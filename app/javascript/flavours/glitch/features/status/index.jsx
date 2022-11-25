@@ -29,6 +29,8 @@ import {
   unreblog,
   pin,
   unpin,
+  statusAddReaction,
+  statusRemoveReaction,
 } from 'flavours/glitch/actions/interactions';
 import {
   replyCompose,
@@ -55,6 +57,7 @@ import { textForScreenReader, defaultMediaVisibility } from 'flavours/glitch/com
 import { Icon } from 'flavours/glitch/components/icon';
 import { Helmet } from 'react-helmet';
 import BundleColumnError from 'flavours/glitch/features/ui/components/bundle_column_error';
+import buildCustomEmojiMap from '../../utils/emoji_map';
 
 const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
@@ -148,6 +151,7 @@ const makeMapStateToProps = () => {
       askReplyConfirmation: state.getIn(['local_settings', 'confirm_before_clearing_draft']) && state.getIn(['compose', 'text']).trim().length !== 0,
       domain: state.getIn(['meta', 'domain']),
       pictureInPicture: getPictureInPicture(state, { id: props.params.statusId }),
+      emojiMap: buildCustomEmojiMap(state),
     };
   };
 
@@ -294,6 +298,30 @@ class Status extends ImmutablePureComponent {
       }));
     }
   };
+
+  handleReactionAdd = (statusId, name) => {
+    const { dispatch } = this.props;
+    const { signedIn } = this.context.identity;
+
+    if (signedIn) {
+      dispatch(statusAddReaction(statusId, name));
+    } else {
+      dispatch(openModal('INTERACTION', {
+        type: 'reaction_add',
+        accountId: status.getIn(['account', 'id']),
+        url: status.get('url'),
+      }));
+    }
+  }
+
+  handleReactionRemove = (statusId, name) => {
+    const { dispatch } = this.props;
+    const { signedIn } = this.context.identity;
+
+    if (signedIn) {
+      dispatch(statusRemoveReaction(statusId, name));
+    }
+  }
 
   handlePin = (status) => {
     if (status.get('pinned')) {
@@ -682,6 +710,8 @@ class Status extends ImmutablePureComponent {
                   settings={settings}
                   onOpenVideo={this.handleOpenVideo}
                   onOpenMedia={this.handleOpenMedia}
+                  onReactionAdd={this.handleReactionAdd}
+                  onReactionRemove={this.handleReactionRemove}
                   expanded={isExpanded}
                   onToggleHidden={this.handleToggleHidden}
                   onTranslate={this.handleTranslate}
@@ -689,6 +719,7 @@ class Status extends ImmutablePureComponent {
                   showMedia={this.state.showMedia}
                   onToggleMediaVisibility={this.handleToggleMediaVisibility}
                   pictureInPicture={pictureInPicture}
+                  emojiMap={this.props.emojiMap}
                 />
 
                 <ActionBar

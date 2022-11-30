@@ -33,7 +33,6 @@ const messages = defineMessages({
   unlisted: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
   private: { id: 'privacy.private.short', defaultMessage: 'Followers-only' },
   direct: { id: 'privacy.direct.short', defaultMessage: 'Mentioned people only' },
-  visible_reactions_count: { id: 'settings.visible_reactions_count', defaultMessage: 'Number of visible reactions' },
   enter_amount_prompt: { id: 'settings.enter_amount_prompt', defaultMessage: 'Enter an amount' },
 });
 
@@ -96,16 +95,6 @@ class LocalSettingsPage extends React.PureComponent {
           onChange={onChange}
         >
           <FormattedMessage id='settings.rewrite_mentions' defaultMessage='Rewrite mentions in displayed statuses' />
-        </LocalSettingsPageItem>
-        <LocalSettingsPageItem
-          settings={settings}
-          item={['num_visible_reactions']}
-          id='mastodon-settings--num_visible_reactions'
-          onChange={onChange}
-          placeholder={intl.formatMessage(messages.enter_amount_prompt)}
-          number
-        >
-          <FormattedMessage id='settings.num_visible_reactions' defaultMessage='Number of visible reaction badges:' />
         </LocalSettingsPageItem>
         <section>
           <h2><FormattedMessage id='settings.notifications_opts' defaultMessage='Notifications options' /></h2>

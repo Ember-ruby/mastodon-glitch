@@ -62,6 +62,7 @@
  * @property {boolean} limited_federation_mode
  * @property {string} locale
  * @property {string | null} mascot
+ * @property {number} max_reactions
  * @property {string=} me
  * @property {string=} moved_to_account_id
  * @property {string=} owner
@@ -81,6 +82,7 @@
  * @property {boolean} use_blurhash
  * @property {boolean=} use_pending_items
  * @property {string} version
+ * @property {number} visible_reactions
  * @property {boolean} translation_enabled
  * @property {string} status_page_url
  * @property {boolean} system_emoji_font
@@ -134,7 +136,6 @@ export const mascot = getMeta('mascot');
 export const maxReactions = (initialState && initialState.max_reactions) || 1;
 export const me = getMeta('me');
 export const movedToAccountId = getMeta('moved_to_account_id');
-export const visibleReactions = getMeta('visible_reactions');
 export const owner = getMeta('owner');
 export const profile_directory = getMeta('profile_directory');
 export const reduceMotion = getMeta('reduce_motion');

@@ -33,7 +33,6 @@ const messages = defineMessages({
   unlisted: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
   private: { id: 'privacy.private.short', defaultMessage: 'Followers-only' },
   direct: { id: 'privacy.direct.short', defaultMessage: 'Mentioned people only' },
-  enter_amount_prompt: { id: 'settings.enter_amount_prompt', defaultMessage: 'Enter an amount' },
 });
 
 class LocalSettingsPage extends React.PureComponent {

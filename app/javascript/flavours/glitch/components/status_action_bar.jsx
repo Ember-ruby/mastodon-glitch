@@ -118,13 +118,7 @@ class StatusActionBar extends ImmutablePureComponent {
   };
 
   handleEmojiPick = data => {
-    const { signedIn } = this.context.identity;
-
-    if (signedIn) {
-      this.props.onReactionAdd(this.props.status.get('id'), data.native.replace(/:/g, ''));
-    } else {
-      this.props.onInteractionModal('favourite', this.props.status);
-    }
+    this.props.onReactionAdd(this.props.status.get('id'), data.native.replace(/:/g, ''));
   }
 
   handleReblogClick = e => {
@@ -213,7 +207,6 @@ class StatusActionBar extends ImmutablePureComponent {
   render () {
     const { status, intl, withDismiss, withCounters, showReplyCount, scrollKey } = this.props;
     const { permissions } = this.context.identity;
-
     const anonymousAccess    = !me;
     const mutingConversation = status.get('muted');
     const publicStatus       = ['public', 'unlisted'].includes(status.get('visibility'));
@@ -314,7 +307,7 @@ class StatusActionBar extends ImmutablePureComponent {
       <IconButton className='status__action-bar-button' title={intl.formatMessage(messages.hide)} icon='eye' onClick={this.handleHideClick} />
     );
 
-    const canReact = status.get('reactions').filter(r => r.get('count') > 0 && r.get('me')).size < maxReactions;
+    const canReact = permissions && status.get('reactions').filter(r => r.get('count') > 0 && r.get('me')).size < maxReactions;
     const reactButton = (
       <IconButton
         className='status__action-bar-button'

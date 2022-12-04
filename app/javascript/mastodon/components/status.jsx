@@ -64,6 +64,7 @@ class Status extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
+    identity: PropTypes.object,
   };
 
   static propTypes = {
@@ -561,7 +562,7 @@ class Status extends ImmutablePureComponent {
               numVisible={visibleReactions}
               addReaction={this.props.onReactionAdd}
               removeReaction={this.props.onReactionRemove}
-              emojiMap={this.props.emojiMap}
+              canReact={this.context.identity.signedIn}
             />
 
             <StatusActionBar scrollKey={scrollKey} status={status} account={account} onFilter={matchedFilters ? this.handleFilterClick : null} {...other} />

@@ -30,6 +30,7 @@ class DetailedStatus extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
+    identity: PropTypes.object,
   };
 
   static propTypes = {
@@ -50,7 +51,6 @@ class DetailedStatus extends ImmutablePureComponent {
     onToggleMediaVisibility: PropTypes.func,
     onReactionAdd: PropTypes.func.isRequired,
     onReactionRemove: PropTypes.func.isRequired,
-    emojiMap: ImmutablePropTypes.map.isRequired,
   };
 
   state = {
@@ -292,7 +292,7 @@ class DetailedStatus extends ImmutablePureComponent {
             reactions={status.get('reactions')}
             addReaction={this.props.onReactionAdd}
             removeReaction={this.props.onReactionRemove}
-            emojiMap={this.props.emojiMap}
+            canReact={this.context.identity.signedIn}
           />
 
           <div className='detailed-status__meta'>

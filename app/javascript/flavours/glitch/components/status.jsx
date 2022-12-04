@@ -61,6 +61,7 @@ class Status extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
+    identity: PropTypes.object,
   };
 
   static propTypes = {
@@ -830,6 +831,7 @@ class Status extends ImmutablePureComponent {
             numVisible={visibleReactions}
             addReaction={this.props.onReactionAdd}
             removeReaction={this.props.onReactionRemove}
+            canReact={this.context.identity.signedIn}
           />
 
           {!isCollapsed || !(muted || !settings.getIn(['collapsed', 'show_action_bar'])) ? (

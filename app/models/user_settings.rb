@@ -12,6 +12,7 @@ class UserSettings
   setting :flavour, default: -> { ::Setting.flavour }
   setting :skin, default: -> { ::Setting.skin }
   setting :noindex, default: -> { ::Setting.noindex }
+  setting :norss, default: -> { ::Setting.norss }
   setting :show_application, default: true
   setting :default_language, default: nil
   setting :default_sensitive, default: false

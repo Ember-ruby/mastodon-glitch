@@ -59,6 +59,10 @@ module User::HasSettings
     settings['noindex']
   end
 
+  def setting_norss
+    settings['norss']
+  end
+
   def setting_flavour
     settings['flavour']
   end

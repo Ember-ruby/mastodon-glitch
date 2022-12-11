@@ -16,6 +16,7 @@ defaults: &defaults
   show_staff_badge: true
   preview_sensitive_media: false
   noindex: false
+  norss: false
   flavour: 'glitch'
   skin: 'default'
   trends: true

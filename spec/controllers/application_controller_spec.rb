@@ -75,8 +75,8 @@ describe ApplicationController, type: :controller do
 
   describe 'helper_method :current_flavour' do
     it 'returns "glitch" when theme wasn\'t changed in admin settings' do
-      allow(Setting).to receive(:default_settings).and_return({'skin' => 'default'})
-      allow(Setting).to receive(:default_settings).and_return({'flavour' => 'glitch'})
+      allow(Setting).to receive(:default_settings).and_return({ 'skin' => 'default' })
+      allow(Setting).to receive(:default_settings).and_return({ 'flavour' => 'glitch' })
 
       expect(controller.view_context.current_flavour).to eq 'glitch'
     end
@@ -101,7 +101,8 @@ describe ApplicationController, type: :controller do
 
     it 'returns user\'s flavour when it is set' do
       current_user = Fabricate(:user)
-      current_user.settings['flavour'] = 'glitch'
+      current_user.settings.update(flavour: 'glitch')
+      current_user.save
       sign_in current_user
 
       allow(Setting).to receive(:[]).with('skin').and_return 'default'
@@ -136,25 +137,6 @@ describe ApplicationController, type: :controller do
     end
 
     include_examples 'respond_with_error', 422
-  end
-
-  describe 'before_action :store_current_location' do
-    it 'stores location for user if it is not devise controller' do
-      routes.draw { get 'success' => 'anonymous#success' }
-      get 'success'
-      expect(controller.stored_location_for(:user)).to eq '/success'
-    end
-
-    context do
-      controller Devise::SessionsController do
-      end
-
-      it 'does not store location for user if it is devise controller' do
-        @request.env['devise.mapping'] = Devise.mappings[:user]
-        get 'create'
-        expect(controller.stored_location_for(:user)).to be_nil
-      end
-    end
   end
 
   describe 'before_action :check_suspension' do

@@ -14,7 +14,6 @@ const messages = defineMessages({
   dismissSuggestion: { id: 'suggestions.dismiss', defaultMessage: 'Dismiss suggestion' },
 });
 
-export default @injectIntl
 class SearchResults extends ImmutablePureComponent {
 
   static propTypes = {
@@ -128,7 +127,7 @@ class SearchResults extends ImmutablePureComponent {
       <div className='drawer--results'>
         <header className='search-results__header'>
           <Icon id='search' fixedWidth />
-          <FormattedMessage id='search_results.total' defaultMessage='{count, number} {count, plural, one {result} other {results}}' values={{ count }} />
+          <FormattedMessage id='search_results.total' defaultMessage='{count, plural, one {# result} other {# results}}' values={{ count }} />
         </header>
 
         {accounts}
@@ -139,3 +138,5 @@ class SearchResults extends ImmutablePureComponent {
   }
 
 }
+
+export default injectIntl(SearchResults);

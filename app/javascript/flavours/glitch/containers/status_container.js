@@ -41,9 +41,6 @@ import { changeLocalSetting } from 'flavours/glitch/actions/local_settings';
 import { defineMessages, injectIntl } from 'react-intl';
 import { boostModal, favouriteModal, deleteModal } from 'flavours/glitch/initial_state';
 import { showAlertForError } from '../actions/alerts';
-import AccountContainer from 'flavours/glitch/containers/account_container';
-import Spoilers from '../components/spoilers';
-import Icon from 'flavours/glitch/components/icon';
 
 const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },

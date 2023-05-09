@@ -81,6 +81,7 @@
  * @property {boolean} use_blurhash
  * @property {boolean=} use_pending_items
  * @property {string} version
+ * @property {number} visible_reactions
  */
 
 /**
@@ -89,6 +90,7 @@
  * @property {InitialStateLanguage[]} languages
  * @property {InitialStateMeta} meta
  * @property {number} max_toot_chars
+ * @property {number} max_reactions
  */
 
 const element = document.getElementById('initial-state');

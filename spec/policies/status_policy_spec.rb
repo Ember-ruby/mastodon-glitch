@@ -141,6 +141,22 @@ RSpec.describe StatusPolicy, type: :model do
     end
   end
 
+  permissions :react? do
+    it 'grants access when viewer is not blocked' do
+      follow         = Fabricate(:follow)
+      status.account = follow.target_account
+
+      expect(subject).to permit(follow.account, status)
+    end
+
+    it 'denies when viewer is blocked' do
+      block          = Fabricate(:block)
+      status.account = block.target_account
+
+      expect(subject).to_not permit(block.account, status)
+    end
+  end
+
   permissions :update? do
     it 'grants access if owner' do
       expect(subject).to permit(status.account, status)

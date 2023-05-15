@@ -170,11 +170,11 @@ module ApplicationHelper
   end
 
   def storage_host
-    URI::HTTPS.build(host: storage_host_name).to_s
+    "https://#{ENV['S3_ALIAS_HOST'].presence || ENV['S3_CLOUDFRONT_HOST']}"
   end
 
   def storage_host?
-    storage_host_name.present?
+    ENV['S3_ALIAS_HOST'].present? || ENV['S3_CLOUDFRONT_HOST'].present?
   end
 
   def quote_wrap(text, line_width: 80, break_sequence: "\n")

@@ -19,7 +19,7 @@ export const IconWithBadge: React.FC<Props> = ({
   <i className='icon-with-badge'>
     <Icon id={id} fixedWidth className={className} />
     {count > 0 && (
-      <i className='icon-with-badge__badge'>{formatNumber(count)}</i>
+      <i className='icon-with-badge__badge'>{count}</i>
     )}
     {issueBadge && <i className='icon-with-badge__issue-badge' />}
   </i>

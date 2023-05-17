@@ -149,13 +149,12 @@ class MediaAttachment < ApplicationRecord
 
   AUDIO_STYLES = {
     original: {
-      format: 'webm',
-      content_type: 'audio/webm',
+      format: 'mp3',
+      content_type: 'audio/mpeg',
       convert_options: {
         output: {
           'loglevel' => 'fatal',
-          'c:a' => 'libopus',
-          'b:a' => '96k',
+          'q:a' => 2,
         }.freeze,
       }.freeze,
       passthrough_options: {

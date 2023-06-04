@@ -3,17 +3,16 @@ import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { lookupAccount, fetchAccount } from 'flavours/glitch/actions/accounts';
-import { expandAccountFeaturedTimeline, expandAccountTimeline } from 'flavours/glitch/actions/timelines';
+import { expandAccountFeaturedTimeline, expandAccountTimeline } from '../../actions/timelines';
 import StatusList from '../../components/status_list';
 import LoadingIndicator from '../../components/loading_indicator';
 import Column from '../ui/components/column';
 import ProfileColumnHeader from 'flavours/glitch/features/account/components/profile_column_header';
 import HeaderContainer from './containers/header_container';
-import ColumnBackButton from 'flavours/glitch/components/column_back_button';
 import { List as ImmutableList } from 'immutable';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { FormattedMessage } from 'react-intl';
-import TimelineHint from 'flavours/glitch/components/timeline_hint';
+import { TimelineHint } from 'flavours/glitch/components/timeline_hint';
 import LimitedAccountHint from './components/limited_account_hint';
 import { getAccountHidden } from 'flavours/glitch/selectors';
 import { fetchFeaturedTags } from '../../actions/featured_tags';
@@ -123,7 +122,7 @@ class AccountTimeline extends ImmutablePureComponent {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { dispatch } = this.props;
 
     if ((nextProps.params.accountId !== this.props.params.accountId && nextProps.params.accountId) || nextProps.withReplies !== this.props.withReplies) {

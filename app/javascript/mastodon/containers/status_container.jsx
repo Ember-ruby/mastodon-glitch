@@ -16,6 +16,8 @@ import {
   unbookmark,
   pin,
   unpin,
+  addReaction,
+  removeReaction,
 } from '../actions/interactions';
 import {
   muteStatus,
@@ -132,6 +134,14 @@ const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
     }
   },
 
+  onReactionAdd (statusId, name, url) {
+    dispatch(addReaction(statusId, name, url));
+  },
+
+  onReactionRemove (statusId, name) {
+    dispatch(removeReaction(statusId, name));
+  },
+
   onEmbed (status) {
     dispatch(openModal('EMBED', {
       url: status.get('url'),
@@ -182,12 +192,12 @@ const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
     dispatch(mentionCompose(account, router));
   },
 
-  onOpenMedia (statusId, media, index) {
-    dispatch(openModal('MEDIA', { statusId, media, index }));
+  onOpenMedia (statusId, media, index, lang) {
+    dispatch(openModal('MEDIA', { statusId, media, index, lang }));
   },
 
-  onOpenVideo (statusId, media, options) {
-    dispatch(openModal('VIDEO', { statusId, media, options }));
+  onOpenVideo (statusId, media, lang, options) {
+    dispatch(openModal('VIDEO', { statusId, media, lang, options }));
   },
 
   onBlock (status) {

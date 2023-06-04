@@ -14,6 +14,7 @@ import HeaderContainer from 'flavours/glitch/features/account_timeline/container
 import ScrollContainer from 'flavours/glitch/containers/scroll_container';
 import LoadMore from 'flavours/glitch/components/load_more';
 import { openModal } from 'flavours/glitch/actions/modal';
+import { FormattedMessage } from 'react-intl';
 import { normalizeForLookup } from 'flavours/glitch/reducers/accounts_map';
 import BundleColumnError from 'flavours/glitch/features/ui/components/bundle_column_error';
 
@@ -71,8 +72,8 @@ class AccountGallery extends ImmutablePureComponent {
     isLoading: PropTypes.bool,
     hasMore: PropTypes.bool,
     isAccount: PropTypes.bool,
-    multiColumn: PropTypes.bool,
     suspended: PropTypes.bool,
+    multiColumn: PropTypes.bool,
   };
 
   state = {
@@ -141,16 +142,17 @@ class AccountGallery extends ImmutablePureComponent {
   handleOpenMedia = attachment => {
     const { dispatch } = this.props;
     const statusId = attachment.getIn(['status', 'id']);
+    const lang = attachment.getIn(['status', 'language']);
 
     if (attachment.get('type') === 'video') {
-      dispatch(openModal('VIDEO', { media: attachment, statusId, options: { autoPlay: true } }));
+      dispatch(openModal('VIDEO', { media: attachment, statusId, lang, options: { autoPlay: true } }));
     } else if (attachment.get('type') === 'audio') {
-      dispatch(openModal('AUDIO', { media: attachment, statusId, options: { autoPlay: true } }));
+      dispatch(openModal('AUDIO', { media: attachment, statusId, lang, options: { autoPlay: true } }));
     } else {
       const media = attachment.getIn(['status', 'media_attachments']);
       const index = media.findIndex(x => x.get('id') === attachment.get('id'));
 
-      dispatch(openModal('MEDIA', { media, index, statusId }));
+      dispatch(openModal('MEDIA', { media, index, statusId, lang }));
     }
   };
 

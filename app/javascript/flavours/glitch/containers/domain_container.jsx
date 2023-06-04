@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { blockDomain, unblockDomain } from '../actions/domain_blocks';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
-import Domain from '../components/domain';
+import { Domain } from '../components/domain';
 import { openModal } from '../actions/modal';
 
 const messages = defineMessages({
@@ -10,8 +10,7 @@ const messages = defineMessages({
 });
 
 const makeMapStateToProps = () => {
-  const mapStateToProps = (state, { }) => ({
-  });
+  const mapStateToProps = () => ({});
 
   return mapStateToProps;
 };

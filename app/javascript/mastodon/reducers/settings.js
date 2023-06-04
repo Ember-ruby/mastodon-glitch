@@ -6,7 +6,7 @@ import { EMOJI_USE } from '../actions/emojis';
 import { LANGUAGE_USE } from '../actions/languages';
 import { LIST_DELETE_SUCCESS, LIST_FETCH_FAIL } from '../actions/lists';
 import { Map as ImmutableMap, fromJS } from 'immutable';
-import uuid from '../uuid';
+import { uuid } from '../uuid';
 
 const initialState = ImmutableMap({
   saved: true,
@@ -33,6 +33,7 @@ const initialState = ImmutableMap({
       follow: false,
       follow_request: false,
       favourite: false,
+      reaction: false,
       reblog: false,
       mention: false,
       poll: false,
@@ -56,6 +57,7 @@ const initialState = ImmutableMap({
       follow_request: false,
       favourite: true,
       reblog: true,
+      reaction: true,
       mention: true,
       poll: true,
       status: true,
@@ -69,6 +71,7 @@ const initialState = ImmutableMap({
       follow_request: false,
       favourite: true,
       reblog: true,
+      reaction: true,
       mention: true,
       poll: true,
       status: true,

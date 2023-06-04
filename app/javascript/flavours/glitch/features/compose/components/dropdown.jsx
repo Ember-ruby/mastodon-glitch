@@ -5,11 +5,8 @@ import React from 'react';
 import Overlay from 'react-overlays/Overlay';
 
 //  Components.
-import IconButton from 'flavours/glitch/components/icon_button';
+import { IconButton } from 'flavours/glitch/components/icon_button';
 import DropdownMenu from './dropdown_menu';
-
-//  Utils.
-import { assignHandlers } from 'flavours/glitch/utils/react_helpers';
 
 //  The component.
 export default class ComposerOptionsDropdown extends React.PureComponent {
@@ -50,7 +47,7 @@ export default class ComposerOptionsDropdown extends React.PureComponent {
     const { open } = this.state;
 
     if (this.props.isUserTouching && this.props.isUserTouching()) {
-      if (this.state.open) {
+      if (open) {
         this.props.onModalClose();
       } else {
         const modal = this.handleMakeModal();
@@ -59,10 +56,10 @@ export default class ComposerOptionsDropdown extends React.PureComponent {
         }
       }
     } else {
-      if (this.state.open && this.activeElement) {
+      if (open && this.activeElement) {
         this.activeElement.focus({ preventScroll: true });
       }
-      this.setState({ open: !this.state.open, openedViaKeyboard: type !== 'click' });
+      this.setState({ open: !open, openedViaKeyboard: type !== 'click' });
     }
   };
 

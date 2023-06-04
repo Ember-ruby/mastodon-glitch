@@ -4,7 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import { preferenceLink } from 'flavours/glitch/utils/backend_links';
 import Button from 'flavours/glitch/components/button';
-import Icon from 'flavours/glitch/components/icon';
+import { Icon } from 'flavours/glitch/components/icon';
 import illustration from 'flavours/glitch/images/logo_warn_glitch.svg';
 
 const messages = defineMessages({
@@ -64,7 +64,7 @@ class DeprecatedSettingsModal extends React.PureComponent {
           <div className='deprecated-settings-info'>
             <ul>
               { settings.map((setting_name) => (
-                <li>
+                <li key={setting_name}>
                   <a href={preferenceLink(setting_name)}><FormattedMessage {...messages[setting_name]} /></a>
                 </li>
               )) }

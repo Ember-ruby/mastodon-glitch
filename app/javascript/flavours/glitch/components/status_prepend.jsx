@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { FormattedMessage } from 'react-intl';
-import Icon from 'flavours/glitch/components/icon';
+import { Icon } from 'flavours/glitch/components/icon';
 import { me } from 'flavours/glitch/initial_state';
 
 export default class StatusPrepend extends React.PureComponent {
@@ -54,6 +54,14 @@ export default class StatusPrepend extends React.PureComponent {
           id='notification.favourite'
           defaultMessage='{name} favourited your status'
           values={{ name : link }}
+        />
+      );
+    case 'reaction':
+      return (
+        <FormattedMessage
+          id='notification.reaction'
+          defaultMessage='{name} reacted to your status'
+          values={{ name: link }}
         />
       );
     case 'reblog':
@@ -109,6 +117,9 @@ export default class StatusPrepend extends React.PureComponent {
     switch(type) {
     case 'favourite':
       iconId = 'star';
+      break;
+    case 'reaction':
+      iconId = 'plus';
       break;
     case 'featured':
       iconId = 'thumb-tack';

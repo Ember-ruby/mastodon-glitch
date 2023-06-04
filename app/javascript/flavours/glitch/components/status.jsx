@@ -6,6 +6,7 @@ import StatusHeader from './status_header';
 import StatusIcons from './status_icons';
 import StatusContent from './status_content';
 import StatusActionBar from './status_action_bar';
+import StatusReactions from './status_reactions';
 import AttachmentList from './attachment_list';
 import Card from '../features/status/components/card';
 import { injectIntl, FormattedMessage } from 'react-intl';
@@ -16,7 +17,7 @@ import NotificationOverlayContainer from 'flavours/glitch/features/notifications
 import classNames from 'classnames';
 import { autoUnfoldCW } from 'flavours/glitch/utils/content_warning';
 import PollContainer from 'flavours/glitch/containers/poll_container';
-import { displayMedia } from 'flavours/glitch/initial_state';
+import { displayMedia, visibleReactions } from 'flavours/glitch/initial_state';
 import PictureInPicturePlaceholder from 'flavours/glitch/components/picture_in_picture_placeholder';
 
 // We use the component (and not the container) since we do not want
@@ -60,6 +61,7 @@ class Status extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
+    identity: PropTypes.object,
   };
 
   static propTypes = {
@@ -77,6 +79,8 @@ class Status extends ImmutablePureComponent {
     onDelete: PropTypes.func,
     onDirect: PropTypes.func,
     onMention: PropTypes.func,
+    onReactionAdd: PropTypes.func,
+    onReactionRemove: PropTypes.func,
     onPin: PropTypes.func,
     onOpenMedia: PropTypes.func,
     onOpenVideo: PropTypes.func,
@@ -134,6 +138,9 @@ class Status extends ImmutablePureComponent {
     'expanded',
     'unread',
     'pictureInPicture',
+    'previousId',
+    'nextInReplyToId',
+    'rootId',
   ];
 
   updateOnStates = [
@@ -279,7 +286,7 @@ class Status extends ImmutablePureComponent {
 
   //  Hack to fix timeline jumps on second rendering when auto-collapsing
   //  or on subsequent rendering when a preview card has been fetched
-  getSnapshotBeforeUpdate (prevProps, prevState) {
+  getSnapshotBeforeUpdate() {
     if (!this.props.getScrollPosition) return null;
 
     const { muted, hidden, status, settings } = this.props;
@@ -294,7 +301,7 @@ class Status extends ImmutablePureComponent {
     }
   }
 
-  componentDidUpdate (prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     if (snapshot !== null && this.props.updateScrollBottom && this.node.offsetTop < snapshot.top) {
       this.props.updateScrollBottom(snapshot.height - snapshot.top);
     }
@@ -365,9 +372,7 @@ class Status extends ImmutablePureComponent {
             status.getIn(['reblog', 'id'], status.get('id'))
           }`;
         }
-        let state = { ...router.history.location.state };
-        state.mastodonBackSteps = (state.mastodonBackSteps || 0) + 1;
-        router.history.push(destination, state);
+        router.history.push(destination);
       }
       e.preventDefault();
     }
@@ -387,11 +392,12 @@ class Status extends ImmutablePureComponent {
 
   handleOpenVideo = (options) => {
     const { status } = this.props;
-    this.props.onOpenVideo(status.get('id'), status.getIn(['media_attachments', 0]), options);
+    this.props.onOpenVideo(status.get('id'), status.getIn(['media_attachments', 0]), status.get('language'), options);
   };
 
   handleOpenMedia = (media, index) => {
-    this.props.onOpenMedia(this.props.status.get('id'), media, index);
+    const { status } = this.props;
+    this.props.onOpenMedia(status.get('id'), media, index, status.get('language'));
   };
 
   handleHotkeyOpenMedia = e => {
@@ -438,16 +444,12 @@ class Status extends ImmutablePureComponent {
   };
 
   handleHotkeyOpen = () => {
-    let state = { ...this.context.router.history.location.state };
-    state.mastodonBackSteps = (state.mastodonBackSteps || 0) + 1;
     const status = this.props.status;
-    this.context.router.history.push(`/@${status.getIn(['account', 'acct'])}/${status.get('id')}`, state);
+    this.context.router.history.push(`/@${status.getIn(['account', 'acct'])}/${status.get('id')}`);
   };
 
   handleHotkeyOpenProfile = () => {
-    let state = { ...this.context.router.history.location.state };
-    state.mastodonBackSteps = (state.mastodonBackSteps || 0) + 1;
-    this.context.router.history.push(`/@${this.props.status.getIn(['account', 'acct'])}`, state);
+    this.context.router.history.push(`/@${this.props.status.getIn(['account', 'acct'])}`);
   };
 
   handleHotkeyMoveUp = e => {
@@ -458,7 +460,7 @@ class Status extends ImmutablePureComponent {
     this.props.onMoveDown(this.props.containerId || this.props.id, e.target.getAttribute('data-featured'));
   };
 
-  handleHotkeyCollapse = e => {
+  handleHotkeyCollapse = () => {
     if (!this.props.settings.getIn(['collapsed', 'enabled']))
       return;
 
@@ -502,7 +504,6 @@ class Status extends ImmutablePureComponent {
     const {
       handleRef,
       parseClick,
-      setExpansion,
       setCollapsed,
     } = this;
     const { router } = this.context;
@@ -526,7 +527,7 @@ class Status extends ImmutablePureComponent {
       rootId,
       ...other
     } = this.props;
-    const { isCollapsed, forceFilter } = this.state;
+    const { isCollapsed } = this.state;
     let background = null;
     let attachments = null;
 
@@ -622,7 +623,7 @@ class Status extends ImmutablePureComponent {
     attachments = status.get('media_attachments');
 
     if (pictureInPicture.get('inUse')) {
-      media.push(<PictureInPicturePlaceholder width={this.props.cachedMediaWidth} />);
+      media.push(<PictureInPicturePlaceholder />);
       mediaIcons.push('video-camera');
     } else if (attachments.size > 0) {
       if (muted || attachments.some(item => item.get('type') === 'unknown')) {
@@ -678,8 +679,6 @@ class Status extends ImmutablePureComponent {
               fullwidth={!rootId && settings.getIn(['media', 'fullwidth'])}
               preventPlayback={isCollapsed || !isExpanded}
               onOpenVideo={this.handleOpenVideo}
-              width={this.props.cachedMediaWidth}
-              cacheWidth={this.props.cacheMediaWidth}
               deployPictureInPicture={pictureInPicture.get('available') ? this.handleDeployPictureInPicture : undefined}
               visible={this.state.showMedia}
               onToggleVisibility={this.handleToggleMediaVisibility}
@@ -719,8 +718,6 @@ class Status extends ImmutablePureComponent {
           onOpenMedia={this.handleOpenMedia}
           card={status.get('card')}
           compact
-          cacheWidth={this.props.cacheMediaWidth}
-          defaultWidth={this.props.cachedMediaWidth}
           sensitive={status.get('sensitive')}
         />,
       );
@@ -741,6 +738,7 @@ class Status extends ImmutablePureComponent {
     if (this.props.prepend && account) {
       const notifKind = {
         favourite: 'favourited',
+        reaction: 'reacted',
         reblog: 'boosted',
         reblogged_by: 'boosted',
         status: 'posted',
@@ -820,6 +818,15 @@ class Status extends ImmutablePureComponent {
             disabled={!router}
             tagLinks={settings.get('tag_misleading_links')}
             rewriteMentions={settings.get('rewrite_mentions')}
+          />
+
+          <StatusReactions
+            statusId={status.get('id')}
+            reactions={status.get('reactions')}
+            numVisible={visibleReactions}
+            addReaction={this.props.onReactionAdd}
+            removeReaction={this.props.onReactionRemove}
+            canReact={this.context.identity.signedIn}
           />
 
           {!isCollapsed || !(muted || !settings.getIn(['collapsed', 'show_action_bar'])) ? (

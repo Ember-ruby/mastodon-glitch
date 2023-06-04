@@ -1,5 +1,12 @@
 import PropTypes from 'prop-types';
-
+import StatusPrepend from './status_prepend';
+import StatusHeader from './status_header';
+import StatusIcons from './status_icons';
+import StatusContent from './status_content';
+import StatusActionBar from './status_action_bar';
+import StatusReactions from './status_reactions';
+import AttachmentList from './attachment_list';
+import Card from '../features/status/components/card';
 import { injectIntl, FormattedMessage } from 'react-intl';
 
 import classNames from 'classnames';
@@ -12,8 +19,8 @@ import { HotKeys } from 'react-hotkeys';
 import PictureInPicturePlaceholder from 'flavours/glitch/components/picture_in_picture_placeholder';
 import PollContainer from 'flavours/glitch/containers/poll_container';
 import NotificationOverlayContainer from 'flavours/glitch/features/notifications/containers/overlay_container';
-import { displayMedia } from 'flavours/glitch/initial_state';
 import { autoUnfoldCW } from 'flavours/glitch/utils/content_warning';
+import { displayMedia, visibleReactions } from 'flavours/glitch/initial_state';
 
 import Card from '../features/status/components/card';
 import Bundle from '../features/ui/components/bundle';
@@ -63,6 +70,7 @@ class Status extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
+    identity: PropTypes.object,
   };
 
   static propTypes = {
@@ -80,6 +88,8 @@ class Status extends ImmutablePureComponent {
     onDelete: PropTypes.func,
     onDirect: PropTypes.func,
     onMention: PropTypes.func,
+    onReactionAdd: PropTypes.func,
+    onReactionRemove: PropTypes.func,
     onPin: PropTypes.func,
     onOpenMedia: PropTypes.func,
     onOpenVideo: PropTypes.func,
@@ -737,6 +747,7 @@ class Status extends ImmutablePureComponent {
     if (this.props.prepend && account) {
       const notifKind = {
         favourite: 'favourited',
+        reaction: 'reacted',
         reblog: 'boosted',
         reblogged_by: 'boosted',
         status: 'posted',
@@ -816,6 +827,15 @@ class Status extends ImmutablePureComponent {
             disabled={!router}
             tagLinks={settings.get('tag_misleading_links')}
             rewriteMentions={settings.get('rewrite_mentions')}
+          />
+
+          <StatusReactions
+            statusId={status.get('id')}
+            reactions={status.get('reactions')}
+            numVisible={visibleReactions}
+            addReaction={this.props.onReactionAdd}
+            removeReaction={this.props.onReactionRemove}
+            canReact={this.context.identity.signedIn}
           />
 
           {!isCollapsed || !(muted || !settings.getIn(['collapsed', 'show_action_bar'])) ? (

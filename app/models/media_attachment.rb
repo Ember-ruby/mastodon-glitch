@@ -37,7 +37,7 @@ class MediaAttachment < ApplicationRecord
   enum type: { image: 0, gifv: 1, video: 2, unknown: 3, audio: 4 }
   enum processing: { queued: 0, in_progress: 1, complete: 2, failed: 3 }, _prefix: true
 
-  MAX_DESCRIPTION_LENGTH = 1_500
+  MAX_DESCRIPTION_LENGTH = 5_000
 
   IMAGE_LIMIT = (ENV['MAX_IMAGE_SIZE'] || 16.megabytes).to_i
   VIDEO_LIMIT = (ENV['MAX_VIDEO_SIZE'] || 99.megabytes).to_i
@@ -58,9 +58,9 @@ class MediaAttachment < ApplicationRecord
 
   IMAGE_MIME_TYPES             = %w(image/jpeg image/png image/gif image/heic image/heif image/webp image/avif).freeze
   IMAGE_CONVERTIBLE_MIME_TYPES = %w(image/heic image/heif).freeze
-  VIDEO_MIME_TYPES             = %w(video/webm video/mp4 video/quicktime video/ogg).freeze
-  VIDEO_CONVERTIBLE_MIME_TYPES = %w(video/webm video/quicktime).freeze
-  AUDIO_MIME_TYPES             = %w(audio/wave audio/wav audio/x-wav audio/x-pn-wave audio/vnd.wave audio/ogg audio/vorbis audio/mpeg audio/mp3 audio/webm audio/flac audio/aac audio/m4a audio/x-m4a audio/mp4 audio/3gpp video/x-ms-asf).freeze
+  VIDEO_MIME_TYPES             = %w(video/webm video/mp4 video/quicktime video/ogg audio/webm).freeze
+  VIDEO_CONVERTIBLE_MIME_TYPES = %w().freeze
+  AUDIO_MIME_TYPES             = %w(audio/wave audio/wav audio/x-wav audio/x-pn-wave audio/vnd.wave audio/ogg audio/vorbis audio/mpeg audio/mp3 audio/flac audio/aac audio/m4a audio/x-m4a audio/mp4 audio/3gpp video/x-ms-asf audio/opus).freeze
 
   BLURHASH_OPTIONS = {
     x_comp: 4,
@@ -114,8 +114,8 @@ class MediaAttachment < ApplicationRecord
   }.freeze
 
   VIDEO_PASSTHROUGH_OPTIONS = {
-    video_codecs: ['h264'].freeze,
-    audio_codecs: ['aac', nil].freeze,
+    video_codecs: ['h264', 'av1'].freeze,
+    audio_codecs: ['aac', 'opus', nil].freeze,
     colorspaces: ['yuv420p'].freeze,
     options: {
       format: 'mp4',
@@ -149,12 +149,28 @@ class MediaAttachment < ApplicationRecord
 
   AUDIO_STYLES = {
     original: {
-      format: 'mp3',
-      content_type: 'audio/mpeg',
+      format: 'webm',
+      content_type: 'audio/webm',
       convert_options: {
         output: {
           'loglevel' => 'fatal',
-          'q:a' => 2,
+          'c:a' => 'libopus',
+          'b:a' => '96k',
+        }.freeze,
+      }.freeze,
+      passthrough_options: {
+        video_codecs: [nil].freeze,
+        audio_codecs: ['opus'].freeze,
+        colorspaces: [nil].freeze,
+        options: {
+          format: 'webm',
+          convert_options: {
+            output: {
+              'loglevel' => 'fatal',
+              'map_metadata' => '-1',
+              'c:a' => 'copy',
+            }.freeze,
+          }.freeze,
         }.freeze,
       }.freeze,
     }.freeze,
@@ -293,7 +309,7 @@ class MediaAttachment < ApplicationRecord
     private
 
     def file_styles(attachment)
-      if attachment.instance.file_content_type == 'image/gif' || VIDEO_CONVERTIBLE_MIME_TYPES.include?(attachment.instance.file_content_type)
+      if VIDEO_CONVERTIBLE_MIME_TYPES.include?(attachment.instance.file_content_type)
         VIDEO_CONVERTED_STYLES
       elsif IMAGE_CONVERTIBLE_MIME_TYPES.include?(attachment.instance.file_content_type)
         IMAGE_CONVERTED_STYLES
@@ -307,9 +323,7 @@ class MediaAttachment < ApplicationRecord
     end
 
     def file_processors(instance)
-      if instance.file_content_type == 'image/gif'
-        [:gif_transcoder, :blurhash_transcoder]
-      elsif VIDEO_MIME_TYPES.include?(instance.file_content_type)
+      if VIDEO_MIME_TYPES.include?(instance.file_content_type)
         [:transcoder, :blurhash_transcoder, :type_corrector]
       elsif AUDIO_MIME_TYPES.include?(instance.file_content_type)
         [:image_extractor, :transcoder, :type_corrector]
@@ -370,6 +384,7 @@ class MediaAttachment < ApplicationRecord
   end
 
   def image_geometry(file)
+    return {} if file.nil?
     width, height = FastImage.size(file.path)
 
     return {} if width.nil?

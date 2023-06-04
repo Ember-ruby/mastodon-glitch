@@ -25,7 +25,7 @@ import Video from 'flavours/glitch/features/video';
 import scheduleIdleTask from '../../ui/util/schedule_idle_task';
 
 import Card from './card';
-
+import StatusReactions from 'flavours/glitch/components/status_reactions';
 
 
 
@@ -33,6 +33,7 @@ class DetailedStatus extends ImmutablePureComponent {
 
   static contextTypes = {
     router: PropTypes.object,
+    identity: PropTypes.object,
   };
 
   static propTypes = {
@@ -53,6 +54,8 @@ class DetailedStatus extends ImmutablePureComponent {
       available: PropTypes.bool,
     }),
     onToggleMediaVisibility: PropTypes.func,
+    onReactionAdd: PropTypes.func.isRequired,
+    onReactionRemove: PropTypes.func.isRequired,
     intl: PropTypes.object.isRequired,
   };
 
@@ -137,7 +140,7 @@ class DetailedStatus extends ImmutablePureComponent {
     let reblogLink = '';
     let reblogIcon = 'retweet';
     let favouriteLink = '';
-    let edited = '';
+    let edited = '';  
 
     //  Depending on user settings, some media are considered as parts of the
     //  contents (affected by CW) while other will be displayed outside of the
@@ -325,6 +328,14 @@ class DetailedStatus extends ImmutablePureComponent {
             tagLinks={settings.get('tag_misleading_links')}
             rewriteMentions={settings.get('rewrite_mentions')}
             disabled
+          />
+
+          <StatusReactions
+            statusId={status.get('id')}
+            reactions={status.get('reactions')}
+            addReaction={this.props.onReactionAdd}
+            removeReaction={this.props.onReactionRemove}
+            canReact={this.context.identity.signedIn}
           />
 
           <div className='detailed-status__meta'>

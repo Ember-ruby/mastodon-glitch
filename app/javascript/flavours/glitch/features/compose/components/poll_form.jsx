@@ -87,7 +87,7 @@ class OptionIntl extends PureComponent {
         </label>
 
         <div className='poll__cancel'>
-          <IconButton disabled={index <= 1} title={intl.formatMessage(messages.remove_option)} icon='times' onClick={this.handleOptionRemove} />
+          <IconButton disabled={index < 1} title={intl.formatMessage(messages.remove_option)} icon='times' onClick={this.handleOptionRemove} />
         </div>
       </li>
     );
@@ -165,6 +165,11 @@ class PollForm extends ImmutablePureComponent {
             <option value={86400}>{intl.formatMessage(messages.days, { number: 1 })}</option>
             <option value={259200}>{intl.formatMessage(messages.days, { number: 3 })}</option>
             <option value={604800}>{intl.formatMessage(messages.days, { number: 7 })}</option>
+            <option value={1209600}>{intl.formatMessage(messages.days, { number: 14 })}</option>
+            <option value={2629746}>{intl.formatMessage(messages.days, { number: 30 })}</option>
+            <option value={7889238}>{intl.formatMessage(messages.days, { number: 91 })}</option>
+            <option value={2629746}>{intl.formatMessage(messages.days, { number: 182 })}</option>
+            <option value={31536000}>{intl.formatMessage(messages.days, { number: 365 })}</option>
           </select>
         </div>
       </div>

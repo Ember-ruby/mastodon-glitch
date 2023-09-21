@@ -37,16 +37,16 @@ class MediaAttachment < ApplicationRecord
   enum type: { image: 0, gifv: 1, video: 2, unknown: 3, audio: 4 }
   enum processing: { queued: 0, in_progress: 1, complete: 2, failed: 3 }, _prefix: true
 
-  MAX_DESCRIPTION_LENGTH = 1_500
+  MAX_DESCRIPTION_LENGTH = 10_000
 
   IMAGE_LIMIT = (ENV['MAX_IMAGE_SIZE'] || 16.megabytes).to_i
   VIDEO_LIMIT = (ENV['MAX_VIDEO_SIZE'] || 99.megabytes).to_i
 
   MAX_VIDEO_MATRIX_LIMIT = 8_294_400 # 3840x2160px
-  MAX_VIDEO_FRAME_RATE   = 120
-  MAX_VIDEO_FRAMES       = 36_000 # Approx. 5 minutes at 120 fps
+  MAX_VIDEO_FRAME_RATE   = 240
+  MAX_VIDEO_FRAMES       = 144_000 # Approx. 10 minutes at 240 fps
 
-  IMAGE_FILE_EXTENSIONS = %w(.jpg .jpeg .png .gif .webp .heic .heif .avif).freeze
+  IMAGE_FILE_EXTENSIONS = %w(.jpg .jpeg .png .gif .webp .heic .heif .avif .jxl).freeze
   VIDEO_FILE_EXTENSIONS = %w(.webm .mp4 .m4v .mov).freeze
   AUDIO_FILE_EXTENSIONS = %w(.ogg .oga .mp3 .wav .flac .opus .aac .m4a .3gp .wma).freeze
 
@@ -57,11 +57,11 @@ class MediaAttachment < ApplicationRecord
     small
   ).freeze
 
-  IMAGE_MIME_TYPES             = %w(image/jpeg image/png image/gif image/heic image/heif image/webp image/avif).freeze
-  IMAGE_CONVERTIBLE_MIME_TYPES = %w(image/heic image/heif image/avif).freeze
+  IMAGE_MIME_TYPES             = %w(image/jpeg image/png image/gif image/heic image/heif image/webp image/avif image/jxl).freeze
+  IMAGE_CONVERTIBLE_MIME_TYPES = %w(image/heic image/heif image/avif image/jxl).freeze
   VIDEO_MIME_TYPES             = %w(video/webm video/mp4 video/quicktime video/ogg).freeze
-  VIDEO_CONVERTIBLE_MIME_TYPES = %w(video/webm video/quicktime).freeze
-  AUDIO_MIME_TYPES             = %w(audio/wave audio/wav audio/x-wav audio/x-pn-wave audio/vnd.wave audio/ogg audio/vorbis audio/mpeg audio/mp3 audio/webm audio/flac audio/aac audio/m4a audio/x-m4a audio/mp4 audio/3gpp video/x-ms-asf).freeze
+  VIDEO_CONVERTIBLE_MIME_TYPES = %w(video/quicktime).freeze
+  AUDIO_MIME_TYPES             = %w(audio/wave audio/wav audio/x-wav audio/x-pn-wave audio/vnd.wave audio/ogg audio/vorbis audio/mpeg audio/mp3 audio/webm audio/flac audio/aac audio/m4a audio/x-m4a audio/mp4 audio/3gpp video/x-ms-asf audio/opus).freeze
 
   BLURHASH_OPTIONS = {
     x_comp: 4,
@@ -70,7 +70,7 @@ class MediaAttachment < ApplicationRecord
 
   IMAGE_STYLES = {
     original: {
-      pixels: 8_294_400, # 3840x2160px
+      pixels: 33_177_600, # 7680x4320px
       file_geometry_parser: FastGeometryParser,
     }.freeze,
 
@@ -83,12 +83,12 @@ class MediaAttachment < ApplicationRecord
 
   IMAGE_CONVERTED_STYLES = {
     original: {
-      format: 'jpeg',
-      content_type: 'image/jpeg',
+      format: 'webp',
+      content_type: 'image/webp',
     }.merge(IMAGE_STYLES[:original]).freeze,
 
     small: {
-      format: 'jpeg',
+      format: 'webp',
     }.merge(IMAGE_STYLES[:small]).freeze,
   }.freeze
 
@@ -113,8 +113,8 @@ class MediaAttachment < ApplicationRecord
   }.freeze
 
   VIDEO_PASSTHROUGH_OPTIONS = {
-    video_codecs: ['h264'].freeze,
-    audio_codecs: ['aac', nil].freeze,
+    video_codecs: ['h264', 'av1'].freeze,
+    audio_codecs: ['aac', 'opus', nil].freeze,
     colorspaces: ['yuv420p'].freeze,
     options: {
       format: 'mp4',

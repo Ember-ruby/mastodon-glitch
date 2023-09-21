@@ -288,7 +288,7 @@ class Status < ApplicationRecord
     end
 
     ActiveRecord::Associations::Preloader.new(record: records, :custom_emoji)
-    # records
+    records
   end
 
   def ordered_media_attachments

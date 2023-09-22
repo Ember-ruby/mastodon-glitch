@@ -2,7 +2,7 @@
 
 module Paperclip
   module MediaTypeSpoofDetectorExtensions
-    MARCEL_MIME_TYPES = %w(audio/mpeg image/avif).freeze
+    MARCEL_MIME_TYPES = %w(audio/mpeg image/avif image/jxl).freeze
 
     def calculated_content_type
       return @calculated_content_type if defined?(@calculated_content_type)

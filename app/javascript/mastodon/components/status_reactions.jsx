@@ -6,7 +6,7 @@ import spring from 'react-motion/lib/spring';
 import TransitionMotion from 'react-motion/lib/TransitionMotion';
 import classNames from 'classnames';
 import React from 'react';
-import unicodeMapping from '../features/emoji/emoji_unicode_mapping_light';
+import { unicodeMapping } from 'mastodon/features/emoji/emoji_unicode_mapping_light';
 import { AnimatedNumber } from './animated_number';
 import { assetHost } from '../utils/config';
 

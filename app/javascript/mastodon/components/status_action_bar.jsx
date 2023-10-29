@@ -18,6 +18,7 @@ import { ReactComponent as ReplyAllIcon } from '@material-symbols/svg-600/outlin
 import { ReactComponent as StarIcon } from '@material-symbols/svg-600/outlined/star-fill.svg';
 import { ReactComponent as StarBorderIcon } from '@material-symbols/svg-600/outlined/star.svg';
 import { ReactComponent as VisibilityIcon } from '@material-symbols/svg-600/outlined/visibility.svg';
+import { ReactComponent as AddIcon } from '@material-symbols/svg-600/outlined/add.svg';
 
 import { PERMISSION_MANAGE_USERS, PERMISSION_MANAGE_FEDERATION } from 'mastodon/permissions';
 import EmojiPickerDropdown from '../features/compose/containers/emoji_picker_dropdown_container';
@@ -392,6 +393,7 @@ class StatusActionBar extends ImmutablePureComponent {
         title={intl.formatMessage(messages.react)}
         disabled={!canReact}
         icon='plus'
+        iconComponent={AddIcon}
       />
     );
 

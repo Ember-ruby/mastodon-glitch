@@ -356,6 +356,7 @@ class Status extends ImmutablePureComponent {
   };
 
   render () {
+    const { signedIn } = this.context.identity;
     const { intl, hidden, featured, unread, showThread, scrollKey, pictureInPicture, previousId, nextInReplyToId, rootId } = this.props;
 
     let { status, account, ...other } = this.props;
@@ -594,7 +595,7 @@ class Status extends ImmutablePureComponent {
               numVisible={visibleReactions}
               addReaction={this.props.onReactionAdd}
               removeReaction={this.props.onReactionRemove}
-              canReact={this.context.identity.signedIn}
+              canReact={signedIn}
             />
 
             <StatusActionBar scrollKey={scrollKey} status={status} account={account} onFilter={matchedFilters ? this.handleFilterClick : null} {...other} />

@@ -513,6 +513,7 @@ class Status extends ImmutablePureComponent {
   }
 
   render () {
+    const { signedIn } = this.context.identity;
     const {
       handleRef,
       parseClick,
@@ -844,7 +845,7 @@ class Status extends ImmutablePureComponent {
             numVisible={visibleReactions}
             addReaction={this.props.onReactionAdd}
             removeReaction={this.props.onReactionRemove}
-            canReact={this.context.identity.signedIn}
+            canReact={signedIn}
           />
 
           {!isCollapsed || !(muted || !settings.getIn(['collapsed', 'show_action_bar'])) ? (

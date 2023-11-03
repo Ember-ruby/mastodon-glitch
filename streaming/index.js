@@ -155,8 +155,6 @@ const redisConfigFromEnv = (env) => {
 const PUBLIC_CHANNELS = [
   'public',
   'public:media',
-  'public:local',
-  'public:local:media',
   'public:remote',
   'public:remote:media',
   'hashtag',

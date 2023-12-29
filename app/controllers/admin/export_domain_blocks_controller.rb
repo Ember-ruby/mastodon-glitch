@@ -63,13 +63,13 @@ module Admin
     end
 
     def export_headers
-      %w(#domain #severity #reject_media #reject_reports #public_comment #obfuscate)
+      %w(#domain #severity #reject_media #reject_reports #public_comment #private_comment #obfuscate)
     end
 
     def export_data
       CSV.generate(headers: export_headers, write_headers: true) do |content|
         DomainBlock.with_limitations.each do |instance|
-          content << [instance.domain, instance.severity, instance.reject_media, instance.reject_reports, instance.public_comment, instance.obfuscate]
+          content << [instance.domain, instance.severity, instance.reject_media, instance.reject_reports, instance.public_comment, instance.private_comment, instance.obfuscate]
         end
       end
     end

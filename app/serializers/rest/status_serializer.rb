@@ -157,6 +157,10 @@ class REST::StatusSerializer < ActiveModel::Serializer
     object.active_mentions.to_a.sort_by(&:id)
   end
 
+  def reactions
+    object.reactions(current_user&.account)
+  end
+
   private
 
   def relationships

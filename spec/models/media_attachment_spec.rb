@@ -147,7 +147,7 @@ RSpec.describe MediaAttachment, :paperclip_processing do
   describe 'jxl' do
     let(:media) { Fabricate(:media_attachment, file: attachment_fixture('600x400.jxl')) }
 
-    it_behaves_like 'static 600x400 image', 'image/webp', '.webp'
+    it_behaves_like 'static 600x400 image', 'image/jpeg', '.jpeg'
   end
   
   describe 'avif' do

@@ -22,7 +22,7 @@ gem 'fog-core', '<= 2.4.0'
 gem 'fog-openstack', '~> 1.0', require: false
 gem 'kt-paperclip', '~> 7.2'
 gem 'md-paperclip-azure', '~> 2.2', require: false
-gem 'marcel', :git => 'git://github.com/Ember-ruby/marcel.git', :branch => 'jxl'
+gem 'marcel', git: 'https://github.com/Ember-ruby/marcel', branch: 'jxl'
 gem 'blurhash', '~> 0.1'
 
 gem 'active_model_serializers', '~> 0.10'

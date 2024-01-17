@@ -1,0 +1,40 @@
+en:
+  flavours:
+    blobfox:
+      description: The default flavour for blobfoxSoc instances.
+      name: blobfox Edition
+  skins:
+    blobfox:
+      default: Default
+cs:
+  flavours:
+    blobfox:
+      description: Výchozí rozhraní instancí blobfoxSoc.
+      name: blobfox
+  skins:
+    blobfox:
+      default: Výchozí
+pl:
+  flavours:
+    blobfox:
+      description: Domyślny motyw instancji blobfoxSoc.
+  skins:
+    blobfox:
+      default: Domyślny
+es:
+  flavours:
+    blobfox:
+      description: El diseño predeterminado para las instancias con blobfoxSoc.
+      name: blobfoxsoc
+  skins:
+    blobfox:
+      default: Predeterminado
+
+ja:
+  flavours:
+    blobfox:
+      description: blobfoxSocインスタンスのデフォルトフレーバーです。
+      name: blobfox Edition
+  skins:
+    blobfox:
+      default: デフォルト

@@ -46,7 +46,7 @@ class MediaAttachment < ApplicationRecord
   MAX_VIDEO_FRAME_RATE   = 240
   MAX_VIDEO_FRAMES       = 144_000 # Approx. 10 minutes at 240 fps
 
-  IMAGE_FILE_EXTENSIONS = %w(.jpg .jpeg .png .gif .webp .heic .heif .avif .jxl).freeze
+  IMAGE_FILE_EXTENSIONS = %w(.jpg .jpeg .png .gif .webp .heic .heif .avif).freeze
   VIDEO_FILE_EXTENSIONS = %w(.webm .mp4 .m4v .mov).freeze
   AUDIO_FILE_EXTENSIONS = %w(.ogg .oga .mp3 .wav .flac .opus .aac .m4a .3gp .wma).freeze
 
@@ -57,8 +57,8 @@ class MediaAttachment < ApplicationRecord
     small
   ).freeze
 
-  IMAGE_MIME_TYPES             = %w(image/jpeg image/png image/gif image/heic image/heif image/webp image/avif image/jxl).freeze
-  IMAGE_CONVERTIBLE_MIME_TYPES = %w(image/heic image/heif image/avif image/jxl).freeze
+  IMAGE_MIME_TYPES             = %w(image/jpeg image/png image/gif image/heic image/heif image/webp image/avif).freeze
+  IMAGE_CONVERTIBLE_MIME_TYPES = %w(image/heic image/heif).freeze
   VIDEO_MIME_TYPES             = %w(video/webm video/mp4 video/quicktime video/ogg).freeze
   VIDEO_CONVERTIBLE_MIME_TYPES = %w(video/quicktime).freeze
   AUDIO_MIME_TYPES             = %w(audio/wave audio/wav audio/x-wav audio/x-pn-wave audio/vnd.wave audio/ogg audio/vorbis audio/mpeg audio/mp3 audio/webm audio/flac audio/aac audio/m4a audio/x-m4a audio/mp4 audio/3gpp video/x-ms-asf audio/opus).freeze
@@ -83,12 +83,12 @@ class MediaAttachment < ApplicationRecord
 
   IMAGE_CONVERTED_STYLES = {
     original: {
-      format: 'webp',
-      content_type: 'image/webp',
+      format: 'avif',
+      content_type: 'image/avif',
     }.merge(IMAGE_STYLES[:original]).freeze,
 
     small: {
-      format: 'webp',
+      format: 'avif',
     }.merge(IMAGE_STYLES[:small]).freeze,
   }.freeze
 
@@ -98,14 +98,15 @@ class MediaAttachment < ApplicationRecord
     vfr_frame_rate_threshold: MAX_VIDEO_FRAME_RATE,
     convert_options: {
       output: {
-        'loglevel' => 'fatal',
+        'loglevel' => 'error',
         'preset' => 'veryfast',
         'movflags' => 'faststart', # Move metadata to start of file so playback can begin before download finishes
         'pix_fmt' => 'yuv420p', # Ensure color space for cross-browser compatibility
         'vf' => 'crop=floor(iw/2)*2:floor(ih/2)*2', # h264 requires width and height to be even. Crop instead of scale to avoid blurring
         'c:v' => 'h264',
-        'c:a' => 'aac',
+        'c:a' => 'opus',
         'b:a' => '192k',
+        'crf' => 18,
         'map_metadata' => '-1',
         'frames:v' => MAX_VIDEO_FRAMES,
       }.freeze,
@@ -120,7 +121,7 @@ class MediaAttachment < ApplicationRecord
       format: 'mp4',
       convert_options: {
         output: {
-          'loglevel' => 'fatal',
+          'loglevel' => 'error',
           'map_metadata' => '-1',
           'c:v' => 'copy',
           'c:a' => 'copy',
@@ -152,12 +153,26 @@ class MediaAttachment < ApplicationRecord
       content_type: 'audio/mpeg',
       convert_options: {
         output: {
-          'loglevel' => 'fatal',
-          'q:a' => 2,
+          'loglevel' => 'error',
+          'q:a' => 4,
+          'map' => 'a',
+        }.freeze,
+      }.freeze,
+    }.freeze,
+    opus: {
+      format: 'webm',
+      content_type: 'audio/webm',
+      convert_options: {
+        output: {
+          'loglevel' => 'error',
+          'b:a' => '96k',
+          'c:a' => 'libopus',
+          'map' => 'a',
         }.freeze,
       }.freeze,
     }.freeze,
   }.freeze
+
 
   VIDEO_CONVERTED_STYLES = {
     small: VIDEO_STYLES[:small].freeze,

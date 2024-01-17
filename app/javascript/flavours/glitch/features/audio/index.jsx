@@ -496,7 +496,6 @@ class Audio extends PureComponent {
         />
 
         {(revealed || editable) && <audio
-          src={src}
           ref={this.setAudioRef}
           preload={autoPlay ? 'auto' : 'none'}
           onPlay={this.handlePlay}
@@ -504,7 +503,11 @@ class Audio extends PureComponent {
           onProgress={this.handleProgress}
           onLoadedData={this.handleLoadedData}
           crossOrigin='anonymous'
-        />}
+        >
+          <source src={src.replace("/original/", "/opus/").replace(".mp3", ".webm")} type="audio/webm; codecs=opus"/>
+          <source src={src} type="audio/mpeg; codecs=mp3"/>
+        </audio>
+        }
 
         <canvas
           role='button'

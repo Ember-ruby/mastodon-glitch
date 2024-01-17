@@ -143,7 +143,7 @@ RSpec.describe MediaAttachment, :paperclip_processing do
 
     it_behaves_like 'static 600x400 image', 'image/webp', '.webp'
   end
-  
+
   describe 'avif' do
     let(:media) { Fabricate(:media_attachment, file: attachment_fixture('600x400.avif')) }
 

@@ -173,7 +173,6 @@ class MediaAttachment < ApplicationRecord
     }.freeze,
   }.freeze
 
-
   VIDEO_CONVERTED_STYLES = {
     small: VIDEO_STYLES[:small].freeze,
     original: VIDEO_FORMAT.freeze,

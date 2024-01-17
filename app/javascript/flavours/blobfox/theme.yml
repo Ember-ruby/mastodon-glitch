@@ -26,10 +26,10 @@ pack:
 #  the flavour, relative to this directory. The contents of this
 #  directory must be `.json` files whose names correspond to
 #  language tags and whose default exports are a messages object.
-locales: locales
+#  locales: locales
 
 #  (OPTIONAL) Which flavour to inherit locales from
-inherit_locales: vanilla
+inherit_locales: glitch
 
 #  (OPTIONAL) A file to use as the preview screenshot for the flavour,
 #  or an array thereof. These are the full path from `app/javascript/`.

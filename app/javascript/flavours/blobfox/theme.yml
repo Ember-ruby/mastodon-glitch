@@ -26,7 +26,7 @@ pack:
 #  the flavour, relative to this directory. The contents of this
 #  directory must be `.json` files whose names correspond to
 #  language tags and whose default exports are a messages object.
-#  locales: locales
+locales: locales
 
 #  (OPTIONAL) Which flavour to inherit locales from
 inherit_locales: glitch

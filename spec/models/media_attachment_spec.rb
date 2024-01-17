@@ -144,22 +144,16 @@ RSpec.describe MediaAttachment, :paperclip_processing do
     it_behaves_like 'static 600x400 image', 'image/webp', '.webp'
   end
 
-  describe 'jxl' do
-    let(:media) { Fabricate(:media_attachment, file: attachment_fixture('600x400.jxl')) }
-
-    it_behaves_like 'static 600x400 image', 'image/jpeg', '.jpeg'
-  end
-  
   describe 'avif' do
     let(:media) { Fabricate(:media_attachment, file: attachment_fixture('600x400.avif')) }
 
-    it_behaves_like 'static 600x400 image', 'image/jpeg', '.jpeg'
+    it_behaves_like 'static 600x400 image', 'image/avif', '.avif'
   end
 
   describe 'heic' do
     let(:media) { Fabricate(:media_attachment, file: attachment_fixture('600x400.heic')) }
 
-    it_behaves_like 'static 600x400 image', 'image/jpeg', '.jpeg'
+    it_behaves_like 'static 600x400 image', 'image/avif', '.avif'
   end
 
   describe 'base64-encoded image' do

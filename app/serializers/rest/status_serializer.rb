@@ -166,10 +166,6 @@ class REST::StatusSerializer < ActiveModel::Serializer
   def relationships
     instance_options && instance_options[:relationships]
   end
-    
-  def reactions
-    object.reactions(current_user&.account)
-  end
 
   class ApplicationSerializer < ActiveModel::Serializer
     attributes :name, :website

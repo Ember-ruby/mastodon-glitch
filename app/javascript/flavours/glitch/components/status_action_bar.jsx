@@ -338,11 +338,6 @@ class StatusActionBar extends ImmutablePureComponent {
             : reactButton
         }
         <IconButton className='status__action-bar-button bookmark-icon' disabled={!signedIn} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='bookmark' onClick={this.handleBookmarkClick} />
-        {
-          permissions
-            ? <EmojiPickerDropdown className='status__action-bar-button' onPickEmoji={this.handleEmojiPick} button={reactButton} disabled={!canReact} />
-            : reactButton
-        }
 
         {filterButton}
 

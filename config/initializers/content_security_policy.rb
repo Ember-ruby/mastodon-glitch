@@ -12,17 +12,6 @@ policy = ContentSecurityPolicy.new
 assets_host = policy.assets_host
 media_hosts = policy.media_hosts
 
-base_host = Rails.configuration.x.web_domain
-
-assets_host   = Rails.configuration.action_controller.asset_host
-assets_host ||= host_to_url(base_host)
-
-media_host   = host_to_url(ENV['S3_ALIAS_HOST'])
-media_host ||= host_to_url(ENV['S3_CLOUDFRONT_HOST'])
-media_host ||= host_to_url(ENV['AZURE_ALIAS_HOST'])
-media_host ||= host_to_url(ENV['S3_HOSTNAME']) if ENV['S3_ENABLED'] == 'true'
-media_host ||= assets_host
-
 def sso_host
   return unless ENV['ONE_CLICK_SSO_LOGIN'] == 'true'
   return unless ENV['OMNIAUTH_ONLY'] == 'true'

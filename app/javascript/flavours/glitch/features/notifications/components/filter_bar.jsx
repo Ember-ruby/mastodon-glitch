@@ -3,6 +3,7 @@ import { PureComponent } from 'react';
 
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 
+import AddReactionIcon from '@/material-icons/400-24px/add_reaction.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import InsertChartIcon from '@/material-icons/400-24px/insert_chart.svg?react';
 import PersonAddIcon from '@/material-icons/400-24px/person_add.svg?react';
@@ -88,7 +89,7 @@ class FilterBar extends PureComponent {
           onClick={this.onClick('reaction')}
           title={intl.formatMessage(tooltips.reactions)}
         >
-          <Icon id='plus' fixedWidth />
+          <Icon id='add_reaction' icon={AddReactionIcon} />
         </button>
         <button
           className={selectedFilter === 'reblog' ? 'active' : ''}

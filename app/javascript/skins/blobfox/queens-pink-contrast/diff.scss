@@ -1,0 +1,381 @@
+@import 'variables';
+
+// This file houses all of the modifications to the base style. Ergo, anything omitted will use the default mastodon styling. This is useful if we just want to change a few things.
+
+body {
+  background-color: darken($ui-base-color, 5%);
+}
+
+@mixin pane-style {
+  @media screen and (max-width: 600px) {
+  // small screen
+    margin: .1rem;
+    padding: .1rem;
+  }
+  @media screen and (min-width: 600px) {
+    margin: 1rem;
+    padding: 1rem;
+  }
+}
+
+.icon-with-badge {
+  .icon-with-badge__badge {
+    border-radius: $queen-radius;
+    transform: scale(1.0);
+    transition: transform .5s ease-in-out;
+  }
+  .icon-with-badge__badge:hover {
+    transform: scale(1.5);
+  }
+}
+
+
+.drawer__inner__mastodon {
+  background-color: transparent !important;
+}
+
+.single-column,
+.auto-columns {
+  background: darken($ui-base-color, 5%);
+  margin: .1rem;
+
+  .column-header {
+    background: $ui-base-color;
+    border-radius: $queen-radius;
+    margin: .1rem;
+  }
+
+  .tabs-bar__wrapper {
+    background-color: transparent;
+  }
+
+
+  .columns-area__panels__pane__inner {
+    // left & right panels
+    @include pane-style;
+
+    background-color: $black;
+    border-radius: $queen-radius;
+    color: $queen-highlight-color;
+  }
+  .columns-area {
+    background-color: transparent;
+  }
+
+  .search {
+    margin: 1rem;
+    .search__input {
+      border-radius: $queen-radius;
+    }
+  }
+
+  .report-modal {
+    background-color: $ui-base-color;
+    color: $white;
+    border-radius: $queen-radius;
+  }
+
+  .column-header__button,
+  .column-header__back-button,
+  .button,
+  .content__heading__actions.button {
+    background-color: $ui-base-color;
+    border-radius: $queen-radius;
+    padding: .7rem;
+    border-width: 2px;
+    border-style: outset;
+    border-color: lighten($queen-highlight-color, 5%);
+    color: $white;
+
+    box-shadow: inset 0 0 0 0 $queen-highlight-color;
+    transition: box-shadow 1s ease-in-out;
+    // transition: background-color .3s;
+    // transition: color .3s;
+  }
+
+  .column-header__button:hover,
+  .column-header__back-button:hover,
+  .button:hover,
+  .content__heading__actions.button:hover {
+    box-shadow: inset 100px 0 0 0 $queen-highlight-color;
+    // background-color: $queen-highlight-color;
+    // color: $black;
+  }
+
+  .drawer__header {
+    background-color: $ui-base-color;
+    border-radius: $queen-radius;
+    i.fa {
+      color: $white;
+    }
+  }
+
+  .drawer__inner {
+    background-color: transparent;
+  }
+
+  .scrollable {
+    background-color: transparent;
+  }
+  .columns-area__panels__main {
+    background-color: transparent;
+    border-bottom-left-radius: $queen-radius;
+    border-bottom-right-radius: $queen-radius;
+    padding: 0%;
+  }
+
+  .status__info {
+    padding-bottom: .5rem;
+  }
+
+  // .account__avatar{
+  //   border-radius: $queen-radius-pfp;
+  //   border-style: solid;
+  //   border-color: $queen-highlight-color;
+  //   // border-width: 3px;
+  //   border-top-width: $queen-border-thickness;
+  //   border-left-width: $queen-border-thickness;
+  //   transform: none;
+  // }
+
+  .status__avatar {
+    // margin: 2rem;
+    border-radius: $queen-radius-pfp;
+    background-image: linear-gradient(45deg, $queen-highlight-color, $ui-base-color);
+    padding: .5rem;
+    border-width: $queen-border-thickness;
+    border-style: solid;
+    border-color: $queen-highlight-color;
+  }
+
+  .status__display-name {
+    .display-name {
+      background-image: linear-gradient(to right, $queen-highlight-color, $ui-base-color);
+      padding: .5rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      border-radius: $queen-radius;
+      .display-name__account {
+        color: $white;
+      }
+    }
+  }
+
+  .account__avatar,
+  .account__avatar-overlay-base,
+  .account__avatar-overlay-overlay {
+    border-radius: $queen-radius-pfp;
+  }
+
+  .tabs-bar__wrapper {
+    background-color: transparent;
+  }
+
+  .status,
+  .detailed-status {
+    background-color: $black;
+    border-radius: $queen-radius;
+    border-style: solid;
+    border-color: desaturate($queen-highlight-color, 25%);
+    // border-width: 3px;
+    border-bottom-width: $queen-border-thickness;
+    border-right-width: $queen-border-thickness;
+    padding: 1rem;
+    margin: 1rem;
+
+  }
+
+  .status__content {
+    text-align: center;
+    align-content: center;
+    vertical-align: middle;
+    span {
+      padding: 1rem;
+    }
+  }
+  .status__content__text {
+    text-align: left;
+  }
+
+  .status__content--with-spoiler {
+    background-color: $ui-base-color;
+    padding: 1rem;
+    border-radius: $queen-radius;
+  }
+
+  .status__content__spoiler-link {
+    // dear god why isn't there a class for the spoiler text!?!?
+    padding: .5rem;
+    border-radius: $queen-radius;
+    background-color: $queen-highlight-color;
+    color: $white;
+    transition: background-color 1s;
+  }
+  .status__content__spoiler-link:hover {
+    background-color: $black;
+  }
+
+  .dropdown-animation {
+    padding: .5rem;
+    border-radius: $queen-radius;
+    background-color: $queen-highlight-color;
+    color: $white;
+  }
+  .privacy-dropdown__option {
+    border-radius: $queen-radius;
+    background-color: $queen-highlight-color;
+    color: $white;
+  }
+
+  .detailed-status-direct,
+  .status-direct,
+  .status-direct::selection,
+  .detailed-status-direct::selection {
+    padding-left: 2rem;
+    border-radius: $queen-radius;
+    border: .3rem solid $queen-highlight-color;
+    border-top-right-radius: 0%;
+    background-color: transparent;
+    background-image: linear-gradient(140deg, darken($queen-highlight-color, 15%), $black, $black);
+  }
+
+  .compose-form {
+    background-color: transparent;
+
+    .compose-form__autosuggest-wrapper {
+      background-color: transparent;
+
+      .autosuggest-textarea {
+        background-color: transparent;
+
+        .autosuggest-textarea__textarea {
+          background-color: $ui-base-color;
+          color: lighten($queen-highlight-color, 25%);
+          border-radius: $queen-radius;
+          padding: 1rem;
+        }
+      }
+    }
+  }
+  .spoiler-input__input {
+    background-color: $ui-base-color;
+    color: lighten($queen-highlight-color, 25%);
+    border-radius: $queen-radius;
+    // padding: 1rem;
+  }
+
+  .navigation-bar {
+    padding: .5rem;
+    background-color: $ui-base-color;
+    border-radius: $queen-radius;
+  }
+.autosuggest-textarea__suggestions-wrapper {
+  background-color: lighten($ui-base-color, 5%);
+}
+.compose-form__buttons-wrapper {
+  background-color: lighten($ui-base-color, 5%);
+  padding: .5rem;
+  margin-top: .5rem;
+  border-radius: $queen-radius;
+}
+
+  .hashtag,
+  .status-link,
+  .mention {
+    background-color: $queen-highlight-color;
+    border-radius: $queen-radius;
+
+    color: $white;
+    text-decoration-color: $white;
+    text-emphasis-color: $white;
+    transition: background-color 1s;
+    // clear values from the spoi
+    padding: .2rem;
+    margin: .3rem;
+    border: 2px outset $white;
+  }
+  .hashtag:hover,
+  .mention:hover {
+    background-color: $black;
+  }
+
+  .unhandled-link {
+    background-color: $black;
+    border-color: $queen-highlight-color;
+  }
+  .mention {
+    border-color: lighten($queen-highlight-color, 25%);
+  }
+  .hashtag {
+    border-color: darken($queen-highlight-color, 25%);
+  }
+  .status-card {
+    background-color: $ui-base-color;
+    border-radius: $queen-radius;
+    border-color: $queen-highlight-color;
+    margin: .5rem;
+    .status-card__image {
+      border-radius: $queen-radius;
+      border-color: $queen-highlight-color;
+      border-width: .1rem;
+      border-style: solid;
+      // padding: .5rem;
+    }
+  }
+
+  .reactions-bar__item,
+  .status__content__text,
+  .display-name {
+    .emojione {
+      transition: transform .3s;
+      transform: scale(1.0);
+    }
+    .emojione:hover {
+      transform: scale(3);
+    }
+  }
+
+  .display-name {
+    clip-path: none;
+  }
+
+  .status__action-bar,
+  .status__info__icons,
+  .columns-area__panels__pane__inner,
+  .notification__message {
+    i.fa,
+    .text-icon {
+      transform: scale(1);
+      transition: transform .3s ease-in-out;
+    }
+
+    i.fa:hover,
+    .text-icon:hover,
+    i.fa:active {
+      transform: scale(1.3);
+    }
+  }
+
+  .column-link {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 0 $queen-highlight-color;
+    transition: box-shadow .3s;
+    border-radius: $queen-radius;
+  }
+  .column-link:hover {
+    box-shadow: inset 10px 0px 30px 0px $queen-highlight-color;
+  }
+
+  .getting-started__wrapper {
+    border-radius: $queen-radius;
+    margin: .5rem;
+  }
+
+  .reply-indicator,
+  .status__content__text {
+    p {
+      line-height: 2rem;
+    }
+  }
+
+}

@@ -44,6 +44,8 @@ class Account extends ImmutablePureComponent {
     intl: PropTypes.object.isRequired,
     hidden: PropTypes.bool,
     minimal: PropTypes.bool,
+    actionIcon: PropTypes.string,
+    actionTitle: PropTypes.string,
     defaultAction: PropTypes.string,
     withBio: PropTypes.bool,
   };

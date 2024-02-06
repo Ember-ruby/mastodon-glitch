@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
 
 import { cancelReplyCompose } from '../../../actions/compose';
+import { makeGetStatus } from '../../../selectors';
 import ReplyIndicator from '../components/reply_indicator';
 
 const makeMapStateToProps = () => {
   const mapStateToProps = state => {
+    const getStatus = makeGetStatus();
+
     let statusId = state.getIn(['compose', 'id'], null);
     let editing  = true;
 
@@ -14,7 +17,7 @@ const makeMapStateToProps = () => {
     }
 
     return {
-      status: state.getIn(['statuses', statusId]),
+      status: getStatus(state, { id: statusId }),
       editing,
     };
   };

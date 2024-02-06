@@ -72,7 +72,7 @@ class Api::V1::StatusesController < Api::BaseController
       with_rate_limit: true
     )
 
-    render json: @status, serializer: @status.is_a?(ScheduledStatus) ? REST::ScheduledStatusSerializer : REST::StatusSerializer
+    render json: @status, serializer: serializer_for_status
   rescue PostStatusService::UnexpectedMentionsError => e
     unexpected_accounts = ActiveModel::Serializer::CollectionSerializer.new(
       e.accounts,
@@ -156,6 +156,10 @@ class Api::V1::StatusesController < Api::BaseController
         options: [],
       ]
     )
+  end
+
+  def serializer_for_status
+    @status.is_a?(ScheduledStatus) ? REST::ScheduledStatusSerializer : REST::StatusSerializer
   end
 
   def pagination_params(core_params)

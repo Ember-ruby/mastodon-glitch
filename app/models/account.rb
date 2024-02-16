@@ -89,8 +89,8 @@ class Account < ApplicationRecord
   MAX_NOTE_LENGTH = (ENV['MAX_BIO_CHARS'] || 500).to_i
   DEFAULT_FIELDS_SIZE = (ENV['MAX_PROFILE_FIELDS'] || 4).to_i
 
-  enum protocol: { ostatus: 0, activitypub: 1 }
-  enum suspension_origin: { local: 0, remote: 1 }, _prefix: true
+  enum :protocol, { ostatus: 0, activitypub: 1 }
+  enum :suspension_origin, { local: 0, remote: 1 }, prefix: true
 
   validates :username, presence: true
   validates_with UniqueUsernameValidator, if: -> { will_save_change_to_username? }

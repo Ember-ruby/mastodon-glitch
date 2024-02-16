@@ -51,6 +51,7 @@ namespace :admin do
     resource :appearance, only: [:show, :update], controller: 'appearance'
     resource :discovery, only: [:show, :update], controller: 'discovery'
     resource :other, only: [:show, :update], controller: 'other'
+    resource :protections, only: [:show, :update], controller: 'protections'
   end
 
   resources :site_uploads, only: [:destroy]

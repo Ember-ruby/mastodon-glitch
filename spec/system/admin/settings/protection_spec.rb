@@ -6,8 +6,9 @@ RSpec.describe 'Admin::Settings::Protections' do
   let(:admin_user) { Fabricate(:admin_user) }
 
   before { sign_in(admin_user) }
-
+  
   it 'Saves changes to protections settings' do
+    sign_in admin_user
     visit admin_settings_protections_path
 
     fill_in reject_pattern_field,

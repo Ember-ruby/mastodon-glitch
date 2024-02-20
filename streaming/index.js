@@ -848,7 +848,7 @@ const startServer = async () => {
 
       // Only send local-only statuses to logged-in users
       if ((event === 'update' || event === 'status.update') && payload.local_only && !(req.accountId && allowLocalOnly)) {
-        log.silly(req.requestId, `Message ${payload.id} filtered because it was local-only`);
+        log.debug(`Message ${payload.id} filtered because it was local-only`);
         return;
       }
 

@@ -24,7 +24,6 @@ import StatusListContainer from '../ui/containers/status_list_container';
 
 import { ColumnSettings } from './components/column_settings';
 import { CriticalUpdateBanner } from './components/critical_update_banner';
-import { ExplorePrompt } from './components/explore_prompt';
 
 const messages = defineMessages({
   title: { id: 'column.home', defaultMessage: 'Home' },
@@ -58,25 +57,12 @@ const getHomeFeedSpeed = createSelector([
   };
 });
 
-const homeTooSlow = createSelector([
-  state => state.getIn(['timelines', 'home', 'isLoading']),
-  state => state.getIn(['timelines', 'home', 'isPartial']),
-  getHomeFeedSpeed,
-], (isLoading, isPartial, speed) =>
-  !isLoading && !isPartial // Only if the home feed has finished loading
-  && (
-    (speed.gap > (30 * 60) // If the average gap between posts is more than 30 minutes
-    || (Date.now() - speed.newest) > (1000 * 3600)) // If the most recent post is from over an hour ago
-  )
-);
-
 const mapStateToProps = state => ({
   hasUnread: state.getIn(['timelines', 'home', 'unread']) > 0,
   isPartial: state.getIn(['timelines', 'home', 'isPartial']),
   hasAnnouncements: !state.getIn(['announcements', 'items']).isEmpty(),
   unreadAnnouncements: state.getIn(['announcements', 'items']).count(item => !item.get('read')),
   showAnnouncements: state.getIn(['announcements', 'show']),
-  tooSlow: homeTooSlow(state),
   regex: state.getIn(['settings', 'home', 'regex', 'body']),
 });
 
@@ -96,7 +82,6 @@ class HomeTimeline extends PureComponent {
     hasAnnouncements: PropTypes.bool,
     unreadAnnouncements: PropTypes.number,
     showAnnouncements: PropTypes.bool,
-    tooSlow: PropTypes.bool,
     regex: PropTypes.string,
   };
 
@@ -167,7 +152,7 @@ class HomeTimeline extends PureComponent {
   };
 
   render () {
-    const { intl, hasUnread, columnId, multiColumn, tooSlow, hasAnnouncements, unreadAnnouncements, showAnnouncements } = this.props;
+    const { intl, hasUnread, columnId, multiColumn, hasAnnouncements, unreadAnnouncements, showAnnouncements } = this.props;
     const pinned = !!columnId;
     const { signedIn } = this.context.identity;
     const banners = [];
@@ -189,10 +174,6 @@ class HomeTimeline extends PureComponent {
 
     if (criticalUpdatesPending) {
       banners.push(<CriticalUpdateBanner key='critical-update-banner' />);
-    }
-
-    if (tooSlow) {
-      banners.push(<ExplorePrompt key='explore-prompt' />);
     }
 
     return (

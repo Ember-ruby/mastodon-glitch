@@ -9,7 +9,7 @@ class Trends::Links < Trends::Base
     threshold: 5,
     review_threshold: 3,
     max_score_cooldown: 2.days.freeze,
-    max_score_halflife: 8.hours.freeze,
+    max_score_halflife: 24.hours.freeze,
     decay_threshold: 1,
   }
 

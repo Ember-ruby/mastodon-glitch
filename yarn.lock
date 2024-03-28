@@ -5217,7 +5217,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-lodash@patch:babel-plugin-lodash@npm%3A3.3.4#~/.yarn/patches/babel-plugin-lodash-npm-3.3.4-c7161075b6.patch":
+"babel-plugin-lodash@npm:3.3.4, babel-plugin-lodash@patch:babel-plugin-lodash@npm%3A3.3.4#~/.yarn/patches/babel-plugin-lodash-npm-3.3.4-c7161075b6.patch":
   version: 3.3.4
   resolution: "babel-plugin-lodash@npm:3.3.4"
   dependencies:

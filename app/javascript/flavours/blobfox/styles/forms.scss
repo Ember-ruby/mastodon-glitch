@@ -106,7 +106,8 @@ code {
       .overridden,
       .recommended,
       .not_recommended,
-      .blobfox_only .glitch_only {
+      .blobfox_only,
+      .glitch_only {
         position: absolute;
         margin: 0 4px;
         margin-top: -2px;

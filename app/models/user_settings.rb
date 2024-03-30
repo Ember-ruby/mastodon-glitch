@@ -23,6 +23,7 @@ class UserSettings
 
   setting_inverse_alias :indexable, :noindex
   setting_inverse_alias :show_followers_count, :hide_followers_count
+  setting_inverse_alias :enable_rss, :norss
 
   namespace :web do
     setting :advanced_layout, default: false

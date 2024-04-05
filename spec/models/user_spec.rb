@@ -49,22 +49,27 @@ RSpec.describe User do
       user.save(validate: false)
       expect(user.valid?).to be true
     end
-  end
 
-  describe 'Normalizations' do
-    describe 'locale' do
-      it 'preserves valid locale' do
-        user = Fabricate.build(:user, locale: 'en')
-
-        expect(user.locale).to eq('en')
-      end
-
-      it 'cleans out invalid locale' do
-        user = Fabricate.build(:user, locale: 'toto')
-
-        expect(user.locale).to be_nil
-      end
+    it 'is valid with a localhost e-mail address' do
+      user = Fabricate.build(:user, email: 'admin@localhost')
+      user.valid?
+      expect(user.valid?).to be true
     end
+
+    describe 'Normalizations' do
+      describe 'locale' do
+        it 'preserves valid locale' do
+          user = Fabricate.build(:user, locale: 'en')
+  
+          expect(user.locale).to eq('en')
+        end
+  
+        it 'cleans out invalid locale' do
+          user = Fabricate.build(:user, locale: 'toto')
+  
+          expect(user.locale).to be_nil
+        end
+      end
 
     describe 'time_zone' do
       it 'preserves valid timezone' do

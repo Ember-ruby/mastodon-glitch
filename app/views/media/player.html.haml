@@ -28,7 +28,7 @@
     %video{ controls: 'controls' }
       %source{ src: @media_attachment.file.url(:original) }
 - elsif @media_attachment.gifv?
-  = react_component :media_gallery,
+  = react_component :video,
                     autoplay: true,
                     height: 380,
                     media: [ActiveModelSerializers::SerializableResource.new(@media_attachment, serializer: REST::MediaAttachmentSerializer).as_json],

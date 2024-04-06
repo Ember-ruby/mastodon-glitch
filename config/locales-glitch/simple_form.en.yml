@@ -19,6 +19,7 @@ en:
         setting_default_content_type_plain: Plain text
         setting_favourite_modal: Show confirmation dialog before favouriting (applies to Glitch flavour only)
         setting_hide_followers_count: Hide your followers count
+        setting_show_followers_count: Show your followers count
         setting_skin: Skin
         setting_system_emoji_font: Use system's default font for emojis (applies to Glitch flavour only)
         setting_visible_reactions: Number of visible emoji reactions

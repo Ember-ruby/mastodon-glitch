@@ -12,7 +12,7 @@
 :ruby
   meta = @media_attachment.file.meta || {}
 
-- if @media_attachment.video? || @media_attachment.gifv?
+- if @media_attachment.video?
   = react_component :video,
                     alt: @media_attachment.description,
                     blurhash: @media_attachment.blurhash,
@@ -26,6 +26,14 @@
                     src: @media_attachment.file.url(:original),
                     width: 670 do
     %video{ controls: 'controls' }
+      %source{ src: @media_attachment.file.url(:original) }
+- elsif @media_attachment.gifv?
+  = react_component :media_gallery,
+                    autoplay: true,
+                    height: 380,
+                    media: [ActiveModelSerializers::SerializableResource.new(@media_attachment, serializer: REST::MediaAttachmentSerializer).as_json],
+                    standalone: true do
+    %video{ autoplay: 'autoplay', muted: 'muted', loop: 'loop' }
       %source{ src: @media_attachment.file.url(:original) }
 - elsif @media_attachment.audio?
   = react_component :audio,

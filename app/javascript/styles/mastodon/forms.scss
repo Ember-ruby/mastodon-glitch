@@ -105,7 +105,9 @@ code {
 
       .overridden,
       .recommended,
-      .not_recommended {
+      .not_recommended,
+      .simple_form .blobfox_only,
+      .simple_form .glitch_only {
         position: absolute;
         margin: 0 4px;
         margin-top: -2px;
@@ -1313,7 +1315,9 @@ code {
         font-weight: 600;
       }
 
-      .recommended {
+      .recommended,
+      .simple_form .blobfox_only,
+      .simple_form .glitch_only {
         position: absolute;
         margin: 0 4px;
         margin-top: -2px;

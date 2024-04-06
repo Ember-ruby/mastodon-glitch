@@ -204,14 +204,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  background-color: var(--user-role-background, rgba($ui-secondary-color, 0.1));
-  border: 1px solid var(--user-role-border, rgba($ui-secondary-color, 0.5));
 }
 
 .information-badge,
 .simple_form .overridden,
 .simple_form .recommended,
-.simple_form .not_recommended {
+.simple_form .not_recommended,
+.simple_form .blobfox_only,
+.simple_form .glitch_only  {
   background-color: rgba($ui-secondary-color, 0.1);
   border: 1px solid rgba($ui-secondary-color, 0.5);
 }

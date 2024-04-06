@@ -614,7 +614,9 @@ html {
     text-shadow: none;
   }
 
-  .recommended {
+  .recommended,
+  .simple_form .blobfox_only,
+  .simple_form .glitch_only {
     border-color: $ui-highlight-color;
     color: $ui-highlight-color;
     background-color: rgba($ui-highlight-color, 0.1);

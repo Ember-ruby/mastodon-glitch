@@ -33,7 +33,7 @@
                     height: 380,
                     media: [ActiveModelSerializers::SerializableResource.new(@media_attachment, serializer: REST::MediaAttachmentSerializer).as_json],
                     standalone: true do
-    %video{ autoplay: 'autoplay', muted: 'muted', loop: 'loop' }
+    %video{ controls: 'controls' autoplay: 'autoplay', muted: 'muted', loop: 'loop' }
       %source{ src: @media_attachment.file.url(:original) }
 - elsif @media_attachment.audio?
   = react_component :audio,

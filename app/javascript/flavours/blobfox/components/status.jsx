@@ -124,6 +124,7 @@ class Status extends ImmutablePureComponent {
       inUse: PropTypes.bool,
       available: PropTypes.bool,
     }),
+    onOpenAltText: PropTypes.func,
     ...WithOptionalRouterPropTypes,
   };
 
@@ -414,6 +415,12 @@ class Status extends ImmutablePureComponent {
     this.props.onOpenMedia(status.get('id'), media, index, lang);
   };
 
+  handleAltClick = (index) => {
+    const { status } = this.props;
+
+    this.props.onOpenAltText(status.get('id'), status.getIn(['media_attachments', index ? index : 0]));
+  }
+
   handleHotkeyOpenMedia = e => {
     const { status, onOpenMedia, onOpenVideo } = this.props;
     const statusId = status.get('id');
@@ -537,6 +544,7 @@ class Status extends ImmutablePureComponent {
       unread,
       featured,
       pictureInPicture,
+      onOpenAltText,
       previousId,
       nextInReplyToId,
       rootId,
@@ -675,6 +683,7 @@ class Status extends ImmutablePureComponent {
                 blurhash={attachment.get('blurhash')}
                 visible={this.state.showMedia}
                 onToggleVisibility={this.handleToggleMediaVisibility}
+                onOpenAltText={this.handleAltClick}
               />
             )}
           </Bundle>,
@@ -702,6 +711,7 @@ class Status extends ImmutablePureComponent {
               deployPictureInPicture={pictureInPicture.get('available') ? this.handleDeployPictureInPicture : undefined}
               visible={this.state.showMedia}
               onToggleVisibility={this.handleToggleMediaVisibility}
+              onOpenAltText={this.handleAltClick}
             />)}
           </Bundle>,
         );
@@ -722,6 +732,7 @@ class Status extends ImmutablePureComponent {
                 defaultWidth={this.props.cachedMediaWidth}
                 visible={this.state.showMedia}
                 onToggleVisibility={this.handleToggleMediaVisibility}
+                onOpenAltText={this.handleAltClick}
               />
             )}
           </Bundle>,

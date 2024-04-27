@@ -33,6 +33,7 @@ import DoodleModal from './doodle_modal';
 import FavouriteModal from './favourite_modal';
 import FocalPointModal from './focal_point_modal';
 import ImageModal from './image_modal';
+import AltTextModal from './alttext_modal';
 import MediaModal from './media_modal';
 import ModalLoading from './modal_loading';
 import VideoModal from './video_modal';
@@ -62,6 +63,7 @@ export const MODAL_COMPONENTS = {
   'SUBSCRIBED_LANGUAGES': SubscribedLanguagesModal,
   'INTERACTION': InteractionModal,
   'CLOSED_REGISTRATIONS': ClosedRegistrationsModal,
+  'ALTTEXT': () => Promise.resolve({ default: AltTextModal }),
 };
 
 export default class ModalRoot extends PureComponent {

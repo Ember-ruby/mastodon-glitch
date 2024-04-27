@@ -1458,6 +1458,34 @@ img.modal-warning {
   }
 }
 
+.alttext-modal {
+  max-width: 90vw;
+  background: $ui-base-color;
+  border-radius: 8px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  display: block;
+  padding: 20px;
+
+  &__action-bar {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+  }
+
+  &__container {
+    display: flex;
+    max-width: 600px;
+    justify-content: center;
+
+    pre {
+      white-space: pre-wrap;
+      font-size: 17px;
+    }
+  }
+}
+
 .copypaste {
   display: flex;
   align-items: center;

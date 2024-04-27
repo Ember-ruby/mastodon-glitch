@@ -26,6 +26,7 @@ const messages = defineMessages({
   close: { id: 'video.close', defaultMessage: 'Close video' },
   fullscreen: { id: 'video.fullscreen', defaultMessage: 'Full screen' },
   exit_fullscreen: { id: 'video.exit_fullscreen', defaultMessage: 'Exit full screen' },
+  alt: { id: 'video.alt', defaultMessage: 'Show alt-text' },
 });
 
 export const formatTime = secondsNum => {
@@ -129,6 +130,7 @@ class Video extends PureComponent {
     volume: PropTypes.number,
     muted: PropTypes.bool,
     componentIndex: PropTypes.number,
+    onOpenAltText: PropTypes.func,
     autoFocus: PropTypes.bool,
   };
 
@@ -521,6 +523,11 @@ class Video extends PureComponent {
     this.props.onCloseVideo();
   };
 
+  handleAltClick = () => {
+    this.video.pause();
+    this.props.onOpenAltText();
+  }
+
   getFrameRate () {
     if (this.props.frameRate && isNaN(this.props.frameRate)) {
       // The frame rate is returned as a fraction string so we
@@ -649,6 +656,7 @@ class Video extends PureComponent {
             </div>
 
             <div className='video-player__buttons right'>
+            {(!fullscreen && alt) && <button type='button' title={intl.formatMessage(messages.alt)} aria-label={intl.formatMessage(messages.alt)} className='player-button alt-button' onClick={this.handleAltClick}><span>ALT</span></button>}
               {(!onCloseVideo && !editable && !fullscreen && !this.props.alwaysVisible) && <button type='button' title={intl.formatMessage(messages.hide)} aria-label={intl.formatMessage(messages.hide)} className='player-button' onClick={this.toggleReveal}><Icon id='eye-slash' fixedWidth /></button>}
               {(!fullscreen && onOpenVideo) && <button type='button' title={intl.formatMessage(messages.expand)} aria-label={intl.formatMessage(messages.expand)} className='player-button' onClick={this.handleOpenVideo}><Icon id='expand' fixedWidth /></button>}
               {onCloseVideo && <button type='button' title={intl.formatMessage(messages.close)} aria-label={intl.formatMessage(messages.close)} className='player-button' onClick={this.handleCloseVideo}><Icon id='compress' fixedWidth /></button>}

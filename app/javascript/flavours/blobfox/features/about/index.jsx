@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 
 import { fetchServer, fetchExtendedDescription, fetchDomainBlocks  } from 'flavours/blobfox/actions/server';
 import Column from 'flavours/blobfox/components/column';
+import ColumnHeader from 'flavours/glitch/components/column_header';
 import { Icon  }  from 'flavours/blobfox/components/icon';
 import { ServerHeroImage } from 'flavours/blobfox/components/server_hero_image';
 import { Skeleton } from 'flavours/blobfox/components/skeleton';
@@ -111,12 +112,26 @@ class About extends PureComponent {
     dispatch(fetchDomainBlocks());
   };
 
+  handleHeaderClick = () => {
+    this.column.scrollTop();
+  }
+
+  setRef = c => {
+    this.column = c;
+  }
+
   render () {
     const { multiColumn, intl, server, extendedDescription, domainBlocks } = this.props;
     const isLoading = server.get('isLoading');
 
     return (
-      <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)}>
+      <Column bindToDocument={!multiColumn} ref={this.setRef} label={intl.formatMessage(messages.title)}>
+      <ColumnHeader
+        icon='info-circle'
+        title={intl.formatMessage(messages.title)}
+        onClick={this.handleHeaderClick}
+        multiColumn={multiColumn}
+      />
         <div className='scrollable about'>
           <div className='about__header'>
             <ServerHeroImage blurhash={server.getIn(['thumbnail', 'blurhash'])} src={server.getIn(['thumbnail', 'url'])} srcSet={server.getIn(['thumbnail', 'versions'])?.map((value, key) => `${value} ${key.replace('@', '')}`).join(', ')} className='about__header__hero' />

@@ -52,6 +52,7 @@ class Item extends PureComponent {
     displayWidth: PropTypes.number,
     visible: PropTypes.bool.isRequired,
     autoplay: PropTypes.bool,
+    onAltClick: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -101,6 +102,19 @@ class Item extends PureComponent {
     e.stopPropagation();
   };
 
+  handleAltClick = (e) => {
+    const { index, onAltClick } = this.props;
+
+    // prevent image to open in a new tab
+    e.preventDefault();
+
+    // open modal
+    onAltClick(index);
+
+    // Prevents opening of media modal
+    e.stopPropagation();
+  };
+
   handleImageLoad = () => {
     this.setState({ loaded: true });
   };
@@ -122,7 +136,7 @@ class Item extends PureComponent {
     }
 
     if (attachment.get('description')?.length > 0) {
-      badges.push(<span key='alt' className='media-gallery__gifv__label'>ALT</span>);
+      badges.push(<button key='alt' type='button' className='media-gallery__alt__label' onClick={this.handleAltClick}><span>ALT</span></button>);
     }
 
     const description = attachment.getIn(['translation', 'description']) || attachment.get('description');
@@ -244,6 +258,7 @@ class MediaGallery extends PureComponent {
     visible: PropTypes.bool,
     autoplay: PropTypes.bool,
     onToggleVisibility: PropTypes.func,
+    onOpenAltText: PropTypes.func,
   };
 
   static defaultProps = {
@@ -298,6 +313,10 @@ class MediaGallery extends PureComponent {
     this.props.onOpenMedia(this.props.media, index, this.props.lang);
   };
 
+  handleAltClick = (index) => {
+    this.props.onOpenAltText(index);
+  };
+
   handleRef = (node) => {
     this.node = node;
 
@@ -347,9 +366,9 @@ class MediaGallery extends PureComponent {
     }
 
     if (this.isStandaloneEligible()) {
-      children = <Item standalone autoplay={autoplay} onClick={this.handleClick} attachment={media.get(0)} lang={lang} displayWidth={width} visible={visible} />;
+      children = <Item standalone autoplay={autoplay} onClick={this.handleClick} onAltClick={this.handleAltClick} attachment={media.get(0)} lang={lang} displayWidth={width} visible={visible} />;
     } else {
-      children = media.take(4).map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} attachment={attachment} index={i} lang={lang} size={size} letterbox={letterbox} displayWidth={width} visible={visible || uncached} />);
+      children = media.take(4).map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} onAltClick={this.handleAltClick} attachment={attachment} index={i} lang={lang} size={size} letterbox={letterbox} displayWidth={width} visible={visible || uncached} />);
     }
 
     if (uncached) {

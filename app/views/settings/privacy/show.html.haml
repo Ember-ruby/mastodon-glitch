@@ -46,5 +46,8 @@
     .fields-group
       = ff.input :show_application, wrapper: :with_label
 
+    .fields-group
+      = ff.input :enable_rss, wrapper: :with_label, label: I18n.t('simple_form.labels.defaults.setting_enable_rss'), hint: I18n.t('simple_form.hints.defaults.setting_enable_rss'), glitch_only: true
+
   .actions
     = f.button :button, t('generic.save_changes'), type: :submit

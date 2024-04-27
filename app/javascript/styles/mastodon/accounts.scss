@@ -190,7 +190,9 @@
 .information-badge,
 .simple_form .overridden,
 .simple_form .recommended,
-.simple_form .not_recommended {
+.simple_form .not_recommended,
+.simple_form .blobfox_only,
+.simple_form .glitch_only  {
   display: inline-block;
   padding: 4px 6px;
   cursor: default;
@@ -207,7 +209,9 @@
 .information-badge,
 .simple_form .overridden,
 .simple_form .recommended,
-.simple_form .not_recommended {
+.simple_form .not_recommended,
+.simple_form .blobfox_only,
+.simple_form .glitch_only  {
   background-color: rgba($ui-secondary-color, 0.1);
   border: 1px solid rgba($ui-secondary-color, 0.5);
 }

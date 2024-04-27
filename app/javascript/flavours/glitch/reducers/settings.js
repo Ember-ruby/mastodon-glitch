@@ -119,7 +119,6 @@ const initialState = ImmutableMap({
   dismissed_banners: ImmutableMap({
     'public_timeline': false,
     'community_timeline': false,
-    'home.explore_prompt': false,
     'explore/links': false,
     'explore/statuses': false,
     'explore/tags': false,

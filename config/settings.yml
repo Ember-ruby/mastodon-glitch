@@ -9,13 +9,14 @@ defaults: &defaults
   site_terms: ''
   site_contact_username: ''
   site_contact_email: ''
-  registrations_mode: 'open'
+  registrations_mode: 'none'
   profile_directory: true
   closed_registrations_message: ''
   timeline_preview: false
   show_staff_badge: true
   preview_sensitive_media: false
   noindex: false
+  norss: false
   flavour: 'glitch'
   skin: 'default'
   trends: true

@@ -160,5 +160,6 @@
   "status.react": "React",
   "status.sensitive_toggle": "Click to view",
   "status.uncollapse": "Uncollapse",
+  "video.alt": "Show alt-text",
   "suggestions.dismiss": "Dismiss suggestion"
 }

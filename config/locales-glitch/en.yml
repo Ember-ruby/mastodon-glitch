@@ -8,6 +8,11 @@ en:
       captcha_enabled:
         desc_html: This relies on external scripts from hCaptcha, which may be a security and privacy concern. In addition, <strong>this can make the registration process significantly less accessible to some (especially disabled) people</strong>. For these reasons, please consider alternative measures such as approval-based or invite-based registration.
         title: Require new users to solve a CAPTCHA to confirm their account
+      default_norss:
+        desc_html: Affects all users who have not changed this setting themselves
+        title: Opt users out of having an RSS feed of their public posts by default
+      discovery:
+        rss: RSS
       flavour_and_skin:
         title: Flavour and skin
       hide_followers_count:

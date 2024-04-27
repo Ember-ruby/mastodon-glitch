@@ -1,0 +1,10 @@
+---
+en:
+  simple_form:
+    hints:
+      defaults:
+        setting_enable_rss: Mastodon offers an RSS feed of all public toots by default.
+    labels:
+      defaults:
+        setting_enable_rss: Enable RSS feed for your public toots
+    blobfox_only: blobfox-glitch

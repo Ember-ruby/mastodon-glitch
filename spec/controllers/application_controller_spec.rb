@@ -22,13 +22,10 @@ describe ApplicationController do
   end
 
   shared_examples 'respond_with_error' do |code|
-    it "returns http #{code} for http" do
-      subject
-      expect(response).to have_http_status(code)
-    end
-
-    it 'renders template for http' do
+    it "returns http #{code} for http and renders template" do
       expect(subject).to render_template("errors/#{code}", layout: 'error')
+
+      expect(response).to have_http_status(code)
     end
   end
 
@@ -95,6 +92,7 @@ describe ApplicationController do
       allow(Setting).to receive(:[]).with('skin').and_return 'default'
       allow(Setting).to receive(:[]).with('flavour').and_return 'vanilla'
       allow(Setting).to receive(:[]).with('noindex').and_return false
+      allow(Setting).to receive(:[]).with('norss').and_return false
 
       expect(controller.view_context.current_flavour).to eq 'vanilla'
     end

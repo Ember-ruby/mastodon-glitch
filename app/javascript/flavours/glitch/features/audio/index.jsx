@@ -31,6 +31,7 @@ const messages = defineMessages({
   unmute: { id: 'video.unmute', defaultMessage: 'Unmute sound' },
   download: { id: 'video.download', defaultMessage: 'Download file' },
   hide: { id: 'audio.hide', defaultMessage: 'Hide audio' },
+  alt: { id: 'video.alt', defaultMessage: 'Show alt-text' },
 });
 
 const TICK_SIZE = 10;
@@ -62,6 +63,7 @@ class Audio extends PureComponent {
     volume: PropTypes.number,
     muted: PropTypes.bool,
     deployPictureInPicture: PropTypes.func,
+    onOpenAltText: PropTypes.func,
   };
 
   state = {
@@ -477,6 +479,11 @@ class Audio extends PureComponent {
     }
   };
 
+  handleAltClick = () => {
+    this.audio.pause();
+    this.props.onOpenAltText();
+  }
+
   render () {
     const { src, intl, alt, lang, editable, autoPlay, sensitive, blurhash } = this.props;
     const { paused, volume, currentTime, duration, buffer, dragging, revealed } = this.state;
@@ -591,6 +598,7 @@ class Audio extends PureComponent {
             </div>
 
             <div className='video-player__buttons right'>
+            {alt && <button type='button' title={intl.formatMessage(messages.alt)} aria-label={intl.formatMessage(messages.alt)} className='player-button alt-button' onClick={this.handleAltClick}><span>ALT</span></button>}
               {!editable && <button type='button' title={intl.formatMessage(messages.hide)} aria-label={intl.formatMessage(messages.hide)} className='player-button' onClick={this.toggleReveal}><Icon id='eye-slash' icon={VisibilityOffIcon} /></button>}
               <a title={intl.formatMessage(messages.download)} aria-label={intl.formatMessage(messages.download)} className='video-player__download__icon player-button' href={this.props.src} download>
                 <Icon id={'download'} icon={DownloadIcon} />

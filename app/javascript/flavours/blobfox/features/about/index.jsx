@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 
 import { fetchServer, fetchExtendedDescription, fetchDomainBlocks  } from 'flavours/blobfox/actions/server';
 import Column from 'flavours/blobfox/components/column';
-import ColumnHeader from 'flavours/blobfox/components/column_header';
+import ColumnHeader from 'flavours/glitch/components/column_header';
 import { Icon  }  from 'flavours/blobfox/components/icon';
 import { ServerHeroImage } from 'flavours/blobfox/components/server_hero_image';
 import { Skeleton } from 'flavours/blobfox/components/skeleton';

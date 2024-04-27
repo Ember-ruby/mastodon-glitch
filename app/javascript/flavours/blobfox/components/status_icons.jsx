@@ -22,6 +22,7 @@ const messages = defineMessages({
   previewCard: { id: 'status.has_preview_card', defaultMessage: 'Features an attached preview card' },
   pictures: { id: 'status.has_pictures', defaultMessage: 'Features attached pictures' },
   poll: { id: 'status.is_poll', defaultMessage: 'This toot is a poll' },
+  thread: { id: 'status.is_thread', defaultMessage: 'This toot is part of a thread' },
   video: { id: 'status.has_video', defaultMessage: 'Features attached videos' },
   audio: { id: 'status.has_audio', defaultMessage: 'Features attached audio files' },
   localOnly: { id: 'status.local_only', defaultMessage: 'Only visible from your instance' },
@@ -106,14 +107,23 @@ class StatusIcons extends PureComponent {
     return (
       <div className='status__info__icons'>
         {settings.get('language') && status.get('language') && <LanguageIcon language={status.get('language')} />}
-        {settings.get('reply') && status.get('in_reply_to_id', null) !== null ? (
-          <Icon
-            className='status__reply-icon'
-            fixedWidth
-            id='comment'
-            aria-hidden='true'
-            title={intl.formatMessage(messages.inReplyTo)}
-          />
+        {settings.get('reply') && status.get('in_reply_to_id', null) !== null ? 
+          status.get('in_reply_to_account_id') === status.getIn(['account', 'id']) ? (
+            <Icon
+              className='status__reply-icon'
+              fixedWidth
+              id='commenting'
+              aria-hidden='true'
+              title={intl.formatMessage(messages.thread)}
+            />
+          ) : (
+            <Icon
+              className='status__reply-icon'
+              fixedWidth
+              id='comment'
+              aria-hidden='true'
+              title={intl.formatMessage(messages.inReplyTo)}
+            />
         ) : null}
         {settings.get('local_only') && status.get('local_only') &&
           <Icon

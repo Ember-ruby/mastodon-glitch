@@ -65,21 +65,42 @@
 }
 
 .media-gallery__alt__button {
+  display: block;
+  color: $white;
+  background: rgba($black, 0.65);
   padding: 2px 6px;
   font-size: 11px;
-  font-weight: 600;
-  opacity: 0.9;
-  transition: opacity 0.1s ease;
+  font-weight: 700;
   line-height: 18px;
   border: none;
-  border-radius: 2px;
+  border-radius: 4px;
+  z-index: 1;
+
+  &:hover,
+  &:focus {
+    background-color: rgba($black, 0.9);
+  }
 }
 
 .media-gallery__gifv__label {
-  color: $primary-text-color;
-  background: rgba($base-overlay-background, 0.5);
-  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $white;
+  background: rgba($black, 0.65);
+  backdrop-filter: blur(10px) saturate(180%) contrast(75%) brightness(70%);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 1;
+  pointer-events: none;
   line-height: 18px;
+
+  .icon {
+    width: 15px;
+    height: 15px;
+  }
 }
 
 .media-gallery__gifv {

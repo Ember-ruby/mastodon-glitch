@@ -19,6 +19,7 @@ export default class MediaItem extends ImmutablePureComponent {
     attachment: ImmutablePropTypes.map.isRequired,
     displayWidth: PropTypes.number.isRequired,
     onOpenMedia: PropTypes.func.isRequired,
+    onOpenAltText: PropTypes.func.isRequired,
   };
 
   state = {
@@ -57,6 +58,18 @@ export default class MediaItem extends ImmutablePureComponent {
         this.setState({ visible: true });
       }
     }
+  };
+
+  handleAltClick = e => {
+    // Prevent media from opening in new tab
+    e.preventDefault();
+
+    if (this.state.visible) {
+      this.props.onOpenAltText(this.props.attachment);
+    }
+
+    // Prevent media modal from opening
+    e.stopPropagation();
   };
 
   render () {
@@ -132,11 +145,10 @@ export default class MediaItem extends ImmutablePureComponent {
         <div className='media-gallery__gifv'>
           {content}
 
-          {label && (
-            <div className='media-gallery__item__badges'>
-              <span className='media-gallery__gifv__label'>{label}</span>
-            </div>
-          )}
+          <div className='media-gallery__item__badges'>
+            {label && (<span className='media-gallery__gifv__label'>{label}</span>)}
+            {attachment.get('description') ? altButton : null}
+          </div>
         </div>
       );
     }

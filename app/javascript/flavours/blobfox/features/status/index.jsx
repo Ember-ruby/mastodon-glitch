@@ -445,8 +445,9 @@ class Status extends ImmutablePureComponent {
 
   handleAltClick = (index) => {
     const { status } = this.props;
-    this.props.dispatch(openModal('ALTTEXT', { statusId: status.get('id'), media: status.getIn(['media_attachments', index ? index : 0])}));
-  }
+
+    this.props.dispatch(openModal({ modalType: 'ALTTEXT', modalProps: { statusId: status.get('id'), media: status.getIn(['media_attachments', index ? index : 0]) } }));
+  };
 
   handleHotkeyOpenMedia = e => {
     const { status } = this.props;

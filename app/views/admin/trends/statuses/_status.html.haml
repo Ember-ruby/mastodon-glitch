@@ -7,7 +7,7 @@
       = admin_account_link_to status.account
 
       = link_to ActivityPub::TagManager.instance.url_for(status), target: '_blank', class: 'emojify', rel: 'noopener noreferrer' do
-        = status.text
+        = multi_line_preview(status)
 
         - status.ordered_media_attachments.each do |media_attachment|
           %abbr{ title: media_attachment.description }

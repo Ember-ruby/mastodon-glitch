@@ -42,7 +42,7 @@ class MediaAttachment < ApplicationRecord
   IMAGE_LIMIT = (ENV['MAX_IMAGE_SIZE'] || 16.megabytes).to_i
   VIDEO_LIMIT = (ENV['MAX_VIDEO_SIZE'] || 99.megabytes).to_i
 
-  MAX_VIDEO_MATRIX_LIMIT = 8_294_400 # 3840x2160px
+  MAX_VIDEO_MATRIX_LIMIT = 25_000_000 # 5000x5000px
   MAX_VIDEO_FRAME_RATE   = 240
   MAX_VIDEO_FRAMES       = 144_000 # Approx. 10 minutes at 240 fps
 

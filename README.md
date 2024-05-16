@@ -9,4 +9,4 @@ So here's the deal: we all work on this code, and anyone who uses that does so a
 
 - [blobfox.coffee (main repo)](https://git.blobfox.coffee/mastodon/blobfoxcoffee)
 - [Codeberg](https://codeberg.org/Ember/blobfoxcoffee)
-- [GitHub](https://github.com/Ember-ruby/blobfoxcoffee)
+- [GitHub](https://github.com/Ember-ruby/mastodon-glitch)

@@ -77,7 +77,7 @@ class REST::V1::InstanceSerializer < ActiveModel::Serializer
 
       statuses: {
         max_characters: StatusLengthValidator::MAX_CHARS,
-        max_media_attachments: 4,
+        max_media_attachments: Status::MEDIA_ATTACHMENTS_LIMIT,
         characters_reserved_per_url: StatusLengthValidator::URL_PLACEHOLDER_CHARS,
         supported_mime_types: HtmlAwareFormatter::STATUS_MIME_TYPES,
       },
@@ -92,6 +92,7 @@ class REST::V1::InstanceSerializer < ActiveModel::Serializer
       },
 
       polls: {
+        allow_media: true,
         max_options: PollValidator::MAX_OPTIONS,
         max_characters_per_option: PollValidator::MAX_OPTION_CHARS,
         min_expiration: PollValidator::MIN_EXPIRATION,

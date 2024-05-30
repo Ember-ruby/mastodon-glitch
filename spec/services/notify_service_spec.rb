@@ -77,9 +77,10 @@ RSpec.describe NotifyService, type: :service do
       end
 
       context 'when the message chain is initiated by recipient, but without a mention to the sender, even if the sender sends multiple messages in a row' do
-        let(:reply_to) { Fabricate(:status, account: recipient) }
-        let(:dummy_reply) { Fabricate(:status, account: sender, visibility: :direct, thread: reply_to) }
-        let(:activity) { Fabricate(:mention, account: recipient, status: Fabricate(:status, account: sender, visibility: :direct, thread: dummy_reply)) }
+        let(:public_status) { Fabricate(:status, account: recipient) }
+        let(:intermediate_reply) { Fabricate(:status, account: sender, thread: public_status, visibility: :direct) }
+        let!(:intermediate_mention) { Fabricate(:mention, account: sender, status: intermediate_reply) }
+        let(:activity) { Fabricate(:mention, account: recipient, status: Fabricate(:status, account: sender, visibility: :direct, thread: intermediate_reply)) }
 
         before { Fabricate(:mention, account: sender, status: reply_to) }
 

@@ -1032,7 +1032,6 @@ DEPENDENCIES
   pg (~> 1.5)
   pghero
   premailer-rails
-  private_address_check (~> 0.5)
   propshaft
   public_suffix (~> 5.0)
   puma (~> 6.3)

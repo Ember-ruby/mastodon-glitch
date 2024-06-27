@@ -165,7 +165,7 @@ class MediaAttachment < ApplicationRecord
       convert_options: {
         output: {
           'loglevel' => 'error',
-          'b:a' => '96k',
+          'b:a' => '160k',
           'c:a' => 'libopus',
           'map' => 'a',
         }.freeze,

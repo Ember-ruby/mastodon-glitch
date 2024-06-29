@@ -66,6 +66,8 @@
   - else
     = link_to t('admin.domain_blocks.add_new'), new_admin_domain_block_path(_domain: @instance.domain), class: 'button'
 
+%hr.spacer/
+
 %h3= t('admin.instances.local_stats.title')
   %p= t('admin.instances.local_stats.description_html')
   .table-wrapper

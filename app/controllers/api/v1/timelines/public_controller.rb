@@ -16,7 +16,7 @@ class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
   def require_auth?
     if truthy_param?(:local) and !truthy_param?(:remote)
       !Setting.timeline_preview_local
-    elsif truthy_param?(:remote) and !truthy_param?(:allow_local_only)
+    elsif truthy_param?(:remote) and !truthy_param?(:allow_local_only) and !truthy_param?(:local)
       !Setting.timeline_preview_remote
     elsif (!truthy_param?(:remote) and truthy_param?(:allow_local_only)) or (truthy_param?(:remote) and truthy_param?(:local))
       !Setting.timeline_preview

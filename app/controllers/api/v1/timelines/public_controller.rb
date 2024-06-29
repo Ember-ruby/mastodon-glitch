@@ -14,12 +14,12 @@ class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
   private
 
   def require_auth?
+    !Setting.timeline_preview
     if truthy_param?(:local)
       !Setting.timeline_preview_local
     elsif truthy_param?(:remote)
       !Setting.timeline_preview_remote
     end
-    !Setting.timeline_preview
   end
 
   def require_auth_local?

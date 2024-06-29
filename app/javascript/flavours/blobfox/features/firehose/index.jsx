@@ -190,17 +190,17 @@ const Firehose = ({ feedType, multiColumn }) => {
       </ColumnHeader>
 
       <div className='account__section-headline'>
-        {(signedIn || timelinePreview || timelinePreview_local ) && (
+        {(signedIn || timelinePreview_local ) && (
           <NavLink exact to='/public/local'>
             <FormattedMessage tagName='div' id='firehose.local' defaultMessage='This server' />
           </NavLink>
         )}
-        {(signedIn || timelinePreview || timelinePreview_remote) && (
+        {(signedIn || timelinePreview_remote) && (
           <NavLink exact to='/public/remote'>
             <FormattedMessage tagName='div' id='firehose.remote' defaultMessage='Other servers' />
           </NavLink>
         )}
-        {(signedIn || timelinePreview || timelinePreview_remote) && (
+        {(signedIn || timelinePreview) && (
           <NavLink exact to='/public'>
             <FormattedMessage tagName='div' id='firehose.all' defaultMessage='All' />
           </NavLink>

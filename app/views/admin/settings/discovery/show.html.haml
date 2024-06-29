@@ -27,13 +27,13 @@
   %h4= t('admin.settings.discovery.public_timelines')
 
   .fields-group
+    = f.input :timeline_preview_remote, as: :boolean, wrapper: :with_label
+
+  .fields-group
     = f.input :timeline_preview, as: :boolean, wrapper: :with_label
 
   .fields-group
-    = f.input :timeline_preview_local, as: :boolean, wrapper: :with_label, warning_hint: public_timelines_warning_hint_text, disabled: :timeline_preview, recommended: public_timelines_recommended_value
-
-  .fields-group
-    = f.input :timeline_preview_remote, as: :boolean, wrapper: :with_label, warning_hint: public_timelines_warning_hint_text, disabled: :timeline_preview, recommended: public_timelines_recommended_value
+    = f.input :timeline_preview_local, as: :boolean, wrapper: :with_label
 
   %h4= t('admin.settings.discovery.publish_statistics')
 

@@ -17,7 +17,7 @@ class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
     if Setting.timeline_preview false
       if truthy_param?(:local)
         !Setting.timeline_preview_local
-      elsif truthy_param?(:remote)
+      elsif truthy_param?(:remote) or truthy_param?(:allow_local_only)
         !Setting.timeline_preview_remote
       end
     else

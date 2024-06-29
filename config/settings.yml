@@ -13,8 +13,8 @@ defaults: &defaults
   profile_directory: true
   closed_registrations_message: ''
   timeline_preview: false
-  timeline_preview_local: false
-  timeline_preview_remote: false
+  timeline_preview_local: true
+  timeline_preview_remote: true
   show_staff_badge: true
   preview_sensitive_media: false
   noindex: false

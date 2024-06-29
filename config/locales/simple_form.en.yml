@@ -265,8 +265,8 @@ en:
         theme: Default theme
         thumbnail: Server thumbnail
         timeline_preview: Allow unauthenticated access to public timelines
-        timeline_preview: Allow unauthenticated access to local timeline
-        timeline_preview: Allow unauthenticated access to remote timeline
+        timeline_preview_local: Allow unauthenticated access to local timeline
+        timeline_preview_remote: Allow unauthenticated access to remote timeline
         trendable_by_default: Allow trends without prior review
         trends: Enable trends
         trends_as_landing_page: Use trends as the landing page

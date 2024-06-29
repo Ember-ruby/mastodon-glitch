@@ -29,6 +29,16 @@
   .fields-group
     = f.input :timeline_preview, as: :boolean, wrapper: :with_label
 
+  %h4= t('admin.settings.discovery.public_timelines_local')
+
+  .fields-group
+    = f.input :timeline_preview_local, as: :boolean, wrapper: :with_label
+
+  %h4= t('admin.settings.discovery.public_timelines_remote')
+
+  .fields-group
+    = f.input :timeline_preview_remote, as: :boolean, wrapper: :with_label
+
   .fields-group
     = f.input :noindex, as: :boolean, wrapper: :with_label, label: t('admin.settings.default_noindex.title'), hint: t('admin.settings.default_noindex.desc_html')
 

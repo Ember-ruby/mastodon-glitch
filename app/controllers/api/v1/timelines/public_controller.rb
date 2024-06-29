@@ -2,6 +2,8 @@
 
 class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
   before_action :require_user!, only: [:show], if: :require_auth?
+  before_action :require_user!, only: [:show], if: :require_auth_local? && !truthy_param?(:local)
+  before_action :require_user!, only: [:show], if: :require_auth_remote? && !truthy_param?(:remote)
 
   PERMITTED_PARAMS = %i(local remote limit only_media allow_local_only).freeze
 
@@ -15,6 +17,14 @@ class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
 
   def require_auth?
     !Setting.timeline_preview
+  end
+
+  def require_auth_local?
+    !Setting.timeline_preview_local
+  end
+
+  def require_auth_remote?
+    !Setting.timeline_preview_remote
   end
 
   def load_statuses

@@ -38,6 +38,8 @@
  * @property {string} source_url
  * @property {string} streaming_api_base_url
  * @property {boolean} timeline_preview
+ * @property {boolean} timeline_preview_local
+ * @property {boolean} timeline_preview_remote
  * @property {string} title
  * @property {boolean} show_trends
  * @property {boolean} trends_as_landing_page
@@ -122,6 +124,8 @@ export const showTrends = getMeta('show_trends');
 export const singleUserMode = getMeta('single_user_mode');
 export const source_url = getMeta('source_url');
 export const timelinePreview = getMeta('timeline_preview');
+export const timelinePreview_local = getMeta('timeline_preview_local');
+export const timelinePreview_remote = getMeta('timeline_preview_remote');
 export const title = getMeta('title');
 export const trendsAsLanding = getMeta('trends_as_landing_page');
 export const unfollowModal = getMeta('unfollow_modal');

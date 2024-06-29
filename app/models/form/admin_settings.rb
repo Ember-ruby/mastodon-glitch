@@ -15,6 +15,8 @@ class Form::AdminSettings
     registrations_mode
     closed_registrations_message
     timeline_preview
+    timeline_preview_local
+    timeline_preview_remote
     bootstrap_timeline_accounts
     flavour
     skin
@@ -56,6 +58,8 @@ class Form::AdminSettings
 
   BOOLEAN_KEYS = %i(
     timeline_preview
+    timeline_preview_local
+    timeline_preview_remote
     activity_api_enabled
     peers_api_enabled
     preview_sensitive_media

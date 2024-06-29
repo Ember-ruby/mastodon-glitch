@@ -66,6 +66,21 @@
   - else
     = link_to t('admin.domain_blocks.add_new'), new_admin_domain_block_path(_domain: @instance.domain), class: 'button'
 
+%h3= t('admin.instances.local_stats.title')
+  %p= t('admin.instances.local_stats.description_html')
+  .table-wrapper
+    %table.table.horizontal-table
+      %tbody
+        %tr
+          %th= t('admin.instances.local_stats.created')
+          %td= @instance.domain_block.created_at
+        %tr
+          %th= t('admin.instances.local_stats.edited')
+          %td= @instance.domain_block.updated_at
+        %tr
+          %th= t('admin.instances.local_stats.domain_digest')
+          %td= @instance.domain_block.domain_digest
+
 - if @instance.persisted?
   %hr.spacer/
 

@@ -498,7 +498,6 @@ en-GB:
         title: Content policies
       local_stats:
         title: Stats
-        # description_html: Uhh yeah
         domain_digest: Domain Digest
         edited: Edited
         created: Created

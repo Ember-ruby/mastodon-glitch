@@ -498,10 +498,10 @@ en-GB:
         title: Content policies
       local_stats:
         title: Stats
-        description_html: Uhh yeah
-        domain_digest: domain_digest
-        edited: edited
-        created: created
+        # description_html: Uhh yeah
+        domain_digest: Domain Digest
+        edited: Edited
+        created: Created
       dashboard:
         instance_accounts_dimension: Most followed accounts
         instance_accounts_measure: stored accounts

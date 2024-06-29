@@ -68,10 +68,10 @@
 
 %hr.spacer/
 
-%h3= t('admin.instances.local_stats.title')
-
 // %p= t('admin.instances.local_stats.description_html')
 - if @instance.domain_block
+  %h3= t('admin.instances.local_stats.title')
+  
   .table-wrapper
     %table.table.horizontal-table
       %tbody

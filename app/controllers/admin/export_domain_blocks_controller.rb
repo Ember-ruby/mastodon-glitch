@@ -34,7 +34,7 @@ module Admin
                                        severity: row.fetch('#severity', :suspend),
                                        reject_media: row.fetch('#reject_media', false),
                                        reject_reports: row.fetch('#reject_reports', false),
-                                       private_comment: row['#private_comment'] + ' ' + @global_private_comment,
+                                       private_comment: row['#private_comment'] + ' | ' + @global_private_comment,
                                        public_comment: row['#public_comment'],
                                        obfuscate: row.fetch('#obfuscate', false))
 

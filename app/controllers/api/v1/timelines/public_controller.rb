@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
-  before_action :require_user!, only: [:show], if: :require_auth?
-  before_action :require_user!, only: [:show], if: :require_auth_local?
-  before_action :require_user!, only: [:show], if: :require_auth_remote?
+  before_action :require_user!, only: [:show], if: :require_auth? || :require_auth_local? || :require_auth_remote?
 
   PERMITTED_PARAMS = %i(local remote limit only_media allow_local_only).freeze
 

@@ -189,17 +189,21 @@ const Firehose = ({ feedType, multiColumn }) => {
       </ColumnHeader>
 
       <div className='account__section-headline'>
-        <NavLink exact to='/public/local'>
-          <FormattedMessage tagName='div' id='firehose.local' defaultMessage='This server' />
-        </NavLink>
-
-        <NavLink exact to='/public/remote'>
-          <FormattedMessage tagName='div' id='firehose.remote' defaultMessage='Other servers' />
-        </NavLink>
-
-        <NavLink exact to='/public'>
-          <FormattedMessage tagName='div' id='firehose.all' defaultMessage='All' />
-        </NavLink>
+        {(signedIn || timelinePreview && timelinePreview_local ) && (
+          <NavLink exact to='/public/local'>
+            <FormattedMessage tagName='div' id='firehose.local' defaultMessage='This server' />
+          </NavLink>
+        )}
+        {(signedIn || timelinePreview && timelinePreview_remote) && (
+          <NavLink exact to='/public/remote'>
+            <FormattedMessage tagName='div' id='firehose.remote' defaultMessage='Other servers' />
+          </NavLink>
+        )}
+        {(signedIn || timelinePreview && timelinePreview_remote) && (
+          <NavLink exact to='/public'>
+            <FormattedMessage tagName='div' id='firehose.all' defaultMessage='All' />
+          </NavLink>
+        )}
       </div>
 
       <StatusListContainer

@@ -14,7 +14,7 @@ import FollowRequestsColumnLink from './follow_requests_column_link';
 import ListPanel from './list_panel';
 import NotificationsCounterIcon from './notifications_counter_icon';
 import SignInBanner from './sign_in_banner';
-import { timelinePreview_local, timelinePreview_remote } from '../../../initial_state';
+import { timelinePreview_local, timelinePreview_remote } from 'flavours/blobfox/initial_state';
 
 const messages = defineMessages({
   home: { id: 'tabs_bar.home', defaultMessage: 'Home' },
@@ -86,15 +86,11 @@ class NavigationPanel extends Component {
           <ColumnLink transparent to='/search' icon='search' text={intl.formatMessage(messages.search)} />
         )}
 
-        {(signedIn || timelinePreview) && (
+        {(signedIn) && (
           <ColumnLink transparent to='/public/local' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
         )}
 
-        {(signedIn || timelinePreview_local) && (
-          <ColumnLink transparent to='/public/local' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
-        )}
-
-        {(signedIn || timelinePreview_remote) && (
+        {(!signedIn && timelinePreview && timelinePreview_remote || !signedIn && timelinePreview && timelinePreview_local) && (
           <ColumnLink transparent to='/public/remote' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
         )}
 

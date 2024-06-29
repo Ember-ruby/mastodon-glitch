@@ -13,8 +13,12 @@ module Admin::Settings::DiscoveryHelper
     authorized_fetch_overridden? ? :overridden : nil
   end
 
-  def public_feed_auth
+  def public_feed_auth?
     Setting.timeline_preview
+  end
+
+  def public_timelines_recommended_value
+    public_feed_auth? ? :overridden : nil
   end
 
   def public_timelines_warning_hint_text

@@ -90,8 +90,12 @@ class NavigationPanel extends Component {
           <ColumnLink transparent to='/public/local' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
         )}
 
-        {(!signedIn && ( timelinePreview || timelinePreview_remote)) && (
+        {(!signedIn && timelinePreview_remote) && (
           <ColumnLink transparent to='/public/remote' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
+        )}
+
+        {(!signedIn && timelinePreview) && (
+          <ColumnLink transparent to='/public' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
         )}
 
         {!signedIn && (

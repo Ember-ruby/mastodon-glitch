@@ -86,11 +86,11 @@ class NavigationPanel extends Component {
           <ColumnLink transparent to='/search' icon='search' text={intl.formatMessage(messages.search)} />
         )}
 
-        {(signedIn) && (
+        {(signedIn || timelinePreview || timelinePreview_local) && (
           <ColumnLink transparent to='/public/local' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
         )}
 
-        {(!signedIn && timelinePreview && timelinePreview_remote || !signedIn && timelinePreview && timelinePreview_local) && (
+        {(!signedIn && ( timelinePreview || timelinePreview_remote)) && (
           <ColumnLink transparent to='/public/remote' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
         )}
 

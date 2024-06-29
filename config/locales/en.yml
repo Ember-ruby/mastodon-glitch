@@ -787,7 +787,7 @@ en:
         authorized_fetch_hint: Requiring authentication from federated servers enables stricter enforcement of both user-level and server-level blocks. However, this comes at the cost of a performance penalty, reduces the reach of your replies, and may introduce compatibility issues with some federated services. In addition, this will not prevent dedicated actors from fetching your public posts and accounts.
         authorized_fetch_overridden_hint: You are currently unable to change this setting because it is overridden by an environment variable.
         federation_authentication: Federation authentication enforcement
-        public_timelines_warning_hint: Overridden by the general toggle
+        public_timelines_warning_hint: Setting only has an effect when 'Allow unauthenticated access to public timelines' is off
       title: Server settings
     site_uploads:
       delete: Delete uploaded file

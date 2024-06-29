@@ -13,6 +13,7 @@ import { expandPublicTimeline, expandCommunityTimeline } from 'flavours/blobfox/
 import { DismissableBanner } from 'flavours/blobfox/components/dismissable_banner';
 import SettingText from 'flavours/blobfox/components/setting_text';
 import initialState, { domain } from 'flavours/blobfox/initial_state';
+import { timelinePreview, timelinePreview_local, timelinePreview_remote } from 'flavours/blobfox/initial_state';
 import { useAppDispatch, useAppSelector } from 'flavours/blobfox/store';
 
 import Column from '../../components/column';

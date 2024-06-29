@@ -30,10 +30,10 @@
     = f.input :timeline_preview, as: :boolean, wrapper: :with_label
 
   .fields-group
-    = f.input :timeline_preview_local, as: :boolean, wrapper: :with_label, warning_hint: public_timelines_warning_hint_text, disabled: public_feed_auth?, recommended: public_timelines_recommended_value, glitch_only: true
+    = f.input :timeline_preview_local, as: :boolean, wrapper: :with_label, warning_hint: public_timelines_warning_hint_text, disabled: :timeline_preview, recommended: public_timelines_recommended_value, glitch_only: true
 
   .fields-group
-    = f.input :timeline_preview_remote, as: :boolean, wrapper: :with_label, warning_hint: public_timelines_warning_hint_text, disabled: public_feed_auth?, recommended: public_timelines_recommended_value, glitch_only: true
+    = f.input :timeline_preview_remote, as: :boolean, wrapper: :with_label, warning_hint: public_timelines_warning_hint_text, disabled: :timeline_preview, recommended: public_timelines_recommended_value, glitch_only: true
 
   .fields-group
     = f.input :noindex, as: :boolean, wrapper: :with_label, label: t('admin.settings.default_noindex.title'), hint: t('admin.settings.default_noindex.desc_html')

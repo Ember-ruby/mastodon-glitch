@@ -332,6 +332,8 @@ class StatusContent extends PureComponent {
       media,
       extraMedia,
       mediaIcons,
+      collapsed,
+      settings,
       parseClick,
       disabled,
       tagLinks,
@@ -356,6 +358,16 @@ class StatusContent extends PureComponent {
     const translateButton = renderTranslate && (
       <TranslateButton onClick={this.handleTranslate} translation={status.get('translation')} />
     );
+
+    let collapsedHeight = null;
+
+    collapsedHeight = (
+      settings.getIn(['collapsed', 'auto', 'height'])
+    )
+
+    if (status.get('media_attachments').size && !muted) {
+      collapsedHeight += 210;
+    }
 
     if (status.get('spoiler_text').length > 0) {
       let mentionsPlaceholder = '';
@@ -408,7 +420,7 @@ class StatusContent extends PureComponent {
       }
 
       return (
-        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
+        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapsed ? { height: `${collapsedHeight}px` } : null}>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >
@@ -446,6 +458,7 @@ class StatusContent extends PureComponent {
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
+          style={collapsed ? { height: `${collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}
@@ -467,6 +480,7 @@ class StatusContent extends PureComponent {
         <div
           className='status__content'
           tabIndex={0}
+          style={collapsed ? { height: `${collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}

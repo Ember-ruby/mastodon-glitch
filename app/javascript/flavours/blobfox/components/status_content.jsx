@@ -156,6 +156,7 @@ class StatusContent extends PureComponent {
 
   state = {
     hidden: true,
+    collapsed: false,
   };
 
   _updateStatusLinks () {
@@ -333,9 +334,8 @@ class StatusContent extends PureComponent {
       media,
       extraMedia,
       mediaIcons,
-      collapsed,
+      collapseHeight,
       muted,
-      settings,
       parseClick,
       disabled,
       tagLinks,
@@ -343,6 +343,7 @@ class StatusContent extends PureComponent {
       intl,
       statusContent,
     } = this.props;
+    const { collapsed } = this.state;
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const contentLocale = intl.locale.replace(/[_-].*/, '');
@@ -361,12 +362,10 @@ class StatusContent extends PureComponent {
       <TranslateButton onClick={this.handleTranslate} translation={status.get('translation')} />
     );
 
-    let collapsedHeight = null;
-
-    const autoCollapseSettings = settings.getIn(['collapsed', 'auto']);
+    let collapsedHeight = 0;
 
     collapsedHeight = (
-      parseInt(autoCollapseSettings.get('height'))
+      parseInt(collapseHeight)
     )
 
     if (status.get('media_attachments').size && !muted) {

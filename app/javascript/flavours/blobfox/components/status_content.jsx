@@ -130,6 +130,7 @@ class StatusContent extends PureComponent {
     statusContent: PropTypes.string,
     expanded: PropTypes.bool,
     collapsed: PropTypes.bool,
+    autoCollapsed: PropTypes.bool,
     onExpandedToggle: PropTypes.func,
     onTranslate: PropTypes.func,
     media: PropTypes.node,
@@ -157,6 +158,7 @@ class StatusContent extends PureComponent {
   state = {
     hidden: true,
     collapsed: false,
+    autoCollapsed: false,
   };
 
   _updateStatusLinks () {
@@ -345,8 +347,10 @@ class StatusContent extends PureComponent {
     } = this.props;
 
     let collapse = false
+    let autoCollapse = false
 
     collapse = this.props.collapsed
+    autoCollapse = this.props.autoCollapsed
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const contentLocale = intl.locale.replace(/[_-].*/, '');
@@ -378,6 +382,10 @@ class StatusContent extends PureComponent {
     if (status.get('media_attachments').size && !muted) {
       collapsedHeight += 210;
     }
+
+    if (!autoCollapse) (
+      collapsedHeight = 20
+    )
 
     if (status.get('spoiler_text').length > 0) {
       let mentionsPlaceholder = '';

@@ -862,6 +862,7 @@ class Status extends ImmutablePureComponent {
             mediaIcons={contentMediaIcons}
             expanded={isExpanded}
             collapsed={isCollapsed}
+            
             collapseHeight={settings.getIn(['collapsed', 'auto', 'height'])}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}

@@ -850,7 +850,7 @@ class Status extends ImmutablePureComponent {
             extraMedia={extraMedia}
             mediaIcons={contentMediaIcons}
             expanded={isExpanded}
-            collapsed={collapsed}
+            collapsed={isCollapsed}
             toggleCollapse={this.handleHotkeyCollapse}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}

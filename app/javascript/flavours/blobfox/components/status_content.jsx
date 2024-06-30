@@ -129,6 +129,7 @@ class StatusContent extends PureComponent {
     status: ImmutablePropTypes.map.isRequired,
     statusContent: PropTypes.string,
     expanded: PropTypes.bool,
+    collapsed: PropTypes.bool,
     onExpandedToggle: PropTypes.func,
     onTranslate: PropTypes.func,
     media: PropTypes.node,
@@ -155,17 +156,7 @@ class StatusContent extends PureComponent {
 
   state = {
     hidden: true,
-    collapsed: false,
   };
-
-  updateOnProps = [
-    'settings',
-    'muted',
-  ];
-
-  updateOnStates = [
-    'collapsed',
-  ];
 
   _updateStatusLinks () {
     const node = this.contentsNode;
@@ -342,6 +333,7 @@ class StatusContent extends PureComponent {
       media,
       extraMedia,
       mediaIcons,
+      collapsed,
       muted,
       settings,
       parseClick,
@@ -351,8 +343,6 @@ class StatusContent extends PureComponent {
       intl,
       statusContent,
     } = this.props;
-
-    const collapsed = this.props.toggleCollapse ? this.props.collapsed : this.state.collapsed;
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const contentLocale = intl.locale.replace(/[_-].*/, '');
@@ -434,7 +424,7 @@ class StatusContent extends PureComponent {
       }
 
       return (
-        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={isCollapsed ? { height: `${collapsedHeight}px` } : null}>
+        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapsed ? { height: `${collapsedHeight}px` } : null}>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >
@@ -472,7 +462,7 @@ class StatusContent extends PureComponent {
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
-          style={isCollapsed ? { height: `${collapsedHeight}px` } : null}
+          style={collapsed ? { height: `${collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}

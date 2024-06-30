@@ -553,6 +553,7 @@ class Status extends ImmutablePureComponent {
     } = this.props;
     const { isCollapsed } = this.state;
     let background = null;
+    let collapsedHeight = null;
     let attachments = null;
 
     //  Depending on user settings, some media are considered as parts of the
@@ -634,6 +635,14 @@ class Status extends ImmutablePureComponent {
     //  the status is collapsed.
     if (settings.getIn(['collapsed', 'backgrounds', 'user_backgrounds'])) {
       background = status.getIn(['account', 'header']);
+    }
+
+    collapsedHeight = (
+      settings.getIn(['collapsed', 'auto', 'height'])
+    )
+
+    if (status.get('media_attachments').size && !muted) {
+      collapsedHeight += 210;
     }
 
     //  This handles our media attachments.
@@ -811,7 +820,7 @@ class Status extends ImmutablePureComponent {
       <HotKeys handlers={handlers}>
         <div
           className={computedClass}
-          style={isCollapsed && background ? { backgroundImage: `url(${background})` } : null}
+          style={isCollapsed && background ? { backgroundImage: `url(${background})`} : null}
           {...selectorAttribs}
           ref={handleRef}
           tabIndex={0}
@@ -846,6 +855,7 @@ class Status extends ImmutablePureComponent {
           </header>
           <StatusContent
             status={status}
+            style={isCollapsed ? { height: `${collapsedHeight}px`} : null}
             media={contentMedia}
             extraMedia={extraMedia}
             mediaIcons={contentMediaIcons}

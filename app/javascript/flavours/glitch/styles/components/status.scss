@@ -322,7 +322,7 @@
     }
 
     .status__content {
-      height: 20px;
+      height: 12em;
       overflow: hidden;
       text-overflow: ellipsis;
       padding-top: 0;
@@ -335,8 +335,8 @@
         inset-inline-start: 0;
         inset-inline-end: 0;
         background: linear-gradient(
-          rgba($ui-base-color, 0),
-          rgba($ui-base-color, 1)
+          rgba($ui-base-color, 0) 0.1em,
+          rgba($ui-base-color, 1) 4em
         );
         pointer-events: none;
       }
@@ -348,8 +348,8 @@
 
     &:focus > .status__content::after {
       background: linear-gradient(
-        rgba(lighten($ui-base-color, 4%), 0),
-        rgba(lighten($ui-base-color, 4%), 1)
+        rgba(lighten($ui-base-color, 4%), 0) 0.1em,
+        rgba(lighten($ui-base-color, 4%), 1) 4em
       );
     }
 

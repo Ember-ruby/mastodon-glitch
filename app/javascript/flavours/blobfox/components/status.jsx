@@ -820,7 +820,7 @@ class Status extends ImmutablePureComponent {
       <HotKeys handlers={handlers}>
         <div
           className={computedClass}
-          style={isCollapsed && background ? { backgroundImage: `url(${background})`} : null}
+          style={isCollapsed && background ? { backgroundImage: `url(${background})` } : null}
           {...selectorAttribs}
           ref={handleRef}
           tabIndex={0}
@@ -855,7 +855,7 @@ class Status extends ImmutablePureComponent {
           </header>
           <StatusContent
             status={status}
-            style={isCollapsed ? { height: `${collapsedHeight}px`} : null}
+            style={isCollapsed && { height: `${collapsedHeight}px` }}
             media={contentMedia}
             extraMedia={extraMedia}
             mediaIcons={contentMediaIcons}

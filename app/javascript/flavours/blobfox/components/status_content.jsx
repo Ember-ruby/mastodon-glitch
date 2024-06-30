@@ -461,7 +461,7 @@ class StatusContent extends PureComponent {
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
-          style={collapsed ? { height: `${collapsedHeight}px` } : null}
+          style={collapsed && collapsedHeight ? { height: `${collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}
@@ -483,7 +483,7 @@ class StatusContent extends PureComponent {
         <div
           className='status__content'
           tabIndex={0}
-          style={collapsed ? { height: `${collapsedHeight}px` } : null}
+          style={collapsed && collapsedHeight ? { height: `${collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}

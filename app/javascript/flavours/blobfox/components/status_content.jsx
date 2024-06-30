@@ -129,10 +129,10 @@ class StatusContent extends PureComponent {
     status: ImmutablePropTypes.map.isRequired,
     statusContent: PropTypes.string,
     expanded: PropTypes.bool,
-    collapsed: PropTypes.bool,
     onExpandedToggle: PropTypes.func,
     onTranslate: PropTypes.func,
     media: PropTypes.node,
+    muted: PropTypes.bool,
     extraMedia: PropTypes.node,
     mediaIcons: PropTypes.arrayOf(PropTypes.string),
     parseClick: PropTypes.func,
@@ -155,7 +155,17 @@ class StatusContent extends PureComponent {
 
   state = {
     hidden: true,
+    collapsed: false,
   };
+
+  updateOnProps = [
+    'settings',
+    'muted',
+  ];
+
+  updateOnStates = [
+    'collapsed',
+  ];
 
   _updateStatusLinks () {
     const node = this.contentsNode;
@@ -332,7 +342,6 @@ class StatusContent extends PureComponent {
       media,
       extraMedia,
       mediaIcons,
-      collapsed,
       muted,
       settings,
       parseClick,
@@ -343,7 +352,7 @@ class StatusContent extends PureComponent {
       statusContent,
     } = this.props;
 
-    const { isCollapsed } = this.state.collapsed;
+    const collapsed = this.props.toggleCollapse ? this.props.collapsed : this.state.collapsed;
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const contentLocale = intl.locale.replace(/[_-].*/, '');
@@ -364,8 +373,10 @@ class StatusContent extends PureComponent {
 
     let collapsedHeight = null;
 
+    const autoCollapseSettings = settings.getIn(['collapsed', 'auto']);
+
     collapsedHeight = (
-      settings.getIn(['collapsed', 'auto', 'height'])
+      parseInt(autoCollapseSettings.get('height'))
     )
 
     if (status.get('media_attachments').size && !muted) {

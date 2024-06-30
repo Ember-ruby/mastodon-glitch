@@ -555,6 +555,17 @@ class Status extends ImmutablePureComponent {
     let background = null;
     let attachments = null;
 
+    let collapsedHeight = null;
+    if (isCollapsed) (
+      collapsedHeight = (
+        parseInt(settings.getIn(['collapsed', 'auto', 'height']))
+      )
+
+      if (status.get('media_attachments').size && !muted) {
+        collapsedHeight += 210;
+      }
+    )
+
     //  Depending on user settings, some media are considered as parts of the
     //  contents (affected by CW) while other will be displayed outside of the
     //  CW.
@@ -851,6 +862,7 @@ class Status extends ImmutablePureComponent {
             mediaIcons={contentMediaIcons}
             expanded={isExpanded}
             collapsed={isCollapsed}
+            height={collapsedHeight}
             collapseHeight={settings.getIn(['collapsed', 'auto', 'height'])}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}

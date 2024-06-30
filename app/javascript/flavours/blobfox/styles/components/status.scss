@@ -341,8 +341,8 @@
         inset-inline-start: 0;
         inset-inline-end: 0;
         background: linear-gradient(
-          rgba($ui-base-color, 0) 0.1em,
-          rgba($ui-base-color, 1) 4em
+          rgba($ui-base-color, 0) 20%,
+          rgba($ui-base-color, 1)
         );
         pointer-events: none;
       }
@@ -354,15 +354,15 @@
 
     &:focus > .status__content::after {
       background: linear-gradient(
-        rgba(lighten($ui-base-color, 4%), 0) 0.1em,
-        rgba(lighten($ui-base-color, 4%), 1) 4em
+        rgba(lighten($ui-base-color, 4%), 0) 20%,
+        rgba(lighten($ui-base-color, 4%), 1)
       );
     }
 
     &.status-direct > .status__content::after {
       background: linear-gradient(
-        rgba(mix($ui-base-color, $ui-highlight-color, 95%), 0) 0.1em,
-        rgba(mix($ui-base-color, $ui-highlight-color, 95%), 1) 4em
+        rgba(mix($ui-base-color, $ui-highlight-color, 95%), 0) 20%,
+        rgba(mix($ui-base-color, $ui-highlight-color, 95%), 1)
       );
     }
 

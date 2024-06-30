@@ -333,6 +333,7 @@ class StatusContent extends PureComponent {
       extraMedia,
       mediaIcons,
       collapsed,
+      muted,
       settings,
       parseClick,
       disabled,

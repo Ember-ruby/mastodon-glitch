@@ -371,6 +371,10 @@ class StatusContent extends PureComponent {
       parseInt(collapseHeight)
     )
 
+    if (collapsedHeight <= 20) (
+      collapsedHeight = 20
+    )
+
     if (status.get('media_attachments').size && !muted) {
       collapsedHeight += 210;
     }

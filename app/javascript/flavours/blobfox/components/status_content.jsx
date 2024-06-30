@@ -343,6 +343,8 @@ class StatusContent extends PureComponent {
       statusContent,
     } = this.props;
 
+    const { isCollapsed } = this.state.collapsed;
+
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const contentLocale = intl.locale.replace(/[_-].*/, '');
     const targetLanguages = this.props.languages?.get(status.get('language') || 'und');
@@ -421,7 +423,7 @@ class StatusContent extends PureComponent {
       }
 
       return (
-        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapsed ? { height: `${collapsedHeight}px` } : null}>
+        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={isCollapsed ? { height: `${collapsedHeight}px` } : null}>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >
@@ -459,7 +461,7 @@ class StatusContent extends PureComponent {
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
-          style={collapsed ? { height: `${collapsedHeight}px` } : null}
+          style={isCollapsed ? { height: `${collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}

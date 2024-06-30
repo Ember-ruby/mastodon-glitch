@@ -855,7 +855,7 @@ class Status extends ImmutablePureComponent {
           </header>
           <StatusContent
             status={status}
-            style={isCollapsed && { height: `${collapsedHeight}px` }}
+            style={isCollapsed ? { height: `${collapsedHeight}px` } : null}
             media={contentMedia}
             extraMedia={extraMedia}
             mediaIcons={contentMediaIcons}

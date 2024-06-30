@@ -424,6 +424,7 @@ class StatusContent extends PureComponent {
 
       return (
         <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={{ height: `${collapsedHeight}px` }}>
+          <div>{collapsed}</div>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >

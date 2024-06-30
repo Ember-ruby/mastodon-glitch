@@ -560,11 +560,11 @@ class Status extends ImmutablePureComponent {
       collapsedHeight = (
         parseInt(settings.getIn(['collapsed', 'auto', 'height']))
       )
-
-      if (status.get('media_attachments').size && !muted) {
-        collapsedHeight += 210;
-      }
     )
+
+    if (status.get('media_attachments').size && !muted && isCollapsed) {
+      collapsedHeight += 210;
+    }
 
     //  Depending on user settings, some media are considered as parts of the
     //  contents (affected by CW) while other will be displayed outside of the

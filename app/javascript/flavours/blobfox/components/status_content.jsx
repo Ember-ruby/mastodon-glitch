@@ -264,7 +264,7 @@ class StatusContent extends PureComponent {
   };
 
   componentDidMount () {
-    const { node } = this;
+    const { node } = this.node;
     const {
       status,
       collapseHeight,

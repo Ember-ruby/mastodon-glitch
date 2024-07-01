@@ -264,7 +264,6 @@ class StatusContent extends PureComponent {
   };
 
   componentDidMount () {
-    const { node } = this.divNode;
     const { clientHeight } = this.divNode;
     const {
       status,
@@ -288,7 +287,7 @@ class StatusContent extends PureComponent {
 
     // this.setState({ collapseHeight: true });
 
-    if (!autoCollapsed && parseInt(collapseHeight) < 30) {
+    if (!autoCollapsed || parseInt(collapseHeight) < 30) {
       this.setState({ collapsedHeight: 30 })
     } else {
       let tempCollapsedHeight = (
@@ -297,9 +296,8 @@ class StatusContent extends PureComponent {
       if (tempCollapsedHeight > clientHeight) (
         tempCollapsedHeight = clientHeight
       )
-      if (status.get('media_attachments').size && !muted) {
-        tempCollapsedHeight += 210;
-      }
+
+      tempCollapsedHeight = clientHeight;
       this.setState({ collapsedHeight: tempCollapsedHeight })
     }
   }

@@ -376,8 +376,8 @@ class StatusContent extends PureComponent {
       parseInt(collapseHeight)
     )
 
-    if (collapsedHeight > this.contentsNode.clientHeight) (
-      collapsedHeight = this.contentsNode.clientHeight
+    if (collapsedHeight > this.clientHeight) (
+      collapsedHeight = this.clientHeight
     )
 
     if (collapsedHeight < 40) (

@@ -331,12 +331,14 @@ class StatusContent extends PureComponent {
   };
 
   render () {
+    const { node } = this;
     const {
       status,
       media,
       extraMedia,
       mediaIcons,
       collapseHeight,
+      tootHeight,
       muted,
       parseClick,
       disabled,
@@ -372,7 +374,7 @@ class StatusContent extends PureComponent {
     let collapsedHeight = 0;
 
     collapsedHeight = (
-      parseInt(collapseHeight)
+      parseInt(collapseHeight) - (tootHeight - node.clientHeight)
     )
 
     if (collapsedHeight <= 40) (

@@ -275,6 +275,7 @@ class StatusContent extends PureComponent {
 
     const { autoCollapsed } = this.props;
     const { tootHeight } = this.props;
+    const { collapsed } = this.props;
 
     //let collapse = false
     //let autoCollapse = false
@@ -290,22 +291,23 @@ class StatusContent extends PureComponent {
 
     // this.setState({ collapseHeight: true });
 
-    if (!autoCollapsed || parseInt(collapseHeight) < 30) {
+    let tempCollapsedHeight = 0;
+
+    tempCollapsedHeight = (
+      parseInt(collapseHeight)
+    )
+    if (tempCollapsedHeight > clientHeight) (
+      tempCollapsedHeight - (tootHeight - clientHeight)
+    )
+
+    console.log(`true? autocollapsed ${autoCollapsed}, collapseHeight ${collapseHeight}, tootHeight ${tootHeight}, collapsed ${collapsed}, clientHeight ${clientHeight}`)
+
+    this.setState({ collapsedHeight: tempCollapsedHeight })
+
+    if (!autoCollapsed || tempCollapsedHeight < 30) {
       this.setState({ collapsedHeight: 30 })
       console.log(`false, autocollapsed ${autoCollapsed}, collapseHeight ${collapseHeight}, tootHeight ${tootHeight}`)
-    } else {
-      let tempCollapsedHeight = (
-        parseInt(collapseHeight)
-      )
-      if (tempCollapsedHeight > clientHeight) (
-        tempCollapsedHeight - (tootHeight - clientHeight)
-      )
-
-      console.log(`true autocollapsed ${autoCollapsed}, collapseHeight ${collapseHeight}, tootHeight ${tootHeight}`)
-
-      //tempCollapsedHeight = clientHeight;
-      this.setState({ collapsedHeight: tempCollapsedHeight })
-    }
+    } 
   }
 
   componentDidUpdate () {

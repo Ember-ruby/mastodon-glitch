@@ -392,6 +392,8 @@ class StatusContent extends PureComponent {
       collapsedHeight = 40
     )
 
+    collapsedHeight = this.clientHeight;
+
     if (status.get('spoiler_text').length > 0) {
       let mentionsPlaceholder = '';
 

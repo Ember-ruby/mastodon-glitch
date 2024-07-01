@@ -163,6 +163,7 @@ class StatusContent extends PureComponent {
     autoCollapsed: false,
     collapsedHeight: null,
     clientHeight: null,
+    tootHeight: null,
   };
 
  // updateOnStates = [
@@ -269,11 +270,11 @@ class StatusContent extends PureComponent {
     const {
       status,
       collapseHeight,
-      tootHeight,
       muted,
     } = this.props;
 
     const { autoCollapsed } = this.props;
+    const { tootHeight } = this.props;
 
     //let collapse = false
     //let autoCollapse = false

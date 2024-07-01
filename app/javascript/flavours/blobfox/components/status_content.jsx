@@ -281,6 +281,8 @@ class StatusContent extends PureComponent {
 
     if (node === undefined) return;
 
+    console.log('yes')
+
     //let tempCollapsedHeight = 0;
 
     // this.setState({ collapseHeight: true });
@@ -509,6 +511,8 @@ class StatusContent extends PureComponent {
       if (hidden) {
         mentionsPlaceholder = <div>{mentionLinks}</div>;
       }
+
+      console.log('collapsed?', collapsed)
 
       return (
         <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>

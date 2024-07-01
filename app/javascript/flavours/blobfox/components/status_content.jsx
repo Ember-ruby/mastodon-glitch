@@ -291,6 +291,7 @@ class StatusContent extends PureComponent {
 
     if (!autoCollapsed || parseInt(collapseHeight) < 30) {
       this.setState({ collapsedHeight: 30 })
+      console.log(`false, autocollapsed ${autoCollapsed}, collapseHeight ${collapseHeight}, tootHeight ${tootHeight}`)
     } else {
       let tempCollapsedHeight = (
         parseInt(collapseHeight)
@@ -298,6 +299,8 @@ class StatusContent extends PureComponent {
       if (tempCollapsedHeight > clientHeight) (
         tempCollapsedHeight - (tootHeight - clientHeight)
       )
+
+      console.log(`true autocollapsed ${autoCollapsed}, collapseHeight ${collapseHeight}, tootHeight ${tootHeight}`)
 
       tempCollapsedHeight = clientHeight;
       this.setState({ collapsedHeight: tempCollapsedHeight })

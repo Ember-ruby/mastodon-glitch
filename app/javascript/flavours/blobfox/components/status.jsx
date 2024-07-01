@@ -569,6 +569,9 @@ class Status extends ImmutablePureComponent {
     }
 
     //this.setState({ tootHeight: parseInt(node.clientHeight) });
+    let tootHeight = 0;
+
+    tootHeight = parseInt(node.clientHeight);
 
     //console.log(`raw ${node.clientHeight}, value ${this.state.tootHeight}`)
 
@@ -869,7 +872,7 @@ class Status extends ImmutablePureComponent {
             expanded={isExpanded}
             collapsed={isCollapsed}
             autoCollapsed={this.state.autoCollapsed}
-            tootHeight={parseInt(node.clientHeight)}
+            tootHeight={tootHeight}
             collapseHeight={settings.getIn(['collapsed', 'auto', 'height'])}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}

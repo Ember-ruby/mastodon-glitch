@@ -131,6 +131,7 @@ class StatusContent extends PureComponent {
     expanded: PropTypes.bool,
     collapsed: PropTypes.bool,
     collapsedHeight: PropTypes.number,
+    tootHeight: PropTypes.number,
     autoCollapsed: PropTypes.bool,
     onExpandedToggle: PropTypes.func,
     onTranslate: PropTypes.func,

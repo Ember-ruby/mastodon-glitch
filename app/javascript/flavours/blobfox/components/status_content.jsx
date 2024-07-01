@@ -270,6 +270,10 @@ class StatusContent extends PureComponent {
     }
   };
 
+  handleRef = c => {
+    this.node = c;
+  };
+
   onMentionClick = (mention, e) => {
     if (this.props.parseClick) {
       this.props.parseClick(e, `/@${mention.get('acct')}`);
@@ -376,8 +380,8 @@ class StatusContent extends PureComponent {
       parseInt(collapseHeight)
     )
 
-    if (collapsedHeight > this.clientHeight) (
-      collapsedHeight = this.clientHeight
+    if (collapsedHeight > this.node.clientHeight) (
+      collapsedHeight = this.node.clientHeight
     )
 
     if (collapsedHeight < 40) (
@@ -392,7 +396,7 @@ class StatusContent extends PureComponent {
       collapsedHeight = 40
     )
 
-    collapsedHeight = this.element.clientHeight;
+    collapsedHeight = this.node.clientHeight;
 
     //collapsedHeight = node.clientHeight;
 

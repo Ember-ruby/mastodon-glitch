@@ -524,7 +524,7 @@ class Status extends ImmutablePureComponent {
 
   render () {
     const { signedIn } = this.context.identity;
-    const { node } = this;
+    //const { node } = this;
     const {
       handleRef,
       parseClick,
@@ -864,7 +864,7 @@ class Status extends ImmutablePureComponent {
             expanded={isExpanded}
             collapsed={isCollapsed}
             autoCollapsed={this.state.autoCollapsed}
-            tootHeight={node.clientHeight}
+            //tootHeight={node.clientHeight}
             collapseHeight={settings.getIn(['collapsed', 'auto', 'height'])}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}

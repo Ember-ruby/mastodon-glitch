@@ -160,7 +160,7 @@ class StatusContent extends PureComponent {
     hidden: true,
     collapsed: false,
     autoCollapsed: false,
-    collapsedHeight: 0,
+    collapsedHeight: null,
     clientHeight: null,
   };
 
@@ -281,12 +281,12 @@ class StatusContent extends PureComponent {
 
     if (node === undefined) return;
 
-    let tempCollapsedHeight = 0;
+    //let tempCollapsedHeight = 0;
 
     // this.setState({ collapseHeight: true });
 
-    if (this.props.collapsed && !this.props.autoCollapsed && collapseHeight >= 40) {
-      tempCollapsedHeight = (
+    if (this.props.autoCollapsed && collapseHeight >= 40) {
+      let tempCollapsedHeight = (
         parseInt(collapseHeight)
       )
 
@@ -300,8 +300,8 @@ class StatusContent extends PureComponent {
 
       tempCollapsedHeight = 600;
 
-      this.setState({ collapsedHeight: parseInt(tempCollapsedHeight) })
-    } else if (this.props.autoCollapsed || collapseHeight < 40) {
+      this.setState({ collapsedHeight: tempCollapsedHeight })
+    } else if (!this.props.autoCollapsed || collapseHeight < 40) {
       this.setState({ collapsedHeight: 40 })
     }
   }

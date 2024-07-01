@@ -263,8 +263,10 @@ class StatusContent extends PureComponent {
     }
   };
 
+  ref = createRef();
+
   componentDidMount () {
-    const { node } = this.div;
+    const { node } = this;
     const {
       status,
       collapseHeight,
@@ -272,6 +274,9 @@ class StatusContent extends PureComponent {
     } = this.props;
 
     const { autoCollapsed } = this.props;
+
+    const { current } = this.ref;
+    console.log(`high ${current.clientHeight}`);
 
     //let collapse = false
     //let autoCollapse = false

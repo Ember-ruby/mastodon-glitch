@@ -271,6 +271,8 @@ class StatusContent extends PureComponent {
       muted,
     } = this.props;
 
+    const { autoCollapsed } = this.props;
+
     //let collapse = false
     //let autoCollapse = false
 
@@ -279,7 +281,7 @@ class StatusContent extends PureComponent {
 
     this._updateStatusLinks();
 
-    if (node === undefined) return;
+    if (node === undefined) return(console.log('no'));
 
     console.log('yes')
 
@@ -287,7 +289,7 @@ class StatusContent extends PureComponent {
 
     // this.setState({ collapseHeight: true });
 
-    if (!this.state.autoCollapsed && parseInt(collapseHeight) < 30) {
+    if (!autoCollapsed && parseInt(collapseHeight) < 30) {
       this.setState({ collapsedHeight: 30 })
     } else {
       let tempCollapsedHeight = (
@@ -414,8 +416,8 @@ class StatusContent extends PureComponent {
     //let collapse = false
     //let autoCollapse = false
 
-    const { collapsed } = this.state;
-    const { collapsedHeight } = this.state;
+    const { collapsed } = this.props;
+    const { collapsedHeight } = this.props;
 
     //collapse = this.state.collapsed
     //autoCollapse = this.props.autoCollapsed

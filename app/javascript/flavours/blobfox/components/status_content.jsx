@@ -284,8 +284,6 @@ class StatusContent extends PureComponent {
 
     //if (node === undefined) return(console.log('no'));
 
-    console.log('yes')
-
     //let tempCollapsedHeight = 0;
 
     // this.setState({ collapseHeight: true });
@@ -296,17 +294,12 @@ class StatusContent extends PureComponent {
       let tempCollapsedHeight = (
         parseInt(collapseHeight)
       )
-
       if (tempCollapsedHeight > clientHeight) (
         tempCollapsedHeight = clientHeight
       )
-
       if (status.get('media_attachments').size && !muted) {
         tempCollapsedHeight += 210;
       }
-
-      tempCollapsedHeight = 600;
-
       this.setState({ collapsedHeight: tempCollapsedHeight })
     }
   }

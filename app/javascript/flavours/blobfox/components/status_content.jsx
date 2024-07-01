@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { PureComponent } from 'react';
+import { PureComponent, createRef } from 'react';
 
 import { FormattedMessage, injectIntl } from 'react-intl';
 

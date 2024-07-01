@@ -293,10 +293,6 @@ class Status extends ImmutablePureComponent {
       this.setState({ autoCollapsed: true });
     }
 
-    this.setState({ tootHeight: parseInt(node.clientHeight) });
-
-    console.log(`raw ${node.clientHeight}, value ${this.state.tootHeight}`)
-
     // Hack to fix timeline jumps when a preview card is fetched
     this.setState({
       showCard: !this.props.muted && !this.props.hidden && this.props.status && this.props.status.get('card') && this.props.settings.get('inline_preview_cards'),
@@ -529,7 +525,7 @@ class Status extends ImmutablePureComponent {
 
   render () {
     const { signedIn } = this.context.identity;
-    //const { node } = this;
+    const { node } = this;
     const {
       handleRef,
       parseClick,
@@ -557,7 +553,7 @@ class Status extends ImmutablePureComponent {
       history,
       ...other
     } = this.props;
-    const { isCollapsed, tootHeight } = this.state;
+    const { isCollapsed } = this.state;
     let background = null;
     let attachments = null;
 
@@ -571,6 +567,10 @@ class Status extends ImmutablePureComponent {
     if (status.get('media_attachments').size && !muted && isCollapsed) {
       collapsedHeight += 210;
     }
+
+    //this.setState({ tootHeight: parseInt(node.clientHeight) });
+
+    //console.log(`raw ${node.clientHeight}, value ${this.state.tootHeight}`)
 
     //  Depending on user settings, some media are considered as parts of the
     //  contents (affected by CW) while other will be displayed outside of the
@@ -869,7 +869,7 @@ class Status extends ImmutablePureComponent {
             expanded={isExpanded}
             collapsed={isCollapsed}
             autoCollapsed={this.state.autoCollapsed}
-            tootHeight={tootHeight}
+            tootHeight={parseInt(node.clientHeight)}
             collapseHeight={settings.getIn(['collapsed', 'auto', 'height'])}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}

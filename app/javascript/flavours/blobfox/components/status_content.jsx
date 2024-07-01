@@ -265,6 +265,7 @@ class StatusContent extends PureComponent {
 
   componentDidMount () {
     const { node } = this.divNode;
+    const { clientHeight } = this.divNode;
     const {
       status,
       collapseHeight,
@@ -281,7 +282,7 @@ class StatusContent extends PureComponent {
 
     this._updateStatusLinks();
 
-    if (node === undefined) return(console.log('no'));
+    //if (node === undefined) return(console.log('no'));
 
     console.log('yes')
 
@@ -296,8 +297,8 @@ class StatusContent extends PureComponent {
         parseInt(collapseHeight)
       )
 
-      if (tempCollapsedHeight > node.clientHeight) (
-        tempCollapsedHeight = node.clientHeight
+      if (tempCollapsedHeight > clientHeight) (
+        tempCollapsedHeight = clientHeight
       )
 
       if (status.get('media_attachments').size && !muted) {

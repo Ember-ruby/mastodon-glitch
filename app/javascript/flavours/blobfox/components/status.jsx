@@ -131,7 +131,7 @@ class Status extends ImmutablePureComponent {
   state = {
     isCollapsed: false,
     autoCollapsed: false,
-    tootHeight: 0,
+    tootHeight: undefined,
     isExpanded: undefined,
     showMedia: undefined,
     statusId: undefined,
@@ -293,7 +293,7 @@ class Status extends ImmutablePureComponent {
       this.setState({ autoCollapsed: true });
     }
 
-    this.setState ({ tootHeight: parseInt(node.clientHeight) });
+    this.setState({ tootHeight: parseInt(node.clientHeight) });
 
     console.log(`raw ${node.clientHeight}, value ${this.state.tootHeight}`)
 

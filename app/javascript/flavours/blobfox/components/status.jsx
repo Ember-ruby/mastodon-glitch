@@ -290,8 +290,10 @@ class Status extends ImmutablePureComponent {
     ) {
       this.setCollapsed(true);
       // Hack to fix timeline jumps on second rendering when auto-collapsing
-      this.setState({ autoCollapsed: true, tootHeight: node.clientHeight});
+      this.setState({ autoCollapsed: true });
     }
+
+    this.setState ({ tootHeight: node.clientHeight });
 
     // Hack to fix timeline jumps when a preview card is fetched
     this.setState({

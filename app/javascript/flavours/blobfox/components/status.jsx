@@ -280,12 +280,6 @@ class Status extends ImmutablePureComponent {
       autoCollapseHeight += 210;
     }
 
-    let tempTootHeight = (
-      parseInt(node.clientHeight)
-    )
-
-    this.setState({ tootHeight: tempTootHeight })
-
     if (collapse ||
       autoCollapseSettings.get('all') ||
       (autoCollapseSettings.get('notifications') && muted) ||
@@ -297,6 +291,12 @@ class Status extends ImmutablePureComponent {
       this.setCollapsed(true);
       // Hack to fix timeline jumps on second rendering when auto-collapsing
       this.setState({ autoCollapsed: true });
+      
+      let tempTootHeight = (
+        parseInt(node.clientHeight)
+      )
+  
+      this.setState({ tootHeight: tempTootHeight })
     }
 
     // Hack to fix timeline jumps when a preview card is fetched
@@ -578,7 +578,7 @@ class Status extends ImmutablePureComponent {
 
     
 
-    console.log(`value ${this.state.tootHeight}`)
+    console.log(`value ${this.state.tootHeight}, auto ${this.state.autoCollapsed}`)
 
     //  Depending on user settings, some media are considered as parts of the
     //  contents (affected by CW) while other will be displayed outside of the

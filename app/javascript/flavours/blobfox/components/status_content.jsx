@@ -130,6 +130,7 @@ class StatusContent extends PureComponent {
     statusContent: PropTypes.string,
     expanded: PropTypes.bool,
     collapsed: PropTypes.bool,
+    collapsedHeight: PropTypes.number,
     autoCollapsed: PropTypes.bool,
     onExpandedToggle: PropTypes.func,
     onTranslate: PropTypes.func,
@@ -159,6 +160,7 @@ class StatusContent extends PureComponent {
     hidden: true,
     collapsed: false,
     autoCollapsed: false,
+    collapsedHeight: 0,
     clientHeight: null,
   };
 
@@ -256,13 +258,69 @@ class StatusContent extends PureComponent {
   };
 
   componentDidMount () {
+    const { node } = this;
+    const {
+      status,
+      collapseHeight,
+      muted,
+    } = this.props;
+
+    let collapse = false
+    let autoCollapse = false
+
+    collapse = this.props.collapsed
+    autoCollapse = this.props.autoCollapsed
+
     this._updateStatusLinks();
+
+    if (node === undefined) return;
+
+    let tempCollapsedHeight = 0;
+
+    this.setState({ collapseHeight: true });
+
+    if (collapse) {
+      tempCollapsedHeight = (
+        parseInt(collapseHeight)
+      )
+
+      if (tempCollapsedHeight > this.node.clientHeight) (
+        tempCollapsedHeight = this.node.clientHeight
+      )
+
+      if (tempCollapsedHeight < 40) (
+        tempCollapsedHeight = 40
+      )
+
+      if (status.get('media_attachments').size && !muted) {
+        tempCollapsedHeight += 210;
+      }
+
+      if (!autoCollapse) (
+        tempCollapsedHeight = 40
+      )
+
+      tempCollapsedHeight = this.node.clientHeight;
+
+      this.setState({ collapsedHeight: parseInt(tempCollapsedHeight) })
+    }
   }
 
   componentDidUpdate () {
     this._updateStatusLinks();
     if (this.props.onUpdate) this.props.onUpdate();
   }
+
+//  setContentHeight = (value) => {
+//    if (this.props.settings.getIn(['collapsed', 'enabled'])) {
+//      if (value) {
+//        this.setExpansion(false);
+//      }
+//      this.setState({ isCollapsed: value });
+//    } else {
+//      this.setState({ isCollapsed: false });
+//    }
+//  };
 
   onLinkClick = (e) => {
     if (this.props.collapsed) {
@@ -374,29 +432,29 @@ class StatusContent extends PureComponent {
       <TranslateButton onClick={this.handleTranslate} translation={status.get('translation')} />
     );
 
-    let collapsedHeight = 0;
-
-    collapsedHeight = (
-      parseInt(collapseHeight)
-    )
-
-    if (collapsedHeight > this.node.clientHeight) (
-      collapsedHeight = this.node.clientHeight
-    )
-
-    if (collapsedHeight < 40) (
-      collapsedHeight = 40
-    )
-
-    if (status.get('media_attachments').size && !muted) {
-      collapsedHeight += 210;
-    }
-
-    if (!autoCollapse) (
-      collapsedHeight = 40
-    )
-
-    collapsedHeight = this.node.clientHeight;
+//    let collapsedHeight = 0;
+//
+//    collapsedHeight = (
+//      parseInt(collapseHeight)
+//    )
+//
+//    if (collapsedHeight > this.node.clientHeight) (
+//      collapsedHeight = this.node.clientHeight
+//    )
+//
+//    if (collapsedHeight < 40) (
+//      collapsedHeight = 40
+//    )
+//
+//    if (status.get('media_attachments').size && !muted) {
+//      collapsedHeight += 210;
+//    }
+//
+//    if (!autoCollapse) (
+//      collapsedHeight = 40
+//    )
+//    
+//    collapsedHeight = this.node.clientHeight;
 
     //collapsedHeight = node.clientHeight;
 
@@ -451,7 +509,7 @@ class StatusContent extends PureComponent {
       }
 
       return (
-        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapse ? { height: `${collapsedHeight}px` } : null}>
+        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >
@@ -489,7 +547,7 @@ class StatusContent extends PureComponent {
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
-          style={collapse ? { height: `${collapsedHeight}px` } : null}
+          style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}
@@ -511,7 +569,7 @@ class StatusContent extends PureComponent {
         <div
           className='status__content'
           tabIndex={0}
-          style={collapse ? { height: `${collapsedHeight}px` } : null}
+          style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}

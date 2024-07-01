@@ -268,6 +268,7 @@ class StatusContent extends PureComponent {
     const {
       status,
       collapseHeight,
+      tootHeight,
       muted,
     } = this.props;
 
@@ -294,7 +295,7 @@ class StatusContent extends PureComponent {
         parseInt(collapseHeight)
       )
       if (tempCollapsedHeight > clientHeight) (
-        tempCollapsedHeight = clientHeight
+        tempCollapsedHeight - (clientHeight - tootHeight)
       )
 
       tempCollapsedHeight = clientHeight;

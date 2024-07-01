@@ -131,6 +131,7 @@ class Status extends ImmutablePureComponent {
   state = {
     isCollapsed: false,
     autoCollapsed: false,
+    tootHeight: 0,
     isExpanded: undefined,
     showMedia: undefined,
     statusId: undefined,
@@ -289,7 +290,7 @@ class Status extends ImmutablePureComponent {
     ) {
       this.setCollapsed(true);
       // Hack to fix timeline jumps on second rendering when auto-collapsing
-      this.setState({ autoCollapsed: true });
+      this.setState({ autoCollapsed: true, tootHeight: node.clientHeight});
     }
 
     // Hack to fix timeline jumps when a preview card is fetched
@@ -552,7 +553,7 @@ class Status extends ImmutablePureComponent {
       history,
       ...other
     } = this.props;
-    const { isCollapsed } = this.state;
+    const { isCollapsed, tootHeight } = this.state;
     let background = null;
     let attachments = null;
 
@@ -864,7 +865,7 @@ class Status extends ImmutablePureComponent {
             expanded={isExpanded}
             collapsed={isCollapsed}
             autoCollapsed={this.state.autoCollapsed}
-            //tootHeight={node.clientHeight}
+            tootHeight={tootHeight}
             collapseHeight={settings.getIn(['collapsed', 'auto', 'height'])}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}

@@ -420,7 +420,7 @@ class StatusContent extends PureComponent {
     let collapse = false
     let autoCollapse = false
 
-    //const { collapsed } = this.props;
+    const { collapsed } = this.props;
     //const { collapsedHeight } = this.props;
 
     collapse = this.props.collapsed
@@ -523,7 +523,7 @@ class StatusContent extends PureComponent {
       console.log(`height? ${collapsedHeight}`)
 
       return (
-        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} ref={this.handleRef} style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}>
+        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} ref={this.handleRef} style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >
@@ -562,7 +562,7 @@ class StatusContent extends PureComponent {
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
           ref={this.handleRef}
-          style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}
+          style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}
@@ -585,7 +585,7 @@ class StatusContent extends PureComponent {
           className='status__content'
           tabIndex={0}
           ref={this.handleRef}
-          style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}
+          style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}

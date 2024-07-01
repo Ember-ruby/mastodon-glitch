@@ -300,7 +300,7 @@ class StatusContent extends PureComponent {
         tempCollapsedHeight = 40
       )
 
-      tempCollapsedHeight = this.node.clientHeight;
+      tempCollapsedHeight = node.clientHeight;
 
       this.setState({ collapsedHeight: parseInt(tempCollapsedHeight) })
     }

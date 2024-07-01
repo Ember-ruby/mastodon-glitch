@@ -293,7 +293,9 @@ class Status extends ImmutablePureComponent {
       this.setState({ autoCollapsed: true });
     }
 
-    this.setState ({ tootHeight: node.clientHeight });
+    this.setState ({ tootHeight: parseInt(node.clientHeight) });
+
+    console.log(`raw ${node.clientHeight}, value ${this.state.tootHeight}`)
 
     // Hack to fix timeline jumps when a preview card is fetched
     this.setState({

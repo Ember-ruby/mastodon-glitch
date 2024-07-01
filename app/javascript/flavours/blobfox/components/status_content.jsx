@@ -164,11 +164,11 @@ class StatusContent extends PureComponent {
     clientHeight: null,
   };
 
-  updateOnStates = [
-    'collapsed',
-    'autoCollapsed',
-    'collapsedHeight',
-  ];
+ // updateOnStates = [
+ //   'collapsed',
+ //   'autoCollapsed',
+ //   'collapsedHeight',
+ // ];
 
   _updateStatusLinks () {
     const node = this.contentsNode;
@@ -409,11 +409,13 @@ class StatusContent extends PureComponent {
       statusContent,
     } = this.props;
 
-    let collapse = false
-    let autoCollapse = false
+    //let collapse = false
+    //let autoCollapse = false
 
-    collapse = this.state.collapsed
-    autoCollapse = this.props.autoCollapsed
+    const { collapsed } = this.state;
+
+    //collapse = this.state.collapsed
+    //autoCollapse = this.props.autoCollapsed
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const contentLocale = intl.locale.replace(/[_-].*/, '');
@@ -509,7 +511,7 @@ class StatusContent extends PureComponent {
       }
 
       return (
-        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={this.state.collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>
+        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >
@@ -547,7 +549,7 @@ class StatusContent extends PureComponent {
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
-          style={this.state.collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
+          style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}
@@ -569,7 +571,7 @@ class StatusContent extends PureComponent {
         <div
           className='status__content'
           tabIndex={0}
-          style={this.state.collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
+          style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}

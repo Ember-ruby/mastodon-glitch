@@ -375,8 +375,8 @@ class StatusContent extends PureComponent {
       parseInt(collapseHeight)
     )
 
-    if (collapsedHeight <= 20) (
-      collapsedHeight = 20
+    if (collapsedHeight <= 40) (
+      collapsedHeight = 40
     )
 
     if (status.get('media_attachments').size && !muted) {
@@ -384,7 +384,7 @@ class StatusContent extends PureComponent {
     }
 
     if (!autoCollapse) (
-      collapsedHeight = 20
+      collapsedHeight = 40
     )
 
     if (status.get('spoiler_text').length > 0) {

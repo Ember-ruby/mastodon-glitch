@@ -164,6 +164,12 @@ class StatusContent extends PureComponent {
     clientHeight: null,
   };
 
+  updateOnStates = [
+    'collapsed',
+    'autoCollapsed',
+    'collapsedHeight',
+  ];
+
   _updateStatusLinks () {
     const node = this.contentsNode;
     const { tagLinks, rewriteMentions } = this.props;
@@ -265,11 +271,11 @@ class StatusContent extends PureComponent {
       muted,
     } = this.props;
 
-    let collapse = false
-    let autoCollapse = false
+    //let collapse = false
+    //let autoCollapse = false
 
-    collapse = this.props.collapsed
-    autoCollapse = this.props.autoCollapsed
+    //collapse = this.props.collapsed
+    //autoCollapse = this.props.autoCollapsed
 
     this._updateStatusLinks();
 
@@ -279,7 +285,7 @@ class StatusContent extends PureComponent {
 
     // this.setState({ collapseHeight: true });
 
-    if (collapse) {
+    if (this.props.collapsed && !this.props.autoCollapsed && collapseHeight >= 40) {
       tempCollapsedHeight = (
         parseInt(collapseHeight)
       )
@@ -288,21 +294,15 @@ class StatusContent extends PureComponent {
         tempCollapsedHeight = node.clientHeight
       )
 
-      if (tempCollapsedHeight < 40) (
-        tempCollapsedHeight = 40
-      )
-
       if (status.get('media_attachments').size && !muted) {
         tempCollapsedHeight += 210;
       }
 
-      if (!autoCollapse) (
-        tempCollapsedHeight = 40
-      )
-
       tempCollapsedHeight = 600;
 
       this.setState({ collapsedHeight: parseInt(tempCollapsedHeight) })
+    } else if (this.props.autoCollapsed || collapseHeight < 40) {
+      this.setState({ collapsedHeight: 40 })
     }
   }
 

@@ -296,7 +296,7 @@ class StatusContent extends PureComponent {
         parseInt(collapseHeight)
       )
       if (tempCollapsedHeight > clientHeight) (
-        tempCollapsedHeight - (clientHeight - tootHeight)
+        tempCollapsedHeight - (tootHeight - clientHeight)
       )
 
       tempCollapsedHeight = clientHeight;

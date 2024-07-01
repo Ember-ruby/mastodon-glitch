@@ -302,7 +302,7 @@ class StatusContent extends PureComponent {
 
       console.log(`true autocollapsed ${autoCollapsed}, collapseHeight ${collapseHeight}, tootHeight ${tootHeight}`)
 
-      tempCollapsedHeight = clientHeight;
+      //tempCollapsedHeight = clientHeight;
       this.setState({ collapsedHeight: tempCollapsedHeight })
     }
   }

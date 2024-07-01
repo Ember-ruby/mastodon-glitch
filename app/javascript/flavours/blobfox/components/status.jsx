@@ -131,7 +131,7 @@ class Status extends ImmutablePureComponent {
   state = {
     isCollapsed: false,
     autoCollapsed: false,
-    tootHeight: undefined,
+    tootHeight: null,
     isExpanded: undefined,
     showMedia: undefined,
     statusId: undefined,
@@ -279,6 +279,12 @@ class Status extends ImmutablePureComponent {
     if (status.get('media_attachments').size && !muted) {
       autoCollapseHeight += 210;
     }
+
+    let tempTootHeight = (
+      parseInt(node.clientHeight)
+    )
+
+    this.setState({ tootHeight: tempTootHeight })
 
     if (collapse ||
       autoCollapseSettings.get('all') ||
@@ -569,11 +575,10 @@ class Status extends ImmutablePureComponent {
     }
 
     //this.setState({ tootHeight: parseInt(node.clientHeight) });
-    let tootHeight = 0;
 
-    tootHeight = parseInt(node.clientHeight);
+    
 
-    //console.log(`raw ${node.clientHeight}, value ${this.state.tootHeight}`)
+    console.log(`value ${this.state.tootHeight}`)
 
     //  Depending on user settings, some media are considered as parts of the
     //  contents (affected by CW) while other will be displayed outside of the
@@ -872,7 +877,7 @@ class Status extends ImmutablePureComponent {
             expanded={isExpanded}
             collapsed={isCollapsed}
             autoCollapsed={this.state.autoCollapsed}
-            tootHeight={tootHeight}
+            tootHeight={this.state.tootHeight}
             collapseHeight={settings.getIn(['collapsed', 'auto', 'height'])}
             onExpandedToggle={this.handleExpandedToggle}
             onTranslate={this.handleTranslate}

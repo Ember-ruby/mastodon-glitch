@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { PureComponent, createRef } from 'react';
+import { PureComponent } from 'react';
 
 import { FormattedMessage, injectIntl } from 'react-intl';
 
@@ -263,10 +263,8 @@ class StatusContent extends PureComponent {
     }
   };
 
-  ref = createRef();
-
   componentDidMount () {
-    const { node } = this;
+    const { node } = this.divNode;
     const {
       status,
       collapseHeight,
@@ -274,9 +272,6 @@ class StatusContent extends PureComponent {
     } = this.props;
 
     const { autoCollapsed } = this.props;
-
-    const { current } = this.ref;
-    console.log(`high ${current.clientHeight}`);
 
     //let collapse = false
     //let autoCollapse = false
@@ -337,8 +332,8 @@ class StatusContent extends PureComponent {
     }
   };
 
-  handleRef = c => {
-    this.node = c;
+  handleRef = (c) => {
+    this.divNode = c;
   };
 
   onMentionClick = (mention, e) => {
@@ -524,7 +519,7 @@ class StatusContent extends PureComponent {
       console.log(`height? ${collapsedHeight}`)
 
       return (
-        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>
+        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} ref={this.handleRef} style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >
@@ -562,6 +557,7 @@ class StatusContent extends PureComponent {
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
+          ref={this.handleRef}
           style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
@@ -584,6 +580,7 @@ class StatusContent extends PureComponent {
         <div
           className='status__content'
           tabIndex={0}
+          ref={this.handleRef}
           style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div

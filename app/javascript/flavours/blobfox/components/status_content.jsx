@@ -423,7 +423,7 @@ class StatusContent extends PureComponent {
     //const { collapsed } = this.props;
     //const { collapsedHeight } = this.props;
 
-    collapse = this.state.collapsed
+    collapse = this.props.collapsed
     autoCollapse = this.props.autoCollapsed
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;

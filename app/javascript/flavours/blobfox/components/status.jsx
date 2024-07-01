@@ -291,7 +291,7 @@ class Status extends ImmutablePureComponent {
       this.setCollapsed(true);
       // Hack to fix timeline jumps on second rendering when auto-collapsing
       this.setState({ autoCollapsed: true });
-      
+
       let tempTootHeight = (
         parseInt(node.clientHeight)
       )
@@ -563,22 +563,18 @@ class Status extends ImmutablePureComponent {
     let background = null;
     let attachments = null;
 
-    let collapsedHeight = null;
-    if (isCollapsed) (
-      collapsedHeight = (
-        parseInt(settings.getIn(['collapsed', 'auto', 'height']))
-      )
-    )
-
-    if (status.get('media_attachments').size && !muted && isCollapsed) {
-      collapsedHeight += 210;
-    }
+    //    let collapsedHeight = null;
+    //    if (isCollapsed) (
+    //      collapsedHeight = (
+    //        parseInt(settings.getIn(['collapsed', 'auto', 'height']))
+    //      )
+    //    )
+    //
+    //    if (status.get('media_attachments').size && !muted && isCollapsed) {
+    //      collapsedHeight += 210;
+    //    }
 
     //this.setState({ tootHeight: parseInt(node.clientHeight) });
-
-    
-
-    console.log(`value ${this.state.tootHeight}, auto ${this.state.autoCollapsed}`)
 
     //  Depending on user settings, some media are considered as parts of the
     //  contents (affected by CW) while other will be displayed outside of the

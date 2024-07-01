@@ -273,9 +273,14 @@ class StatusContent extends PureComponent {
       muted,
     } = this.props;
 
-    const { autoCollapsed } = this.props;
-    const { tootHeight } = this.props;
-    const { collapsed } = this.props;
+    let autoCollapsed = false;
+    let tootHeight = 0;
+    let collapsed = false;
+    let tempCollapsedHeight = 0;
+
+    autoCollapsed = this.state.autoCollapsed;
+    tootHeight = this.state.tootHeight;
+    collapsed = this.state.collapsed;
 
     //let collapse = false
     //let autoCollapse = false
@@ -290,8 +295,6 @@ class StatusContent extends PureComponent {
     //let tempCollapsedHeight = 0;
 
     // this.setState({ collapseHeight: true });
-
-    let tempCollapsedHeight = 0;
 
     tempCollapsedHeight = (
       parseInt(collapseHeight)

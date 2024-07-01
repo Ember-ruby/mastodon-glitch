@@ -412,7 +412,7 @@ class StatusContent extends PureComponent {
     let collapse = false
     let autoCollapse = false
 
-    collapse = this.props.collapsed
+    collapse = this.state.collapsed
     autoCollapse = this.props.autoCollapsed
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
@@ -509,7 +509,7 @@ class StatusContent extends PureComponent {
       }
 
       return (
-        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}>
+        <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={this.state.collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>
           <p
             style={{ marginBottom: hidden && status.get('mentions').isEmpty() ? '0px' : null }}
           >
@@ -547,7 +547,7 @@ class StatusContent extends PureComponent {
           onMouseDown={this.handleMouseDown}
           onMouseUp={this.handleMouseUp}
           tabIndex={0}
-          style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}
+          style={this.state.collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}
@@ -569,7 +569,7 @@ class StatusContent extends PureComponent {
         <div
           className='status__content'
           tabIndex={0}
-          style={collapse ? { height: `${this.state.collapsedHeight}px` } : null}
+          style={this.state.collapsed ? { height: `${this.state.collapsedHeight}px` } : null}
         >
           <div
             ref={this.setContentsRef}

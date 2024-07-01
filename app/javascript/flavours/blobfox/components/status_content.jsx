@@ -415,6 +415,7 @@ class StatusContent extends PureComponent {
     //let autoCollapse = false
 
     const { collapsed } = this.state;
+    const { collapsedHeight } = this.state;
 
     //collapse = this.state.collapsed
     //autoCollapse = this.props.autoCollapsed
@@ -513,6 +514,7 @@ class StatusContent extends PureComponent {
       }
 
       console.log('collapsed?', collapsed)
+      console.log('height?', collapsedHeight)
 
       return (
         <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>

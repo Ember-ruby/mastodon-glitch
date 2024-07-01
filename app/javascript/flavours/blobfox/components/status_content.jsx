@@ -513,8 +513,8 @@ class StatusContent extends PureComponent {
         mentionsPlaceholder = <div>{mentionLinks}</div>;
       }
 
-      console.log('collapsed?', collapsed)
-      console.log('height?', collapsedHeight)
+      console.log(`collapsed? ${collapsed}`)
+      console.log(`height? ${collapsedHeight}`)
 
       return (
         <div className={classNames} tabIndex={0} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} style={collapsed ? { height: `${this.state.collapsedHeight}px` } : null}>

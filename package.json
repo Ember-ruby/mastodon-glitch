@@ -207,15 +207,15 @@
     "kind-of": "^6.0.3",
     "webpack/terser-webpack-plugin": "^4.2.3"
   },
-  "optionalDependencies": {
-    "bufferutil": "^4.0.7",
-    "utf-8-validate": "^6.0.3"
-  },
-  "lint-staged": {
-    "*": "prettier --ignore-unknown --write",
-    "Capfile|Gemfile|*.{rb,ruby,ru,rake}": "bundle exec rubocop --force-exclusion -a",
-    "*.{js,jsx,ts,tsx}": "eslint --fix",
-    "*.{css,scss}": "stylelint --fix"
-  },
-  "packageManager": "yarn@1.22.22"
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "react-router-dom": {
+      "optional": true
+    }
+  }
 }

@@ -496,6 +496,11 @@ en:
         policy: Policy
         reason: Public reason
         title: Content policies
+      local_stats:
+        title: Stats
+        domain_digest: Domain Digest
+        edited: Edited
+        created: Created
       dashboard:
         instance_accounts_dimension: Most followed accounts
         instance_accounts_measure: stored accounts

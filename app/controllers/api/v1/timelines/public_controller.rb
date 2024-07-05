@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
+  before_action -> { authorize_if_got_token! :read, :'read:statuses' }
   before_action :require_user!, only: [:show], if: :require_auth?
 
   PERMITTED_PARAMS = %i(local remote limit only_media allow_local_only).freeze
@@ -14,7 +15,15 @@ class Api::V1::Timelines::PublicController < Api::V1::Timelines::BaseController
   private
 
   def require_auth?
-    !Setting.timeline_preview
+    if truthy_param?(:local) and !truthy_param?(:remote)
+      !Setting.timeline_preview_local
+    elsif truthy_param?(:remote) and !truthy_param?(:allow_local_only) and !truthy_param?(:local)
+      !Setting.timeline_preview_remote
+    elsif (!truthy_param?(:remote) and truthy_param?(:allow_local_only)) or (truthy_param?(:remote) and truthy_param?(:local))
+      !Setting.timeline_preview
+    else
+      !Setting.timeline_preview
+    end
   end
 
   def load_statuses

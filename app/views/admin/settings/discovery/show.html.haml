@@ -30,7 +30,10 @@
     = f.input :timeline_preview, as: :boolean, wrapper: :with_label
 
   .fields-group
-    = f.input :noindex, as: :boolean, wrapper: :with_label, label: t('admin.settings.default_noindex.title'), hint: t('admin.settings.default_noindex.desc_html')
+    = f.input :timeline_preview_remote, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :timeline_preview_local, as: :boolean, wrapper: :with_label
 
   %h4= t('admin.settings.discovery.publish_statistics')
 
@@ -58,6 +61,9 @@
     = f.input :bootstrap_timeline_accounts, wrapper: :with_block_label
 
   %h4= t('admin.settings.discovery.profile_directory')
+
+  .fields-group
+    = f.input :noindex, as: :boolean, wrapper: :with_label, label: t('admin.settings.default_noindex.title'), hint: t('admin.settings.default_noindex.desc_html') #i don't feel like moving everything around and changing translation keys, this is good enough
 
   .fields-group
     = f.input :profile_directory, as: :boolean, wrapper: :with_label

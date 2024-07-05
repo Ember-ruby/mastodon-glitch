@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class Api::V1::Statuses::TranslationsController < Api::V1::Statuses::BaseController
+  include Authorization
+  
   before_action -> { doorkeeper_authorize! :read, :'read:statuses' }
+  before_action :require_user!
+  before_action :set_status
   before_action :set_translation
 
   rescue_from TranslationService::NotConfiguredError, with: :not_found

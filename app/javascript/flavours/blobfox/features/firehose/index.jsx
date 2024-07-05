@@ -13,6 +13,7 @@ import { expandPublicTimeline, expandCommunityTimeline } from 'flavours/blobfox/
 import { DismissableBanner } from 'flavours/blobfox/components/dismissable_banner';
 import SettingText from 'flavours/blobfox/components/setting_text';
 import initialState, { domain } from 'flavours/blobfox/initial_state';
+import { timelinePreview, timelinePreview_local, timelinePreview_remote } from 'flavours/blobfox/initial_state';
 import { useAppDispatch, useAppSelector } from 'flavours/blobfox/store';
 
 import Column from '../../components/column';
@@ -189,17 +190,21 @@ const Firehose = ({ feedType, multiColumn }) => {
       </ColumnHeader>
 
       <div className='account__section-headline'>
-        <NavLink exact to='/public/local'>
-          <FormattedMessage tagName='div' id='firehose.local' defaultMessage='This server' />
-        </NavLink>
-
-        <NavLink exact to='/public/remote'>
-          <FormattedMessage tagName='div' id='firehose.remote' defaultMessage='Other servers' />
-        </NavLink>
-
-        <NavLink exact to='/public'>
-          <FormattedMessage tagName='div' id='firehose.all' defaultMessage='All' />
-        </NavLink>
+        {(signedIn || timelinePreview_local ) && (
+          <NavLink exact to='/public/local'>
+            <FormattedMessage tagName='div' id='firehose.local' defaultMessage='This server' />
+          </NavLink>
+        )}
+        {(signedIn || timelinePreview_remote) && (
+          <NavLink exact to='/public/remote'>
+            <FormattedMessage tagName='div' id='firehose.remote' defaultMessage='Other servers' />
+          </NavLink>
+        )}
+        {(signedIn || timelinePreview) && (
+          <NavLink exact to='/public'>
+            <FormattedMessage tagName='div' id='firehose.all' defaultMessage='All' />
+          </NavLink>
+        )}
       </div>
 
       <StatusListContainer

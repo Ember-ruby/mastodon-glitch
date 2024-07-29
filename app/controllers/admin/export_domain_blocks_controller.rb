@@ -29,12 +29,12 @@ module Admin
       @domain_blocks = @import.csv_rows.filter_map do |row|
         domain = row['#domain'].strip
         next if DomainBlock.rule_for(domain).present?
-
+        
         domain_block = DomainBlock.new(domain: domain,
                                        severity: row.fetch('#severity', :suspend),
                                        reject_media: row.fetch('#reject_media', false),
                                        reject_reports: row.fetch('#reject_reports', false),
-                                       private_comment: row['#private_comment'] + ' | ' + @global_private_comment,
+                                       private_comment: (row['#private_comment'] + ' | ' or "| ") + @global_private_comment,
                                        public_comment: row['#public_comment'],
                                        obfuscate: row.fetch('#obfuscate', false))
 

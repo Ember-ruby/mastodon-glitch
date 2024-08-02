@@ -16,7 +16,15 @@ class Api::V1::Timelines::TagController < Api::V1::Timelines::BaseController
   private
 
   def require_auth?
-    !Setting.timeline_preview
+    if truthy_param?(:local) and !truthy_param?(:remote)
+      !Setting.timeline_preview_local
+    elsif truthy_param?(:remote) and !truthy_param?(:local)
+      !Setting.timeline_preview_remote
+    elsif truthy_param?(:remote) and truthy_param?(:local)
+      !Setting.timeline_preview
+    else
+      !Setting.timeline_preview
+    end
   end
 
   def load_tag

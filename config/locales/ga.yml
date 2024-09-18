@@ -333,6 +333,16 @@ ga:
     too_fast: Cuireadh an fhoirm isteach róthapa, triail arís.
   challenge:
     confirm: Lean ar aghaidh
+    hint_html: "<strong>Leid:</strong> Ní iarrfaimid do phasfhocal ort arís go ceann uair an chloig eile."
+    invalid_password: Pasfhocal neamhbhailí
+    prompt: Deimhnigh an pasfhocal chun leanúint ar aghaidh
+  crypto:
+    errors:
+      invalid_key: nach eochair bhailí Ed25519 nó Curve25519 í
+  date:
+    formats:
+      default: "%b %d, %Y"
+      with_month_name: "%B %d, %Y"
   datetime:
     distance_in_words:
       about_x_hours: "%{count}u"

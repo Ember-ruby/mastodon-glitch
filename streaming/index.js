@@ -1164,10 +1164,6 @@ const startServer = async () => {
   const channelsForUserStream = req => {
     const arr = [`timeline:${req.accountId}`];
 
-    if (isInScope(req, ['crypto']) && req.deviceId) {
-      arr.push(`timeline:${req.accountId}:${req.deviceId}`);
-    }
-
     if (isInScope(req, ['read', 'read:notifications'])) {
       arr.push(`timeline:${req.accountId}:notifications`);
     }

@@ -1,4 +1,6 @@
 name: Misc
+description: |
+  Generic template for anything that doesn't fit elsewhere.
 labels: [suggestion]
 body:
   - type: markdown

@@ -18,6 +18,8 @@ RSpec.describe ActivityPub::Activity::Create do
   before do
     sender.update(uri: ActivityPub::TagManager.instance.uri_for(sender))
 
+    Setting.reject_pattern = 'spam'
+
     stub_request(:get, 'http://example.com/attachment.png').to_return(request_fixture('avatar.txt'))
     stub_request(:get, 'http://example.com/emoji.png').to_return(body: attachment_fixture('emojo.png'))
     stub_request(:get, 'http://example.com/emojib.png').to_return(body: attachment_fixture('emojo.png'), headers: { 'Content-Type' => 'application/octet-stream' })
@@ -56,6 +58,42 @@ RSpec.describe ActivityPub::Activity::Create do
         content: '@bob lorem ipsum',
         published: Time.now.utc.iso8601,
         updated: Time.now.utc.iso8601,
+        tag: {
+          type: 'Mention',
+          href: ActivityPub::TagManager.instance.uri_for(follower),
+        },
+      }
+    end
+
+    let(:invalid_mention_json) do
+      {
+        id: [ActivityPub::TagManager.instance.uri_for(sender), 'post2'].join('/'),
+        type: 'Note',
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          ActivityPub::TagManager.instance.uri_for(follower),
+        ],
+        content: '@bob lorem ipsum',
+        published: 1.hour.ago.utc.iso8601,
+        updated: 1.hour.ago.utc.iso8601,
+        tag: {
+          type: 'Mention',
+          href: 'http://notexisting.dontexistingtld/actor',
+        },
+      }
+    end
+
+    let(:spam_object_json) do
+      {
+        id: [ActivityPub::TagManager.instance.uri_for(sender), 'post3'].join('/'),
+        type: 'Note',
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          ActivityPub::TagManager.instance.uri_for(follower),
+        ],
+        content: '@bob lorem ispam',
+        published: 1.hour.ago.utc.iso8601,
+        updated: 1.hour.ago.utc.iso8601,
         tag: {
           type: 'Mention',
           href: ActivityPub::TagManager.instance.uri_for(follower),
@@ -116,6 +154,36 @@ RSpec.describe ActivityPub::Activity::Create do
 
       # Creates two notifications
       expect(Notification.count).to eq 2
+    end
+
+    it 'ignores unprocessable mention', :aggregate_failures do
+      stub_request(:get, invalid_mention_json[:tag][:href]).to_raise(HTTP::ConnectionError)
+      # When receiving the post that contains an invalid mention…
+      described_class.new(activity_for_object(invalid_mention_json), sender, delivery: true).perform
+
+      # NOTE: Refering explicitly to the workers is a bit awkward
+      DistributionWorker.drain
+      FeedInsertWorker.drain
+
+      # …it creates a status
+      status = Status.find_by(uri: invalid_mention_json[:id])
+
+      # Check the process did not crash
+      expect(status.nil?).to be false
+
+      # It has queued a mention resolve job
+      expect(MentionResolveWorker).to have_enqueued_sidekiq_job(status.id, invalid_mention_json[:tag][:href], anything)
+    end
+
+    it 'do not process posts that contain reject patterns', :aggregate_failures do
+      stub_request(:get, spam_object_json[:id]).to_return(status: 500)
+      described_class.new(activity_for_object(spam_object_json), sender, delivery: true).perform
+
+      # …it creates a status
+      status = Status.find_by(uri: spam_object_json[:id])
+
+      # Check the process did crash
+      expect(status.nil?).to be true
     end
   end
 

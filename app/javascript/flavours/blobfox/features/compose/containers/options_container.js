@@ -11,6 +11,7 @@ import { openModal } from 'flavours/blobfox/actions/modal';
 import Options from '../components/options';
 
 function mapStateToProps (state) {
+  const uploadLimit = getState().getIn(['server', 'server', 'configuration', 'statuses', 'max_media_attachments']);
   const poll = state.getIn(['compose', 'poll']);
   const media = state.getIn(['compose', 'media_attachments']);
   const pending_media = state.getIn(['compose', 'pending_media_attachments']);
@@ -18,8 +19,7 @@ function mapStateToProps (state) {
     acceptContentTypes: state.getIn(['media_attachments', 'accept_content_types']).toArray().join(','),
     resetFileKey: state.getIn(['compose', 'resetFileKey']),
     hasPoll: !!poll,
-    allowMedia: !poll && (media ? media.size + pending_media < 4 && !media.some(item => ['video', 'audio'].includes(item.get('type'))) : pending_media < 4),
-    allowPoll: !(media && !!media.size),
+    allowMedia: (media ? media.size + pending_media < uploadLimit && !media.some(item => ['video', 'audio'].includes(item.get('type'))) : pending_media < uploadLimit),
     showContentTypeChoice: state.getIn(['local_settings', 'show_content_type_choice']),
     contentType: state.getIn(['compose', 'content_type']),
   };

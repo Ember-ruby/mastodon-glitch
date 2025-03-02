@@ -15,13 +15,11 @@ import { Blurhash } from 'mastodon/components/blurhash';
 
 import { autoPlayGif, displayMedia, useBlurhash } from '../initial_state';
 
-<<<<<<< ours
 import { IconButton } from './icon_button';
 
 const messages = defineMessages({
   toggle_visible: { id: 'media_gallery.toggle_visible', defaultMessage: '{number, plural, one {Hide image} other {Hide images}}' },
 });
-=======
 const colCount = function(size) {
   return Math.max(Math.ceil(Math.sqrt(size)), 2);
 };
@@ -29,7 +27,6 @@ const colCount = function(size) {
 const rowCount = function(size) {
   return Math.ceil(size / colCount(size));
 };
->>>>>>> theirs
 
 class Item extends PureComponent {
 

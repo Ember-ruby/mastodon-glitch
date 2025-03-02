@@ -11,7 +11,7 @@ import { openModal } from 'flavours/glitch/actions/modal';
 import Options from '../components/options';
 
 function mapStateToProps (state) {
-  const uploadLimit = getState().getIn(['server', 'server', 'configuration', 'statuses', 'max_media_attachments']);
+  const uploadLimit = state.getIn(['server', 'server', 'configuration', 'statuses', 'max_media_attachments']);
   const poll = state.getIn(['compose', 'poll']);
   const media = state.getIn(['compose', 'media_attachments']);
   const pending_media = state.getIn(['compose', 'pending_media_attachments']);

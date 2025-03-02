@@ -39,6 +39,14 @@ const messages = defineMessages({
   },
 });
 
+const colCount = function(size) {
+  return Math.max(Math.ceil(Math.sqrt(size)), 2);
+};
+
+const rowCount = function(size) {
+  return Math.ceil(size / colCount(size));
+};
+
 class Item extends PureComponent {
 
   static propTypes = {
@@ -125,14 +133,19 @@ class Item extends PureComponent {
     let badges = [], thumbnail;
 
     let width  = 50;
-    let height = 100;
+    let height = 50;
 
-    if (size === 1) {
+    const cols = colCount(size);
+    const remaining = (-size % cols + cols) % cols;
+    const largeCount = Math.floor(remaining / 3); // width=2, height=2
+
+    const mediumCount = remaining % 3; // height=2
+
+    if (size === 1 || index < largeCount) {
       width = 100;
-    }
-
-    if (size === 4 || (size === 3 && index > 0)) {
-      height = 50;
+      height = 100;
+    } else if (size === 2 || index < largeCount + mediumCount) {
+      height = 100;
     }
 
     if (attachment.get('description')?.length > 0) {
@@ -348,7 +361,7 @@ class MediaGallery extends PureComponent {
   render () {
     const { media, lang, intl, sensitive, letterbox, fullwidth, defaultWidth, autoplay } = this.props;
     const { visible } = this.state;
-    const size     = media.take(4).size;
+    const size     = media.size;
     const uncached = media.every(attachment => attachment.get('type') === 'unknown');
 
     const width = this.state.width || defaultWidth;
@@ -362,13 +375,18 @@ class MediaGallery extends PureComponent {
     if (this.isStandaloneEligible()) { // TODO: cropImages setting
       style.aspectRatio = `${this.props.media.getIn([0, 'meta', 'small', 'aspect'])}`;
     } else {
-      style.aspectRatio = '16 / 9';
+      const cols = colCount(media.size);
+      const rows = rowCount(media.size);
+      style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+
+      style.aspectRatio = '3 / 2';
     }
 
     if (this.isStandaloneEligible()) {
       children = <Item standalone autoplay={autoplay} onClick={this.handleClick} onAltClick={this.handleAltClick} attachment={media.get(0)} lang={lang} displayWidth={width} visible={visible} />;
     } else {
-      children = media.take(4).map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} onAltClick={this.handleAltClick} attachment={attachment} index={i} lang={lang} size={size} letterbox={letterbox} displayWidth={width} visible={visible || uncached} />);
+      children = media.map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} attachment={attachment} index={i} lang={lang} size={size} displayWidth={width} visible={visible || uncached} />);
     }
 
     if (uncached) {

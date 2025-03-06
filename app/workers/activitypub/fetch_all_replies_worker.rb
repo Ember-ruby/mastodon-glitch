@@ -13,6 +13,7 @@ class ActivityPub::FetchAllRepliesWorker
 
   # Global max replies to fetch per request (all replies, recursively)
   MAX_REPLIES = (ENV['FETCH_REPLIES_MAX_GLOBAL'] || 1000).to_i
+  MAX_PAGES = (ENV['FETCH_REPLIES_MAX_PAGES'] || 500).to_i
 
   def perform(parent_status_id, options = {})
     @parent_status = Status.find(parent_status_id)
@@ -23,18 +24,18 @@ class ActivityPub::FetchAllRepliesWorker
     raise UnexpectedResponseError("Could not fetch ActivityPub JSON for parent status: #{@parent_status.uri}") if @parent_status_json.nil?
 
     FetchReplyWorker.perform_async(@parent_status.uri, { 'prefetched_body' => @parent_status_json })
-    uris_to_fetch = get_replies(@parent_status.uri, @parent_status_json, options)
+    uris_to_fetch, n_pages = get_replies(@parent_status.uri, @parent_status_json, MAX_PAGES, options)
     return if uris_to_fetch.nil?
 
     @parent_status.touch(:fetched_replies_at)
 
     fetched_uris = uris_to_fetch.clone.to_set
 
-    until uris_to_fetch.empty? || fetched_uris.length >= MAX_REPLIES
+    until uris_to_fetch.empty? || fetched_uris.length >= MAX_REPLIES  || n_pages >= MAX_PAGES
       next_reply = uris_to_fetch.pop
       next if next_reply.nil?
 
-      new_reply_uris = get_replies(next_reply, nil, options)
+      new_reply_uris, new_n_pages = get_replies(next_reply, MAX_PAGES - n_pages, nil, options)
       next if new_reply_uris.nil?
 
       new_reply_uris = new_reply_uris.reject { |uri| fetched_uris.include?(uri) }
@@ -45,15 +46,16 @@ class ActivityPub::FetchAllRepliesWorker
 
     Rails.logger.debug { "FetchAllRepliesWorker - #{parent_status_id}: fetched #{fetched_uris.length} replies" }
     fetched_uris
+    n_pages += new_n_pages
   end
 
   private
 
-  def get_replies(status_uri, prefetched_body = nil, options = {})
+  def get_replies(status_uri, max_pages, prefetched_body = nil, options = {})
     replies_collection_or_uri = get_replies_uri(status_uri, prefetched_body)
     return if replies_collection_or_uri.nil?
 
-    ActivityPub::FetchAllRepliesService.new.call(replies_collection_or_uri, **options.deep_symbolize_keys)
+    ActivityPub::FetchAllRepliesService.new.call(replies_collection_or_uri, max_pages, **options.deep_symbolize_keys)
   end
 
   def get_replies_uri(parent_status_uri, prefetched_body = nil)

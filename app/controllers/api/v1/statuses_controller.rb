@@ -46,10 +46,6 @@ class Api::V1::StatusesController < Api::BaseController
     descendants_results = @status.descendants(descendants_limit, current_account, descendants_depth_limit)
     loaded_ancestors    = cache_collection(ancestors_results, Status)
     loaded_descendants  = cache_collection(descendants_results, Status)
-    loaded_ancestors = preload_collection(ancestors_results, Status)
-    loaded_descendants = preload_collection(descendants_results, Status)
-    loaded_ancestors    = preload_collection(ancestors_results, Status)
-    loaded_descendants  = preload_collection(descendants_results, Status)
 
     @context = Context.new(ancestors: loaded_ancestors, descendants: loaded_descendants)
     statuses = [@status] + @context.ancestors + @context.descendants

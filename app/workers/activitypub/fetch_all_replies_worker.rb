@@ -19,7 +19,7 @@ class ActivityPub::FetchAllRepliesWorker
     @parent_status = Status.find(parent_status_id)
     Rails.logger.debug { "FetchAllRepliesWorker - #{@parent_status.uri}: Fetching all replies for status: #{@parent_status}" }
 
-    uris_to_fetch, n_pages = get_replies(@parent_status.uri, @parent_status_json, MAX_PAGES, options)
+    uris_to_fetch, n_pages = get_replies(@parent_status.uri, MAX_PAGES, options)
     return if uris_to_fetch.nil?
 
     @parent_status.touch(:fetched_replies_at)

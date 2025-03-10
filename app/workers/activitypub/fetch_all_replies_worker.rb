@@ -30,7 +30,7 @@ class ActivityPub::FetchAllRepliesWorker
       next_reply = uris_to_fetch.pop
       next if next_reply.nil?
 
-      new_reply_uris, new_n_pages = get_replies(next_reply, MAX_PAGES - n_pages, nil, options)
+      new_reply_uris, new_n_pages = get_replies(next_reply, MAX_PAGES - n_pages, options)
       next if new_reply_uris.nil?
 
       new_reply_uris = new_reply_uris.reject { |uri| fetched_uris.include?(uri) }

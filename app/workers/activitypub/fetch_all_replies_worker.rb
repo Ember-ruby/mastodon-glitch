@@ -21,7 +21,7 @@ class ActivityPub::FetchAllRepliesWorker
 
     # Refetch parent status and replies with one request
     @parent_status_json = fetch_resource(@parent_status.uri, true)
-    raise UnexpectedResponseError("Could not fetch ActivityPub JSON for parent status: #{@parent_status.uri}") if @parent_status_json.nil?
+    raise Mastodon::UnexpectedResponseError("Could not fetch ActivityPub JSON for parent status: #{@parent_status.uri}") if @parent_status_json.nil?
 
     FetchReplyWorker.perform_async(@parent_status.uri, { 'prefetched_body' => @parent_status_json })
     uris_to_fetch, n_pages = get_replies(@parent_status.uri, @parent_status_json, MAX_PAGES, options)

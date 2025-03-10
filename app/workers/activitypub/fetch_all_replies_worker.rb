@@ -19,11 +19,6 @@ class ActivityPub::FetchAllRepliesWorker
     @parent_status = Status.find(parent_status_id)
     Rails.logger.debug { "FetchAllRepliesWorker - #{@parent_status.uri}: Fetching all replies for status: #{@parent_status}" }
 
-    # Refetch parent status and replies with one request
-    @parent_status_json = fetch_resource(@parent_status.uri, true)
-    raise Mastodon::UnexpectedResponseError("Could not fetch ActivityPub JSON for parent status: #{@parent_status.uri}") if @parent_status_json.nil?
-
-    FetchReplyWorker.perform_async(@parent_status.uri, { 'prefetched_body' => @parent_status_json })
     uris_to_fetch, n_pages = get_replies(@parent_status.uri, @parent_status_json, MAX_PAGES, options)
     return if uris_to_fetch.nil?
 
@@ -51,17 +46,16 @@ class ActivityPub::FetchAllRepliesWorker
 
   private
 
-  def get_replies(status_uri, max_pages, prefetched_body = nil, options = {})
-    replies_collection_or_uri = get_replies_uri(status_uri, prefetched_body)
+  def get_replies(status_uri, max_pages, options = {})
+    replies_collection_or_uri = get_replies_uri(status_uri)
     return if replies_collection_or_uri.nil?
 
     ActivityPub::FetchAllRepliesService.new.call(replies_collection_or_uri, max_pages, **options.deep_symbolize_keys)
   end
 
-  def get_replies_uri(parent_status_uri, prefetched_body = nil)
+  def get_replies_uri(parent_status_uri)
     begin
-      json_status = prefetched_body.nil? ? fetch_resource(parent_status_uri, true) : prefetched_body
-
+      json_status = fetch_resource(parent_status_uri, true)
       if json_status.nil?
         Rails.logger.debug { "FetchAllRepliesWorker - #{@parent_status.uri}: error getting replies URI for #{parent_status_uri}, returned nil" }
         nil

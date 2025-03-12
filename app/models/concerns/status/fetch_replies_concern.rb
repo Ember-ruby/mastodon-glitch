@@ -4,7 +4,7 @@ module Status::FetchRepliesConcern
   extend ActiveSupport::Concern
 
   # enable/disable fetching all replies
-  FETCH_REPLIES_ENABLED = ENV.key?('FETCH_REPLIES_ENABLED') ? ENV['FETCH_REPLIES_ENABLED'] == 'true' : true
+  FETCH_REPLIES_ENABLED = ENV['FETCH_REPLIES_ENABLED'] == 'true'
 
   # debounce fetching all replies to minimize DoS
   FETCH_REPLIES_DEBOUNCE = (ENV['FETCH_REPLIES_DEBOUNCE'] || 15).to_i.minutes

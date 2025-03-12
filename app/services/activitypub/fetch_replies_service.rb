@@ -17,9 +17,10 @@ class ActivityPub::FetchRepliesService < BaseService
     @items, n_pages = collection_items(collection_or_uri, max_pages: max_pages, max_items: MAX_REPLIES, reference_uri: @reference_uri)
     return if @items.nil?
 
-    FetchReplyWorker.push_bulk(filtered_replies) { |reply_uri| [reply_uri, { 'request_id' => request_id }] }
+    @items = filter_replies(@items)
+    FetchReplyWorker.push_bulk(@items) { |reply_uri| [reply_uri, { 'request_id' => request_id }] }
 
-    @items
+    [@items, n_pages]
   end
 
   private

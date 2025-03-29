@@ -6,7 +6,7 @@ ruby '>= 3.1.0'
 gem 'propshaft'
 gem 'puma', '~> 6.3'
 gem 'rack', '~> 2.2.7'
-gem 'rails', '~> 8.0'
+gem 'rails', '~> 7.1.1'
 gem 'thor', '~> 1.2'
 
 # For why irb is in the Gemfile, see: https://ruby.social/@st0012/111444685161478182
@@ -74,7 +74,7 @@ gem 'public_suffix', '~> 5.0'
 gem 'pundit', '~> 2.3'
 gem 'rack-attack', '~> 6.6'
 gem 'rack-cors', '~> 2.0', require: 'rack/cors'
-gem 'rails-i18n', '~> 8.0'
+gem 'rails-i18n', '~> 7.0'
 gem 'redcarpet', '~> 3.6'
 gem 'redis', '~> 4.5', require: ['redis', 'redis/connection/hiredis']
 gem 'redis-namespace', '~> 1.10'

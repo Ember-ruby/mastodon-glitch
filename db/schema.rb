@@ -247,7 +247,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_10_123453) do
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "published_at", precision: nil
     t.bigint "status_ids", array: true
-    t.datetime "notification_sent_at"
   end
 
   create_table "appeals", force: :cascade do |t|

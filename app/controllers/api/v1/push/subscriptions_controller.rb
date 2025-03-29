@@ -11,19 +11,16 @@ class Api::V1::Push::SubscriptionsController < Api::BaseController
   end
 
   def create
-    with_redis_lock("push_subscription:#{current_user.id}") do
-      destroy_web_push_subscriptions!
+    @push_subscription&.destroy!
 
-      @push_subscription = Web::PushSubscription.create!(
-        endpoint: subscription_params[:endpoint],
-        key_p256dh: subscription_params[:keys][:p256dh],
-        key_auth: subscription_params[:keys][:auth],
-        standard: subscription_params[:standard] || false,
-        data: data_params,
-        user_id: current_user.id,
-        access_token_id: doorkeeper_token.id
-      )
-    end
+    @push_subscription = Web::PushSubscription.create!(
+      endpoint: subscription_params[:endpoint],
+      key_p256dh: subscription_params[:keys][:p256dh],
+      key_auth: subscription_params[:keys][:auth],
+      data: data_params,
+      user_id: current_user.id,
+      access_token_id: doorkeeper_token.id
+    )
 
     render json: @push_subscription, serializer: REST::WebPushSubscriptionSerializer
   end
@@ -49,7 +46,7 @@ class Api::V1::Push::SubscriptionsController < Api::BaseController
   end
 
   def subscription_params
-    params.require(:subscription).permit(:endpoint, :standard, keys: [:auth, :p256dh])
+    params.require(:subscription).permit(:endpoint, keys: [:auth, :p256dh])
   end
 
   def data_params

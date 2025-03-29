@@ -5,11 +5,10 @@
 # Table name: web_push_subscriptions
 #
 #  id              :bigint(8)        not null, primary key
-#  data            :json
 #  endpoint        :string           not null
-#  key_auth        :string           not null
 #  key_p256dh      :string           not null
-#  standard        :boolean          default(FALSE), not null
+#  key_auth        :string           not null
+#  data            :json
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  access_token_id :bigint(8)

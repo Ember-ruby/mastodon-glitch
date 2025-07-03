@@ -232,6 +232,7 @@ en:
         username: Username
         username_or_email: Username or Email
         whole_word: Whole word
+        regex: Regex (Takes Priority)
       email_domain_block:
         with_dns_records: Include MX records and IPs of the domain
       featured_tag:

@@ -702,8 +702,6 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.0)
-    rbs (3.9.4)
-      logger
     rdf (3.3.3)
       bcp47_spec (~> 0.2)
       bigdecimal (~> 3.1, >= 3.1.5)
@@ -791,11 +789,6 @@ GEM
     rubocop-rspec (3.6.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
-    ruby-lsp (0.24.2)
-      language_server-protocol (~> 3.17.0)
-      prism (>= 1.2, < 2.0)
-      rbs (>= 3, < 5)
-      sorbet-runtime (>= 0.5.10782)
     ruby-prof (1.7.2)
       base64
     ruby-progressbar (1.13.0)
@@ -850,7 +843,6 @@ GEM
     simplecov-html (0.13.1)
     simplecov-lcov (0.8.0)
     simplecov_json_formatter (0.1.4)
-    sorbet-runtime (0.5.12219)
     stackprof (0.2.27)
     statsd-ruby (1.5.0)
     stoplight (4.1.1)
@@ -1065,7 +1057,6 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  ruby-lsp
   ruby-prof
   ruby-progressbar (~> 1.13)
   rubyzip (~> 2.3)

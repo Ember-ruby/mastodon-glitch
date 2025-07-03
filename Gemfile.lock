@@ -3,7 +3,7 @@ GIT
   revision: 52725def8baf67e0d645c9d1c6c0bdff69da0c60
   ref: 52725def8baf67e0d645c9d1c6c0bdff69da0c60
   specs:
-    webpush (1.1.0)
+    webpush (0.3.8)
       hkdf (~> 0.2)
       jwt (~> 2.0)
 

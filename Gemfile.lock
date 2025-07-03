@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/mastodon/webpush.git
-  revision: 52725def8baf67e0d645c9d1c6c0bdff69da0c60
-  ref: 52725def8baf67e0d645c9d1c6c0bdff69da0c60
+  revision: 9631ac63045cfabddacc69fc06e919b4c13eb913
+  ref: 9631ac63045cfabddacc69fc06e919b4c13eb913
   specs:
-    webpush (0.3.8)
+    webpush (1.1.0)
       hkdf (~> 0.2)
       jwt (~> 2.0)
 

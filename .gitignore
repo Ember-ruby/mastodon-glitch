@@ -27,6 +27,8 @@
 .env.development
 /node_modules/
 /build/
+/vendor
+/tmp
 
 # Ignore Vagrant files
 .vagrant/

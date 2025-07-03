@@ -8,6 +8,7 @@
 #  custom_filter_id :bigint(8)        not null
 #  keyword          :text             default(""), not null
 #  whole_word       :boolean          default(TRUE), not null
+#  regex            :boolean          default(FALSE), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
@@ -24,7 +25,9 @@ class CustomFilterKeyword < ApplicationRecord
   after_commit :invalidate_cache!
 
   def to_regex
-    if whole_word?
+    if regex?
+      /#{keyword}/i
+    elsif whole_word?
       /(?mix:#{to_regex_sb}#{Regexp.escape(keyword)}#{to_regex_eb})/
     else
       /#{Regexp.escape(keyword)}/i

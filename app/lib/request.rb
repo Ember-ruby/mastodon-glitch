@@ -61,6 +61,8 @@ class PerOperationWithDeadline < HTTP::Timeout::PerOperation
 end
 
 class Request
+  REQUEST_TARGET = '(request-target)'
+
   # We enforce a 5s timeout on DNS resolving, 5s timeout on socket opening
   # and 5s timeout on the TLS handshake, meaning the worst case should take
   # about 15s in total
@@ -75,18 +77,11 @@ class Request
     @url         = Addressable::URI.parse(url).normalize
     @http_client = options.delete(:http_client)
     @allow_local = options.delete(:allow_local)
-    @full_path   = !options.delete(:omit_query_string)
-    @options     = {
-      follow: {
-        max_hops: 3,
-        on_redirect: ->(response, request) { re_sign_on_redirect(response, request) },
-      },
-      socket_class: use_proxy? || @allow_local ? ProxySocket : Socket,
-    }.merge(options)
+    @full_path   = options.delete(:with_query_string)
+    @options     = options.merge(socket_class: use_proxy? || @allow_local ? ProxySocket : Socket)
+    @options     = @options.merge(timeout_class: PerOperationWithDeadline, timeout_options: TIMEOUT)
     @options     = @options.merge(proxy_url) if use_proxy?
     @headers     = {}
-
-    @signing = nil
 
     raise Mastodon::HostValidationError, 'Instance does not support hidden service connections' if block_hidden_service?
 
@@ -97,9 +92,8 @@ class Request
   def on_behalf_of(actor, sign_with: nil)
     raise ArgumentError, 'actor must not be nil' if actor.nil?
 
-    key_id = ActivityPub::TagManager.instance.key_uri_for(actor)
-    keypair = sign_with.present? ? OpenSSL::PKey::RSA.new(sign_with) : actor.keypair
-    @signing = HttpSignatureDraft.new(keypair, key_id, full_path: @full_path)
+    @actor         = actor
+    @keypair       = sign_with.present? ? OpenSSL::PKey::RSA.new(sign_with) : @actor.keypair
 
     self
   end
@@ -131,7 +125,7 @@ class Request
   end
 
   def headers
-    (@signing ? @headers.merge('Signature' => signature) : @headers)
+    (@actor ? @headers.merge('Signature' => signature) : @headers).without(REQUEST_TARGET)
   end
 
   class << self
@@ -146,13 +140,14 @@ class Request
     end
 
     def http_client
-      HTTP.use(:auto_inflate)
+      HTTP.use(:auto_inflate).follow(max_hops: 3)
     end
   end
 
   private
 
   def set_common_headers!
+    @headers[REQUEST_TARGET]    = request_target
     @headers['User-Agent']      = Mastodon::Version.user_agent
     @headers['Host']            = @url.host
     @headers['Date']            = Time.now.utc.httpdate
@@ -163,28 +158,31 @@ class Request
     @headers['Digest'] = "SHA-256=#{Digest::SHA256.base64digest(@options[:body])}"
   end
 
-  def signature
-    @signing.sign(@headers.without('User-Agent', 'Accept-Encoding'), @verb, @url)
+  def request_target
+    if @url.query.nil? || !@full_path
+      "#{@verb} #{@url.path}"
+    else
+      "#{@verb} #{@url.path}?#{@url.query}"
+    end
   end
 
-  def re_sign_on_redirect(_response, request)
-    # Delete existing signature if there is one, since it will be invalid
-    request.headers.delete('Signature')
+  def signature
+    algorithm = 'rsa-sha256'
+    signature = Base64.strict_encode64(@keypair.sign(OpenSSL::Digest.new('SHA256'), signed_string))
 
-    return unless @signing.present? && @verb == :get
+    "keyId=\"#{key_id}\",algorithm=\"#{algorithm}\",headers=\"#{signed_headers.keys.join(' ').downcase}\",signature=\"#{signature}\""
+  end
 
-    signed_headers = request.headers.to_h.slice(*@headers.keys)
-    unless @headers.keys.all? { |key| signed_headers.key?(key) }
-      # We have lost some headers in the process, so don't sign the new
-      # request, in order to avoid issuing a valid signature with fewer
-      # conditions than expected.
+  def signed_string
+    signed_headers.map { |key, value| "#{key.downcase}: #{value}" }.join("\n")
+  end
 
-      Rails.logger.warn { "Some headers (#{@headers.keys - signed_headers.keys}) have been lost on redirect from {@uri} to #{request.uri}, this should not happen. Skipping signatures" }
-      return
-    end
+  def signed_headers
+    @headers.without('User-Agent', 'Accept-Encoding')
+  end
 
-    signature_value = @signing.sign(signed_headers.without('User-Agent', 'Accept-Encoding'), @verb, Addressable::URI.parse(request.uri))
-    request.headers['Signature'] = signature_value
+  def key_id
+    ActivityPub::TagManager.instance.key_uri_for(@actor)
   end
 
   def http_client

@@ -18,11 +18,8 @@ class ActivityPub::FetchRepliesService < BaseService
     return if @items.nil?
 
     @items = filter_replies(@items)
-    
-    batch = WorkerBatch.new
-    batch.connect(async_refresh_key) if async_refresh_key.present?
-    batch.finish! if @items.empty?
-    batch.within do
+
+    WorkerBatch.new(batch_id).within do |batch|
       FetchReplyWorker.push_bulk(@items) do |reply_uri|
         [reply_uri, { 'request_id' => request_id, 'batch_id' => batch.id }]
       end

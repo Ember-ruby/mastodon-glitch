@@ -16,6 +16,7 @@ class ActivityPub::FetchAllRepliesWorker
   MAX_PAGES = (ENV['FETCH_REPLIES_MAX_PAGES'] || 500).to_i
 
   def perform(parent_status_id, options = {})
+    @batch = WorkerBatch.new(options['batch_id'])
     @parent_status = Status.find(parent_status_id)
     Rails.logger.debug { "FetchAllRepliesWorker - #{@parent_status.uri}: Fetching all replies for status: #{@parent_status}" }
 
@@ -37,11 +38,13 @@ class ActivityPub::FetchAllRepliesWorker
 
       uris_to_fetch.concat(new_reply_uris)
       fetched_uris = fetched_uris.merge(new_reply_uris)
+      n_pages += new_n_pages
     end
 
     Rails.logger.debug { "FetchAllRepliesWorker - #{parent_status_id}: fetched #{fetched_uris.length} replies" }
     fetched_uris
-    n_pages += new_n_pages
+  ensure
+    @batch.remove_job(jid)
   end
 
   private
@@ -50,6 +53,7 @@ class ActivityPub::FetchAllRepliesWorker
   #   status URI, or the prefetched body of the Note object
   def get_replies(status, max_pages, options = {})
     replies_collection_or_uri = get_replies_uri(status)
+
     return if replies_collection_or_uri.nil?
 
     ActivityPub::FetchAllRepliesService.new.call(value_or_id(status), replies_collection_or_uri, max_pages: max_pages, **options.deep_symbolize_keys)
@@ -75,9 +79,14 @@ class ActivityPub::FetchAllRepliesWorker
   # @param root_status_uri [String]
   def get_root_replies(root_status_uri, options = {})
     root_status_body = fetch_resource(root_status_uri, true)
+
     raise RuntimeError("FetchAllRepliesWorker - #{@root_status.uri}: Root status could not be fetched") if root_status_body.nil?
 
+    @batch.within do
+      
+
     FetchReplyWorker.perform_async(root_status_uri, { **options, prefetched_body: root_status_body })
+    end
 
     get_replies(root_status_body, MAX_PAGES, options)
   end

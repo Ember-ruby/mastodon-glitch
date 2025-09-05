@@ -492,7 +492,7 @@ export default function compose(state = initialState, action) {
       }
 
       if (action.status.get('poll')) {
-        let options = ImmutableList(action.status.get('poll').options.map(x => x.title));
+        let options = action.status.getIn(['poll', 'options']).map(x => x.get('title'));
         if (options.size < action.maxOptions) {
           options = options.push('');
         }
@@ -526,7 +526,7 @@ export default function compose(state = initialState, action) {
       }
 
       if (action.status.get('poll')) {
-        let options = ImmutableList(action.status.get('poll').options.map(x => x.title));
+        let options = action.status.getIn(['poll', 'options']).map(x => x.get('title'));
         if (options.size < action.maxOptions) {
           options = options.push('');
         }

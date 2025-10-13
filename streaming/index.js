@@ -41,7 +41,6 @@ initializeLogLevel(process.env, environment);
  * @property {string[]} scopes
  * @property {string} accountId
  * @property {string[]} chosenLanguages
- * @property {string} deviceId
  */
 
 /**
@@ -518,43 +517,25 @@ const startServer = async () => {
    * @param {any} req
    * @returns {Promise<ResolvedAccount>}
    */
-  const accountFromToken = (token, req) => new Promise((resolve, reject) => {
-    pgPool.connect((err, client, done) => {
-      if (err) {
-        reject(err);
-        return;
-      }
+  const accountFromToken = async (token, req) => {
+    const result = await pgPool.query('SELECT oauth_access_tokens.id, oauth_access_tokens.resource_owner_id, users.account_id, users.chosen_languages, oauth_access_tokens.scopes FROM oauth_access_tokens INNER JOIN users ON oauth_access_tokens.resource_owner_id = users.id INNER JOIN accounts ON accounts.id = users.account_id WHERE oauth_access_tokens.token = $1 AND oauth_access_tokens.revoked_at IS NULL AND users.disabled IS FALSE AND accounts.suspended_at IS NULL LIMIT 1', [token]);
 
-      // @ts-ignore
-      client.query('SELECT oauth_access_tokens.id, oauth_access_tokens.resource_owner_id, users.account_id, users.chosen_languages, oauth_access_tokens.scopes, devices.device_id FROM oauth_access_tokens INNER JOIN users ON oauth_access_tokens.resource_owner_id = users.id LEFT OUTER JOIN devices ON oauth_access_tokens.id = devices.access_token_id WHERE oauth_access_tokens.token = $1 AND oauth_access_tokens.revoked_at IS NULL LIMIT 1', [token], (err, result) => {
-        done();
+    if (result.rows.length === 0) {
+      throw new AuthenticationError('Invalid access token');
+    }
 
-        if (err) {
-          reject(err);
-          return;
-        }
+    req.accessTokenId = result.rows[0].id;
+    req.scopes = result.rows[0].scopes.split(' ');
+    req.accountId = result.rows[0].account_id;
+    req.chosenLanguages = result.rows[0].chosen_languages;
 
-        if (result.rows.length === 0) {
-          reject(new AuthenticationError('Invalid access token'));
-          return;
-        }
-
-        req.accessTokenId = result.rows[0].id;
-        req.scopes = result.rows[0].scopes.split(' ');
-        req.accountId = result.rows[0].account_id;
-        req.chosenLanguages = result.rows[0].chosen_languages;
-        req.deviceId = result.rows[0].device_id;
-
-        resolve({
-          accessTokenId: result.rows[0].id,
-          scopes: result.rows[0].scopes.split(' '),
-          accountId: result.rows[0].account_id,
-          chosenLanguages: result.rows[0].chosen_languages,
-          deviceId: result.rows[0].device_id
-        });
-      });
-    });
-  });
+    return {
+      accessTokenId: result.rows[0].id,
+      scopes: result.rows[0].scopes.split(' '),
+      accountId: result.rows[0].account_id,
+      chosenLanguages: result.rows[0].chosen_languages
+    };
+  };
 
   /**
    * @param {any} req

@@ -28,6 +28,10 @@ class CustomFilter < ApplicationRecord
     account
   ).freeze
 
+  EXPIRATION_DURATIONS = [30.minutes, 1.hour, 6.hours, 12.hours, 1.day, 1.week].freeze
+
+  TITLE_LENGTH_LIMIT = 256
+
   include Expireable
   include Redisable
 
@@ -39,6 +43,7 @@ class CustomFilter < ApplicationRecord
   accepts_nested_attributes_for :keywords, reject_if: :all_blank, allow_destroy: true
 
   validates :title, :context, presence: true
+  validates :title, length: { maximum: TITLE_LENGTH_LIMIT }
   validate :context_must_be_valid
 
   before_validation :clean_up_contexts

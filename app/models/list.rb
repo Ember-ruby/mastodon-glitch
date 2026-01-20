@@ -17,6 +17,7 @@ class List < ApplicationRecord
   include Paginable
 
   PER_ACCOUNT_LIMIT = 50
+  TITLE_LENGTH_LIMIT = 256
 
   enum :replies_policy, { list: 0, followed: 1, none: 2 }, prefix: :show
 
@@ -25,7 +26,7 @@ class List < ApplicationRecord
   has_many :list_accounts, inverse_of: :list, dependent: :destroy
   has_many :accounts, through: :list_accounts
 
-  validates :title, presence: true
+  validates :title, presence: true, length: { maximum: TITLE_LENGTH_LIMIT }
 
   validates_each :account_id, on: :create do |record, _attr, value|
     record.errors.add(:base, I18n.t('lists.errors.limit')) if List.where(account_id: value).count >= PER_ACCOUNT_LIMIT

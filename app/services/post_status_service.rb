@@ -209,6 +209,7 @@ class PostStatusService < BaseService
       language: valid_locale_cascade(@options[:language], @account.user&.preferred_posting_language, I18n.default_locale),
       application: @options[:application],
       content_type: @options[:content_type] || @account.user&.setting_default_content_type,
+      local_only: @options[:local_only],
       rate_limit: @options[:with_rate_limit],
     }.compact
   end

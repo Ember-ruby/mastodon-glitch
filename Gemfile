@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source 'https://gem.coop'
 ruby '>= 3.1.0'
 
 gem 'propshaft'

@@ -133,11 +133,6 @@ Rails/NegateInclude:
 RSpec/ExampleLength:
   CountAsOne: ['array', 'heredoc', 'method_call']
 
-# Reason: Deprecated cop, will be removed in 3.0, replaced by SpecFilePathFormat
-# https://docs.rubocop.org/rubocop-rspec/cops_rspec.html#rspecfilepath
-RSpec/FilePath:
-  Enabled: false
-
 # Reason:
 # https://docs.rubocop.org/rubocop-rspec/cops_rspec.html#rspecnamedsubject
 RSpec/NamedSubject:
@@ -147,11 +142,6 @@ RSpec/NamedSubject:
 # https://docs.rubocop.org/rubocop-rspec/cops_rspec.html#rspecnottonot
 RSpec/NotToNot:
   EnforcedStyle: to_not
-
-# Reason: Prevailing style uses numeric status codes, matches Rails/HttpStatus
-# https://docs.rubocop.org/rubocop-rspec/cops_rspec_rails.html#rspecrailshttpstatus
-RSpec/Rails/HttpStatus:
-  EnforcedStyle: numeric
 
 # Reason: Match overrides from Rspec/FilePath rule above
 # https://docs.rubocop.org/rubocop-rspec/cops_rspec.html#rspecspecfilepathformat

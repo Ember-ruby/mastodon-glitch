@@ -79,7 +79,6 @@ class Account < ApplicationRecord
   USERNAME_LENGTH_HARD_LIMIT = 2048
   DISPLAY_NAME_LENGTH_HARD_LIMIT = 2048
   NOTE_LENGTH_HARD_LIMIT = 20.kilobytes
-  ATTRIBUTION_DOMAINS_HARD_LIMIT = 256
   ALSO_KNOWN_AS_HARD_LIMIT = 256
 
   AUTOMATED_ACTOR_TYPES = %w(Application Service).freeze
@@ -96,7 +95,6 @@ class Account < ApplicationRecord
   include Account::Search
   include Account::StatusesSearch
   include Account::Suspensions
-  include Account::AttributionDomains
   include DomainMaterializable
   include DomainNormalizable
   include Paginable

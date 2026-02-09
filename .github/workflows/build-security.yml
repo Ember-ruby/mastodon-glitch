@@ -8,7 +8,9 @@ permissions:
 
 jobs:
   compute-suffix:
-    runs-on: ubuntu-latest
+    runs-on: docker
+    container:
+      image: buildpack-deps:trixie
     if: github.repository == 'mastodon/mastodon'
     steps:
       - id: version_vars

@@ -9,7 +9,9 @@ permissions:
 
 jobs:
   compute-suffix:
-    runs-on: ubuntu-latest
+    runs-on: docker
+    container:
+      image: buildpack-deps:trixie
     # This is only allowed to run if:
     # - the PR branch is in the `mastodon/mastodon` repository
     # - the PR is not a draft

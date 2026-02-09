@@ -29,7 +29,9 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: docker
+    container:
+      image: buildpack-deps:trixie
 
     steps:
       - name: Clone repository

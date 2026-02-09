@@ -9,7 +9,9 @@ permissions:
 
 jobs:
   label-rebase-needed:
-    runs-on: ubuntu-latest
+    runs-on: docker
+    container:
+      image: buildpack-deps:trixie
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}

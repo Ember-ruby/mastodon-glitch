@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: docker
     container:
-      image: node:trixie
+      image: buildpack-deps:trixie
 
     strategy:
       fail-fast: true
@@ -152,7 +152,7 @@ jobs:
     name: End to End testing
     runs-on: docker
     container:
-      image: node:trixie
+      image: buildpack-deps:trixie
 
     needs:
       - build
@@ -238,7 +238,7 @@ jobs:
     name: Elastic Search integration testing
     runs-on: docker
     container:
-      image: node:trixie
+      image: buildpack-deps:trixie
 
     needs:
       - build

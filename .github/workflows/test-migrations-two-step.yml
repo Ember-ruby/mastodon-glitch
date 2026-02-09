@@ -8,7 +8,9 @@ on:
 
 jobs:
   pre_job:
-    runs-on: ubuntu-latest
+    runs-on: docker
+    container:
+      image: buildpack-deps:trixie
 
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -20,7 +22,9 @@ jobs:
           paths: '["Gemfile*", ".ruby-version", "**/*.rb", ".github/workflows/test-migrations-two-step.yml", "lib/tasks/tests.rake"]'
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: docker
+    container:
+      image: buildpack-deps:trixie
     needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
 

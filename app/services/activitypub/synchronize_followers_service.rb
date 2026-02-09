@@ -50,25 +50,24 @@ class ActivityPub::SynchronizeFollowersService < BaseService
     Oj.dump(serialize_payload(follow, ActivityPub::UndoFollowSerializer))
   end
 
-  def collection_items(collection_or_uri)
-    collection = fetch_collection(collection_or_uri)
-    return unless collection.is_a?(Hash)
+  # Only returns true if the whole collection has been processed
+  def process_collection!(collection_uri, max_pages: MAX_COLLECTION_PAGES)
+    collection = fetch_collection_page(collection_uri, reference_uri: @account.uri)
+    return false unless collection.is_a?(Hash)
 
-    collection = fetch_collection(collection['first']) if collection['first'].present?
-    return unless collection.is_a?(Hash)
+    collection = fetch_collection_page(collection['first'], reference_uri: @account.uri) if collection['first'].present?
 
-    case collection['type']
-    when 'Collection', 'CollectionPage'
-      as_array(collection['items'])
-    when 'OrderedCollection', 'OrderedCollectionPage'
-      as_array(collection['orderedItems'])
+    while collection.is_a?(Hash)
+      process_page!(as_array(collection_page_items(collection)))
+
+      max_pages -= 1
+
+      return true if collection['next'].blank? # We reached the end of the collection
+      return false if max_pages <= 0 # We reached our pages limit
+
+      collection = fetch_collection_page(collection['next'])
     end
-  end
 
-  def fetch_collection(collection_or_uri)
-    return collection_or_uri if collection_or_uri.is_a?(Hash)
-    return if non_matching_uri_hosts?(@account.uri, collection_or_uri)
-
-    fetch_resource_without_id_validation(collection_or_uri, nil, true)
+    false
   end
 end

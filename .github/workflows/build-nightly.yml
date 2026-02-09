@@ -12,7 +12,7 @@ jobs:
   compute-suffix:
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
     if: github.repository == 'glitch-soc/mastodon'
     steps:
       - id: version_vars

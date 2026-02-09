@@ -11,7 +11,7 @@ jobs:
   label-rebase-needed:
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
 
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}

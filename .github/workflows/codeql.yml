@@ -14,7 +14,7 @@ jobs:
     name: Analyze
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
     permissions:
       actions: read
       contents: read

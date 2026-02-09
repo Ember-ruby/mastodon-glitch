@@ -31,7 +31,7 @@ jobs:
   lint:
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
 
     steps:
       - name: Clone repository

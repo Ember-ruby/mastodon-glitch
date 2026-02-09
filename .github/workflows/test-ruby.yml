@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
 
     strategy:
       fail-fast: true
@@ -65,7 +65,7 @@ jobs:
   test:
     runs-on: docker
     container:
-      image: node:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
 
     needs:
       - build
@@ -152,7 +152,7 @@ jobs:
     name: End to End testing
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
 
     needs:
       - build
@@ -238,7 +238,7 @@ jobs:
     name: Elastic Search integration testing
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
 
     needs:
       - build

@@ -10,7 +10,7 @@ jobs:
   pre_job:
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
 
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -24,7 +24,7 @@ jobs:
   test:
     runs-on: docker
     container:
-      image: buildpack-deps:trixie
+      image: ghcr.io/catthehacker/ubuntu:js-latest
     needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
 

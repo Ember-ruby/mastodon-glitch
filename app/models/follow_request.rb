@@ -53,6 +53,10 @@ class FollowRequest < ApplicationRecord
     false # Force uri_for to use uri attribute
   end
 
+  def first_follow?
+    !target_account.followers.local.exists?
+  end
+
   before_validation :set_uri, only: :create
   after_commit :invalidate_follow_recommendations_cache
 

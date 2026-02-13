@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FetchRemoteStatusService < BaseService
-  def call(url, prefetched_body: nil, request_id: nil)
+  def call(url, prefetched_body: nil, request_id: nil, on_behalf_of: nil)
     if prefetched_body.nil?
       resource_url, resource_options = FetchResourceService.new.call(url)
     else

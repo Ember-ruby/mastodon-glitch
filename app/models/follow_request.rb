@@ -32,6 +32,7 @@ class FollowRequest < ApplicationRecord
   validates :languages, language: true
 
   def authorize!
+    is_first_follow = first_follow?
     follow = account.follow!(target_account, reblogs: show_reblogs, notify: notify, languages: languages, uri: uri, bypass_limit: true)
 
     if account.local?

@@ -25,15 +25,11 @@ class ActivityPub::FetchRepliesService < BaseService
 
   private
 
-  def filtered_replies
-    if @filter_by_host
-      # Only fetch replies to the same server as the original status to avoid
-      # amplification attacks.
+  def filter_replies(items)
+    # Only fetch replies to the same server as the original status to avoid
+    # amplification attacks.
 
-      # Also limit to 5 fetched replies to limit potential for DoS.
-      @items.map { |item| value_or_id(item) }.reject { |uri| non_matching_uri_hosts?(@account.uri, uri) }.take(MAX_REPLIES)
-    else
-      @items.map { |item| value_or_id(item) }.take(MAX_REPLIES)
-    end
+    # Also limit to 5 fetched replies to limit potential for DoS.
+    items.map { |item| value_or_id(item) }.reject { |uri| non_matching_uri_hosts?(@reference_uri, uri) }.take(MAX_REPLIES)
   end
 end
